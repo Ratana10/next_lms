@@ -1,9 +1,9 @@
-import React from 'react'
+import { RegisterForm } from '@/components/RegisterForm'
 
 const Register = () => {
   return (
-    <div>
-      
+    <div className='h-screen flex items-center justify-center'>
+      <RegisterForm />
     </div>
   )
 }
