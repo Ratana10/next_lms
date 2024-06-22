@@ -25,9 +25,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
+import { useRouter } from 'next/navigation'
 
 export function LoginForm() {
   const [errors, setErrors] = useState(null);
+  const router = useRouter();
 
   const formSchema = z.object({
     username: z.string().min(2, {
@@ -60,6 +62,8 @@ export function LoginForm() {
       setErrors(data.message);
     } else {
       const data = await res.json();
+      //TODO store token in the session for later used
+      router.push('/dashboard')
       console.log(data.token);
     }
   }

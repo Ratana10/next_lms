@@ -36,6 +36,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
+import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
   firstname: z.string().min(2, {
@@ -57,6 +58,8 @@ const formSchema = z.object({
 
 export function RegisterForm() {
   const [errorMsg, setErrorMsg] = useState(null);
+  const router = useRouter()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -68,7 +71,6 @@ export function RegisterForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     const res = await fetch(`http://localhost/8080/api/v1/auth/register`, {
       method: "POST",
       headers: {
@@ -79,6 +81,7 @@ export function RegisterForm() {
     if (res.ok) {
       //Todo save token into session
       const data = await res.json();
+      router.push('/dashboard');
     } else {
       const data = await res.json();
       setErrorMsg(data.message);
