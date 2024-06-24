@@ -37,31 +37,15 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
 import { useRouter } from 'next/navigation'
-
-const formSchema = z.object({
-  firstname: z.string().min(2, {
-    message: "Firstname must be at least 2 characters.",
-  }),
-  lastname: z.string().min(2, {
-    message: "Lastname must be at least 2 characters.",
-  }),
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  password: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  role: z.string({
-    required_error: "Please select a role",
-  }),
-});
+import { registerSchema } from "@/schema/definition";
+import { registerService } from "@/services/auth.service";
 
 export function RegisterForm() {
   const [errorMsg, setErrorMsg] = useState(null);
   const router = useRouter()
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       firstname: "",
       lastname: "",
@@ -70,14 +54,10 @@ export function RegisterForm() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    const res = await fetch(`http://localhost/8080/api/v1/auth/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
+  async function onSubmit(values: z.infer<typeof registerSchema>) {
+    const {firstname, lastname, username, password, role} = await registerSchema.parseAsync(values)
+
+    const res = await registerService({firstname, lastname, username, password, role});
     if (res.ok) {
       //Todo save token into session
       const data = await res.json();
