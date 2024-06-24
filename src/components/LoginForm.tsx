@@ -25,47 +25,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
-import { useRouter } from 'next/navigation'
-
+import { login } from "@/services/auth.service";
+import { loginSchema } from "@/schema/definition";
 export function LoginForm() {
   const [errors, setErrors] = useState(null);
-  const router = useRouter();
 
-  const formSchema = z.object({
-    username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
-    password: z.string().min(2, {
-      message: "Password must be at least 2 characters.",
-    }),
-  });
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       username: "",
       password: "",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    const res = await fetch("http://localhost:8080/api/v1/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
-
-    if (!res.ok) {
-      const data = await res.json();
-      setErrors(data.message);
-    } else {
-      const data = await res.json();
-      //TODO store token in the session for later used
-      router.push('/dashboard')
-      console.log(data.token);
-    }
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
+    await login(values);
   }
 
   function handleClearErrors(){
