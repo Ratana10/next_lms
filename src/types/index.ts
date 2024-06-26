@@ -11,3 +11,10 @@ export type RegisterRequest = {
     password: string,
     role: string,
 }
+
+export type Category ={
+    id: number,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+}

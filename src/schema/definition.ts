@@ -29,3 +29,10 @@ export const registerSchema = z.object({
     required_error: "Please select a role",
   }),
 });
+
+
+export const categorySchema = z.object({
+  name: z.string().min(1, {
+    message: "name is required.",
+  })
+});
