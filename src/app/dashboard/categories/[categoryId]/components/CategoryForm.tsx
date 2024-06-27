@@ -25,6 +25,7 @@ import { Trash } from "lucide-react";
 import { Category } from "@/types";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 type CategoryProp = {
   initialize: Category | null;
@@ -32,10 +33,12 @@ type CategoryProp = {
 
 const CategoryForm = ({ initialize }: CategoryProp) => {
   const title = initialize ? "Edit category" : "Create category";
-  const description = initialize ? "Edit a category" : "Create new category";
+  const description = initialize ? "Edit a category" : "Add new category";
   const btnText = initialize ? "Save change" : "Create";
 
   const router = useRouter();
+  const [open, setOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof categorySchema>>({
     resolver: zodResolver(categorySchema),
@@ -46,23 +49,47 @@ const CategoryForm = ({ initialize }: CategoryProp) => {
 
   async function onSubmit(values: z.infer<typeof categorySchema>) {
     if (initialize) {
-      await updateCategory(initialize.id, values);
-      toast.success("update successfully");
-      router.push("/dashboard/categories");
+      // Update exists category
+      try {
+        await updateCategory(initialize.id, values);
+        setLoading(true);
+      } catch (error) {
+        toast.error(`Error[Category]: ${error}`);
+      } finally {
+        setLoading(false);
+        setOpen(false);
+        toast.success("Update successfully");
+        router.push("/dashboard/categories");
+      }
     } else {
-      await createCategory(values);
-      toast.success("create successfully");
-      router.push("/dashboard/categories");
+      // Create new category
+      try {
+        await createCategory(values);
+        setLoading(true);
+      } catch (error) {
+        toast.error(`Error[Category]: ${error}`);
+      } finally {
+        setLoading(false);
+        setOpen(false);
+        toast.success("Create successfully");
+        router.push("/dashboard/categories");
+      }
     }
   }
 
   async function onDelete() {
     if (initialize && initialize.id) {
-      await deleteCategory(initialize.id);
-      toast.success("delete successfully");
-      router.push("/dashboard/categories");
-    }else{
-      toast.error("delete unsuccessfully");
+      try {
+        await deleteCategory(initialize.id);
+        setLoading(true);
+      } catch (error) {
+        toast.error(`Error[Category]: ${error}`);
+      } finally {
+        setLoading(false);
+        setOpen(false);
+        toast.success("delete successfully");
+        router.push("/dashboard/categories");
+      }
     }
   }
 
@@ -71,7 +98,11 @@ const CategoryForm = ({ initialize }: CategoryProp) => {
       <div className="flex justify-between mb-4">
         <Heading title={title} descritpion={description} />
         {initialize && (
-          <Button variant="destructive" onClick={() => onDelete()}>
+          <Button
+            disabled={loading}
+            variant="destructive"
+            onClick={() => onDelete()}
+          >
             <Trash className="h-4 w-4" />
           </Button>
         )}
@@ -79,7 +110,7 @@ const CategoryForm = ({ initialize }: CategoryProp) => {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
               name="name"
@@ -94,7 +125,9 @@ const CategoryForm = ({ initialize }: CategoryProp) => {
               )}
             />
           </div>
-          <Button type="submit">{btnText}</Button>
+          <Button disabled={loading} type="submit">
+            {btnText}
+          </Button>
         </form>
       </Form>
     </>
