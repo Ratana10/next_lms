@@ -26,17 +26,17 @@ const Sidebar = () => {
 
     const navs = [
         {
-            href: "/dashboard/categoy",
+            href: "/dashboard/categories",
             label: "Category",
             icon: <Home />
         },
         {
-            href: "/dashboard/course",
+            href: "/dashboard/courses",
             label: "Course",
             icon: <Home />
         },
         {
-            href: "/dashboard/schedule",
+            href: "/dashboard/schedules",
             label: "Schedule",
             icon: <Home />
         },
