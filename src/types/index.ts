@@ -18,3 +18,14 @@ export type Category ={
     createdAt: string,
     updatedAt: string,
 }
+
+export type Pagination={
+    pageSize: number,
+    pageNumber: number,
+    totalPages: number,
+    numberOfElements: number,
+    totalElements: number,
+    first: boolean,
+    last: boolean,
+    empty: boolean
+}

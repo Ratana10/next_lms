@@ -3,14 +3,32 @@ import CategoryClient from "./components/CategoryClient";
 import { Category } from "@/types";
 import { format } from "date-fns";
 
-const CategoryPage = async () => {
-  const data = await getAllCategories();
+interface SearchParams {
+  query?: string;
+  page?: string;
+}
+const CategoryPage = async ({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+    page?: string;
+    size?: string;
+  };
+}) => {
+  const currentPage = Number(searchParams?.page) || 1;
+  const size = Number(searchParams?.size) || 10;
+
+  const data = await getAllCategories(size, currentPage);
   const categories = data.data;
+  const pagination = data.pagination;
+  console.log(data);
+  console.log("Testing", searchParams);
 
   const categoriesFormatted: Category[] = categories.map(
     (e: Category, index: number) => ({
       id: e.id,
-      no: index+1,
+      no: index + 1,
       name: e.name,
       createdAt: format(new Date(e.createdAt), "yyyy-MM-dd"),
       updatedAt: format(new Date(e.updatedAt), "yyyy-MM-dd"),
@@ -18,7 +36,7 @@ const CategoryPage = async () => {
   );
   return (
     <div>
-      <CategoryClient categories={categoriesFormatted} />
+      <CategoryClient categories={categoriesFormatted} pagination={pagination} />
     </div>
   );
 };

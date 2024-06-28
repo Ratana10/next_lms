@@ -5,15 +5,20 @@ import { categorySchema } from "@/schema/definition";
 import { Category } from "@/types";
 import { z } from "zod";
 
-export async function getAllCategories() {
+export async function getAllCategories(size: number, page: number) {
   const token = await getToken();
-  const res = await fetch(`${process.env.API_BASE_URL}/api/v1/categories`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const res = await fetch(
+    `${process.env.API_BASE_URL}/api/v1/categories?size=${size || 10}&page=${
+      page || 1
+    }`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   return await res.json();
 }
@@ -81,10 +86,7 @@ export async function updateCategory(
   }
 }
 
-
-export async function deleteCategory(
-  categoryId: number,
-) {
+export async function deleteCategory(categoryId: number) {
   const token = await getToken();
   const res = await fetch(
     `${process.env.API_BASE_URL}/api/v1/categories/${categoryId}`,
