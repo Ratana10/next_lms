@@ -26,6 +26,9 @@ import { Category } from "@/types";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import BackButton from "@/components/BackButton";
+import { Modal } from "@/components/Modal";
+import { Separator } from "@/components/ui/separator";
 
 type CategoryProp = {
   initialize: Category | null;
@@ -60,6 +63,7 @@ const CategoryForm = ({ initialize }: CategoryProp) => {
         setOpen(false);
         toast.success("Update successfully");
         router.push("/dashboard/categories");
+        router.refresh();
       }
     } else {
       // Create new category
@@ -73,6 +77,7 @@ const CategoryForm = ({ initialize }: CategoryProp) => {
         setOpen(false);
         toast.success("Create successfully");
         router.push("/dashboard/categories");
+        router.refresh();
       }
     }
   }
@@ -95,19 +100,30 @@ const CategoryForm = ({ initialize }: CategoryProp) => {
 
   return (
     <>
-      <div className="flex justify-between mb-4">
+      <BackButton text="Back" href="/dashboard/categories" />
+      <div className="flex justify-between">
         <Heading title={title} descritpion={description} />
         {initialize && (
-          <Button
-            disabled={loading}
-            variant="destructive"
-            onClick={() => onDelete()}
-          >
-            <Trash className="h-4 w-4" />
-          </Button>
+          <>
+            <Modal
+              title={`Are you sure to delete [${initialize.name}]?`}
+              description="This action cannot be undone."
+              isOpen={open}
+              onClose={() => setOpen(false)}
+              onDelete={onDelete}
+              loading={loading}
+            />
+            <Button
+              disabled={loading}
+              variant="destructive"
+              onClick={() => setOpen(true)}
+            >
+              <Trash className="h-4 w-4" />
+            </Button>
+          </>
         )}
       </div>
-
+      <Separator />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="grid grid-cols-3 gap-8">

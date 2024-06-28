@@ -3,12 +3,11 @@
 import Heading from "@/components/Heading";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import React from "react";
 import { useRouter } from "next/navigation";
-import { DataTable } from "@/components/ui/DataTable";
 import { Category } from "@/types";
 import { columns } from "./columns";
 import { Separator } from "@/components/ui/separator";
+import { DataTable } from "@/components/ui/DataTable";
 
 interface CategoryClientProp {
   categories: Category[];
@@ -21,7 +20,7 @@ const CategoryClient = ({ categories }: CategoryClientProp) => {
       <div className="flex justify-between">
         <Heading title="Categories" descritpion="Manage categories" />
         <Button onClick={() => router.push("/dashboard/categories/new")}>
-          <Plus />
+          <Plus className="w-4 h-4 mr-2" />
           Add
         </Button>
       </div>

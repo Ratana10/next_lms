@@ -45,7 +45,6 @@ export async function getCategoryById(categoryId: number) {
     }
   );
   const data = await res.json();
-  console.log("test res", data);
 
   if (res.ok) {
     console.log("sucess");
