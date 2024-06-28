@@ -65,13 +65,14 @@ const CellAction = ({ data }: props) => {
           <DropdownMenuItem
             disabled={loading}
             onClick={() => onUpdate(data.id)}
+            className="cursor-pointer"
           >
             <Edit className="w-4 h-4 mr-2" /> Update
           </DropdownMenuItem>
           <DropdownMenuItem
             disabled={loading}
             onClick={() => setOpen(true)}
-            className="text-red-500"
+            className="text-red-500 cursor-pointer"
           >
             <Trash className="w-4 h-4 mr-2 " />
             Delete
