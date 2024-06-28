@@ -134,7 +134,7 @@ const CategoryForm = ({ initialize }: CategoryProp) => {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter name" {...field} />
+                    <Input autoFocus placeholder="Enter name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

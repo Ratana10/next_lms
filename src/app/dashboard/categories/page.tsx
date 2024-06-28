@@ -22,8 +22,6 @@ const CategoryPage = async ({
   const data = await getAllCategories(size, currentPage);
   const categories = data.data;
   const pagination = data.pagination;
-  console.log(data);
-  console.log("Testing", searchParams);
 
   const categoriesFormatted: Category[] = categories.map(
     (e: Category, index: number) => ({
@@ -31,7 +29,7 @@ const CategoryPage = async ({
       no: index + 1,
       name: e.name,
       createdAt: format(new Date(e.createdAt), "yyyy-MM-dd"),
-      updatedAt: format(new Date(e.updatedAt), "yyyy-MM-dd"),
+      updatedAt: e.updatedAt ? format(new Date(e.updatedAt), "yyyy-MM-dd") : '...',
     })
   );
   return (
