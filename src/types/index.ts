@@ -19,6 +19,19 @@ export type Category ={
     updatedAt: string,
 }
 
+export type Teacher = {
+    id: number,
+    firstname: string,
+    lastname: string,
+    email: string,
+    gender: string,
+    hireDate: Date,
+    phone: string,
+    address: string,
+    createdAt: string,
+    updatedAt: string,
+}
+
 export type Pagination={
     pageSize: number,
     pageNumber: number,

@@ -31,8 +31,8 @@ const Sidebar = () => {
             icon: <Home />
         },
         {
-            href: "/dashboard/courses",
-            label: "Course",
+            href: "/dashboard/teachers",
+            label: "Teacher",
             icon: <Home />
         },
         {
@@ -58,7 +58,7 @@ const Sidebar = () => {
           <div className="flex-1">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               {navs.map(nav => (
-                 <Link
+                 <Link key={nav.href}
                  href={nav.href}
                  className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
                 >

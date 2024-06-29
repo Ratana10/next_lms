@@ -8,6 +8,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Loader2Icon } from "lucide-react";
 interface AlertProps {
   isOpen: boolean;
   onClose: () => void;
@@ -22,7 +23,7 @@ export function Modal({
   isOpen,
   onClose,
   onDelete,
-  loading
+  loading,
 }: AlertProps) {
   return (
     <AlertDialog open={isOpen}>
@@ -34,6 +35,7 @@ export function Modal({
         <AlertDialogFooter>
           <AlertDialogCancel onClick={onClose}>Cancel</AlertDialogCancel>
           <Button disabled={loading} variant="destructive" onClick={onDelete}>
+            {loading && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
             Continue
           </Button>
         </AlertDialogFooter>
