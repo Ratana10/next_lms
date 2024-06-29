@@ -8,26 +8,30 @@ interface PaginationSectionProps {
   totalPages: number;
   isLast: boolean;
   isFirst: boolean;
+  onPreviousPage: ()=>void;
+  onNextPage: ()=>void;
 }
 const PaginationSection = ({
   currentPage,
   totalPages,
   isLast,
   isFirst,
+  onPreviousPage,
+  onNextPage,
 }: PaginationSectionProps) => {
   const router = useRouter();
 
-  const onPreviousPage = async () => {
-    if (currentPage > 1) {
-      router.push(`/dashboard/categories?page=${currentPage - 1}`);
-    }
-  };
+  // const onPreviousPage = async () => {
+  //   if (currentPage > 1) {
+  //     router.push(`/dashboard/categories?page=${currentPage - 1}`);
+  //   }
+  // };
 
-  const onNextPage = () => {
-    if (currentPage < totalPages) {
-      router.push(`/dashboard/categories?page=${currentPage + 1}`);
-    }
-  };
+  // const onNextPage = () => {
+  //   if (currentPage < totalPages) {
+  //     router.push(`/dashboard/categories?page=${currentPage + 1}`);
+  //   }
+  // };
 
   return (
     <div className="flex items-center justify-end space-x-2 py-6">

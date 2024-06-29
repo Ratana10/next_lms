@@ -42,3 +42,13 @@ export type Pagination={
     last: boolean,
     empty: boolean
 }
+
+export type Student = {
+    id: number,
+    firstname: string,
+    lastname: string,
+    gender: string,
+    phone: string,
+    createdAt: string,
+    updatedAt: string,
+}

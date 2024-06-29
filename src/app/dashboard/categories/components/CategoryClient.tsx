@@ -22,6 +22,19 @@ const CategoryClient = ({ categories, pagination }: CategoryClientProp) => {
   const currentPage = pagination.pageNumber;
   const isLast = pagination.last;
   const isFirst = pagination.first;
+
+  const onPreviousPage = () => {
+    if (currentPage > 1) {
+      router.push(`/dashboard/categories?page=${currentPage - 1}`);
+    }
+  };
+
+  const onNextPage = () => {
+    if (currentPage < totalPages) {
+      router.push(`/dashboard/categories?page=${currentPage + 1}`);
+    }
+  };
+  
   return (
     <>
       <div className="flex justify-between">
@@ -39,6 +52,8 @@ const CategoryClient = ({ categories, pagination }: CategoryClientProp) => {
         isFirst={isFirst}
         currentPage={currentPage}
         totalPages={totalPages}
+        onPreviousPage={onPreviousPage}
+        onNextPage={onNextPage}
       />
     </>
   );

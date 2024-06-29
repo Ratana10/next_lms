@@ -1,48 +1,48 @@
 "use client";
 
+import { DataTable } from "@/components/DataTable";
 import Heading from "@/components/Heading";
-import { Button } from "@/components/ui/button";
 import PaginationSection from "@/components/PaginationSection";
-
+import { Pagination, Student } from "@/types";
+import { Separator } from "@radix-ui/react-select";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Separator } from "@/components/ui/separator";
-import { DataTable } from "@/components/DataTable";
-import { Pagination, Teacher } from "@/types";
+import React from "react";
 import { columns } from "./columns";
+import { Button } from "@/components/ui/button";
 
-interface TeacherClientProp {
-  teachers: Teacher[];
+interface StudentClientProp {
+  students: Student[];
   pagination: Pagination;
 }
 
-const TeacherClient = ({ teachers, pagination }: TeacherClientProp) => {
+const StudentClient = ({ students, pagination }: StudentClientProp) => {
   const router = useRouter();
 
   const onPreviousPage = () => {
     if (pagination.pageNumber > 1) {
-      router.push(`/dashboard/teachers?page=${pagination.pageNumber - 1}`);
+      router.push(`/dashboard/students?page=${pagination.pageNumber - 1}`);
     }
   };
 
   const onNextPage = () => {
     if (pagination.pageNumber < pagination.totalPages) {
-      router.push(`/dashboard/teachers?page=${pagination.pageNumber + 1}`);
+      router.push(`/dashboard/students?page=${pagination.pageNumber + 1}`);
     }
   };
 
   return (
     <>
       <div className="flex justify-between">
-        <Heading title="Teachers" descritpion="Manage teachers" />
-        <Button onClick={() => router.push("/dashboard/teachers/new")}>
+        <Heading title="Students" descritpion="Manage students" />
+        <Button onClick={() => router.push("/dashboard/students/new")}>
           <Plus className="w-4 h-4 mr-2" />
           Add
         </Button>
       </div>
       <Separator className="my-4" />
-      <DataTable columns={columns} data={teachers} />
-
+      <DataTable columns={columns} data={students} />
+{/* 
       <PaginationSection
         isLast={pagination.last}
         isFirst={pagination.first}
@@ -50,9 +50,9 @@ const TeacherClient = ({ teachers, pagination }: TeacherClientProp) => {
         totalPages={pagination.totalPages}
         onPreviousPage={onPreviousPage}
         onNextPage={onNextPage}
-      />
+      /> */}
     </>
   );
 };
 
-export default TeacherClient;
+export default StudentClient;

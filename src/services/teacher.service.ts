@@ -4,10 +4,11 @@ import { getToken } from "@/lib/session";
 import {  teacherSchema } from "@/schema/definition";
 import { z } from "zod";
 
-export async function getAllTeacher(size: number, page: number) {
+export async function getAllTeacher(page: number) {
+  let size = 10;
   const token = await getToken();
   const res = await fetch(
-    `${process.env.API_BASE_URL}/api/v1/teachers?size=${size || 10}&page=${
+    `${process.env.API_BASE_URL}/api/v1/teachers?size=${size}&page=${
       page || 1
     }`,
     {

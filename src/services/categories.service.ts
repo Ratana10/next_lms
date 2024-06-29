@@ -5,10 +5,10 @@ import { categorySchema } from "@/schema/definition";
 import { Category } from "@/types";
 import { z } from "zod";
 
-export async function getAllCategories(size: number, page: number) {
+export async function getAllCategories(page: number) {
   const token = await getToken();
   const res = await fetch(
-    `${process.env.API_BASE_URL}/api/v1/categories?size=${size || 10}&page=${
+    `${process.env.API_BASE_URL}/api/v1/categories?size=10&page=${
       page || 1
     }`,
     {

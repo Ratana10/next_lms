@@ -13,13 +13,11 @@ const CategoryPage = async ({
   searchParams?: {
     query?: string;
     page?: string;
-    size?: string;
   };
 }) => {
   const currentPage = Number(searchParams?.page) || 1;
-  const size = Number(searchParams?.size) || 10;
 
-  const data = await getAllCategories(size, currentPage);
+  const data = await getAllCategories(currentPage);
   const categories = data.data;
   const pagination = data.pagination;
 

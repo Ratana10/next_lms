@@ -36,8 +36,8 @@ const Sidebar = () => {
             icon: <Home />
         },
         {
-            href: "/dashboard/schedules",
-            label: "Schedule",
+            href: "/dashboard/students",
+            label: "Students",
             icon: <Home />
         },
         {

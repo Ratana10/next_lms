@@ -3,8 +3,17 @@ import TeacherClient from "./components/TeacherClient";
 import { Teacher } from "@/types";
 import { format } from "date-fns";
 
-const TeacherPage = async () => {
-  const data = await getAllTeacher(10, 1);
+const TeacherPage = async ({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+    page?: string;
+  };
+}) => {
+  const currentPage = Number(searchParams?.page) || 1;
+
+  const data = await getAllTeacher(currentPage);
 
   const teacherFormatted = data.data.map((e: Teacher, index: number) => ({
     id: e.id,

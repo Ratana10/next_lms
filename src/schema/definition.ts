@@ -33,24 +33,38 @@ export const registerSchema = z.object({
 
 export const categorySchema = z.object({
   name: z.string().min(1, {
-    message: "name is required.",
+    message: "Name is required.",
   })
 });
 
 export const teacherSchema = z.object({
   firstname: z.string().min(1, {
-    message: "firstname is required.",
+    message: "Firstname is required.",
   }),
   lastname: z.string().min(1, {
-    message: "lastname is required.",
+    message: "Lastname is required.",
   }),
   email: z.string().optional(),
   phone: z.string().optional(),
   gender: z.string().min(1, {
-    message: "gender is required.",
+    message: "Gender is required.",
   }),
   hireDate: z.date({
-    required_error: "hireDate is required.",
+    required_error: "HireDate is required.",
   }),
   address: z.string().optional()
+});
+
+
+export const studentSchema = z.object({
+  firstname: z.string().min(1, {
+    message: "Firstname is required.",
+  }),
+  lastname: z.string().min(1, {
+    message: "Lastname is required.",
+  }),
+  phone: z.string().optional(),
+  gender: z.string().min(1, {
+    message: "Gender is required.",
+  })
 });
