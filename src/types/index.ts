@@ -53,3 +53,14 @@ export type Student = {
     createdAt: string,
     updatedAt: string,
 }
+
+export type Course = {
+    id: number,
+    name: string,
+    description: string,
+    price: number,
+    categoryId: number;
+    teacherId: number;
+    createdAt: string,
+    updatedAt: string,
+}

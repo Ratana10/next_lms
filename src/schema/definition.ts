@@ -69,3 +69,17 @@ export const studentSchema = z.object({
   }),
   email: z.string().optional(),
 });
+
+
+export const courseSchema = z.object({
+  name: z.string().min(1, {
+    message: "Name is required.",
+  }),
+  description: z.string().optional(),
+  price: z.coerce.number().optional(),
+  teacherId: z.coerce.number().optional(),
+  categoryId: z.coerce.number().min(1, {
+    message: "Category is required.",
+  }),
+  // categoryId: z.number().optional(),
+});

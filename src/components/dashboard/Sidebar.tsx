@@ -41,8 +41,8 @@ const Sidebar = () => {
             icon: <Home />
         },
         {
-            href: "/",
-            label: "label",
+            href: "/dashboard/courses",
+            label: "Courses",
             icon: <Home />
         },
     ]

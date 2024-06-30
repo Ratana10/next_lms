@@ -23,6 +23,22 @@ export async function getAllCategories(page: number) {
   return await res.json();
 }
 
+export async function getAllCategoriesV2() {
+  const token = await getToken();
+  const res = await fetch(
+    `${process.env.API_BASE_URL}/api/v1/categories/all`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return await res.json();
+}
+
 export async function createCategory(category: z.infer<typeof categorySchema>) {
   const token = await getToken();
   const res = await fetch(`${process.env.API_BASE_URL}/api/v1/categories`, {
