@@ -7,12 +7,14 @@ const StudentPage = async ({
   searchParams,
 }: {
   searchParams?: {
-    query?: string;
     page?: string;
+    search?: string;
   };
 }) => {
   const currentPage = Number(searchParams?.page) || 1;
-  const data = await getAllStudent(currentPage);
+  const search = searchParams?.search || ""
+  const data = await getAllStudent(currentPage, search);
+
 
   const studentsFormatted: Student[] = data.data.map(
     (e: Student, index: number) => ({

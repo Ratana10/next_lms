@@ -10,6 +10,7 @@ import React from "react";
 import { columns } from "./columns";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import Search from "@/components/Search";
 
 interface StudentClientProp {
   students: Student[];
@@ -41,6 +42,7 @@ const StudentClient = ({ students, pagination }: StudentClientProp) => {
         </Button>
       </div>
       <Separator />
+      <Search placeholder="Search..." />
       <DataTable columns={columns} data={students} />
 
       <PaginationSection
