@@ -1,7 +1,7 @@
 "use server";
 
 import { getToken } from "@/lib/session";
-import {  studentSchema, teacherSchema } from "@/schema/definition";
+import { studentSchema, teacherSchema } from "@/schema/definition";
 import { z } from "zod";
 
 export async function getAllStudent(page: number) {
@@ -20,11 +20,18 @@ export async function getAllStudent(page: number) {
     }
   );
 
-  return await res.json();
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
 }
 
 export async function createStudent(student: z.infer<typeof studentSchema>) {
   const token = await getToken();
+
   const res = await fetch(`${process.env.API_BASE_URL}/api/v1/students`, {
     method: "POST",
     headers: {
@@ -34,7 +41,13 @@ export async function createStudent(student: z.infer<typeof studentSchema>) {
     body: JSON.stringify(student),
   });
 
-  return await res.json();
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
 }
 
 export async function getStudentById(studentId: number) {
@@ -49,7 +62,13 @@ export async function getStudentById(studentId: number) {
       },
     }
   );
-  return await res.json();
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
 }
 
 export async function updateStudent(
@@ -68,7 +87,13 @@ export async function updateStudent(
       body: JSON.stringify(student),
     }
   );
-  return await res.json();
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
 }
 
 export async function deleteStudent(studentId: number) {
@@ -83,5 +108,11 @@ export async function deleteStudent(studentId: number) {
       },
     }
   );
-  return await res.json();
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
 }

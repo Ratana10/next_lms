@@ -4,12 +4,12 @@ import { DataTable } from "@/components/DataTable";
 import Heading from "@/components/Heading";
 import PaginationSection from "@/components/PaginationSection";
 import { Pagination, Student } from "@/types";
-import { Separator } from "@radix-ui/react-select";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { columns } from "./columns";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 interface StudentClientProp {
   students: Student[];
@@ -40,9 +40,9 @@ const StudentClient = ({ students, pagination }: StudentClientProp) => {
           Add
         </Button>
       </div>
-      <Separator className="my-4" />
+      <Separator />
       <DataTable columns={columns} data={students} />
-{/* 
+
       <PaginationSection
         isLast={pagination.last}
         isFirst={pagination.first}
@@ -50,7 +50,7 @@ const StudentClient = ({ students, pagination }: StudentClientProp) => {
         totalPages={pagination.totalPages}
         onPreviousPage={onPreviousPage}
         onNextPage={onNextPage}
-      /> */}
+      />
     </>
   );
 };

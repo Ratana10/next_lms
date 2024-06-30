@@ -48,6 +48,7 @@ export type Student = {
     firstname: string,
     lastname: string,
     gender: string,
+    email: string;
     phone: string,
     createdAt: string,
     updatedAt: string,

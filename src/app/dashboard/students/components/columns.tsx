@@ -2,7 +2,7 @@
 
 import { Student } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
-
+import CellAction from "./CellAction";
 
 export const columns: ColumnDef<Student>[] = [
   {
@@ -26,6 +26,10 @@ export const columns: ColumnDef<Student>[] = [
     header: "Phone",
   },
   {
+    accessorKey: "email",
+    header: "Email",
+  },
+  {
     accessorKey: "createdAt",
     header: "CreatedAt",
   },
@@ -33,8 +37,8 @@ export const columns: ColumnDef<Student>[] = [
     accessorKey: "updatedAt",
     header: "UpdatedAt",
   },
-  // {
-  //   id: "actions",
-  //   cell: ({ row }) => <CellAction data={row.original} />,
-  // },
+  {
+    id: "actions",
+    cell: ({ row }) => <CellAction data={row.original} />,
+  },
 ];

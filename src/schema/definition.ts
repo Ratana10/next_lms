@@ -66,5 +66,6 @@ export const studentSchema = z.object({
   phone: z.string().optional(),
   gender: z.string().min(1, {
     message: "Gender is required.",
-  })
+  }),
+  email: z.string().optional(),
 });
