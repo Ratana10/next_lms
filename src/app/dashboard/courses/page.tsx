@@ -3,7 +3,6 @@ import { getAllCourses } from "@/services/course.service";
 import { Course } from "@/types";
 import { format } from "date-fns";
 import CourseClient from "./components/CourseClient";
-import { log } from "console";
 
 const CoursePage = async ({
   searchParams,
@@ -15,7 +14,6 @@ const CoursePage = async ({
 }) => {
   const currentPage = Number(searchParams?.page || 1);
   const search = searchParams?.search || "";
-  log("testing", search);
   const data = await getAllCourses(currentPage, search);
 
   const coursesFormatted = data.data.map((e: any, index: number) => ({
