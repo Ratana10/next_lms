@@ -84,16 +84,8 @@ export const courseSchema = z.object({
 });
 
 export const scheduleSchema = z.object({
-  day: z.string().min(1, {
-    message: "Day is required.",
-  }),
-  courseId: z.coerce.number().min(1, {
-    message: "Course is required.",
-  }),
-  startTime: z.date({
-    required_error: "StartTime is required.",
-  }),
-  endTime: z.date({
-    required_error: "EndTime is required.",
-  }),
+  day: z.string().nullable(),
+  courseId: z.coerce.number().nullable(),
+  startTime: z.string(),
+  endTime: z.string(),
 });

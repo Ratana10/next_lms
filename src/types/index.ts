@@ -68,11 +68,11 @@ export type Course = {
 
 export type Schedule = {
     id: number,
-    courseId: number;
+    // courseId: number;
     day: string;
     startTime: string,
     endTime: string,
     createdAt: string,
     updatedAt: string,
-    course?: Course
+    course: Course | null
 }

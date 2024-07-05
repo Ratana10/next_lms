@@ -11,14 +11,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-import { z } from "zod";
+import {  z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { courseSchema, scheduleSchema } from "@/schema/definition";
+import {  scheduleSchema } from "@/schema/definition";
 
 import Heading from "@/components/Heading";
 import { Trash } from "lucide-react";
-import { Category, Course, Schedule, Teacher } from "@/types";
+import {  Course, Schedule } from "@/types";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useState } from "react";
@@ -32,18 +32,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  createCourse,
-  deleteCourse,
-  updateCourse,
-} from "@/services/course.service";
+import { DayOfWeek, dayOfWeek } from "@/lib/dayOfWeek";
+import { createSchedule, updateSchedule } from "@/services/schedule.service";
 
 type ScheduleProp = {
   initialize: Schedule | null;
+  courses: Course[];
 };
 
-const ScheduleForm = ({ initialize }: ScheduleProp) => {
+const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
   const title = initialize ? "Edit schedule" : "Create schedule";
   const description = initialize ? "Edit a schedule" : "Add new schedule";
   const btnText = initialize ? "Save change" : "Create";
@@ -52,25 +49,49 @@ const ScheduleForm = ({ initialize }: ScheduleProp) => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  console.table(initialize);
-
   const form = useForm<z.infer<typeof scheduleSchema>>({
     resolver: zodResolver(scheduleSchema),
     defaultValues: {
       courseId: 0,
       day: "",
-      endTime: new Date(),
-      startTime: new Date(),
+      startTime: "",
+      endTime: "",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof scheduleSchema>) {}
+  async function onSubmit(values: z.infer<typeof scheduleSchema>) {
+    if (initialize) {
+      try {
+        setLoading(true);
+        await updateSchedule(initialize.id, values);
+        toast.success("Update successfully");
+        router.push("/dashboard/schedules");
+        router.refresh();
+      } catch (error) {
+        toast.error(`${error}`);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      try {
+        setLoading(true);
+        await createSchedule(values);
+        toast.success("Create successfully");
+        router.push("/dashboard/schedules");
+        router.refresh();
+      } catch (error) {
+        toast.error(`${error}`);
+      } finally {
+        setLoading(false);
+      }
+    }
+  }
 
   async function onDelete() {}
 
   return (
     <>
-      <BackButton text="Back" href="/dashboard/schedule" />
+      <BackButton text="Back" href="/dashboard/schedules" />
       <div className="flex justify-between">
         <Heading title={title} descritpion={description} />
         {initialize && (
@@ -96,7 +117,7 @@ const ScheduleForm = ({ initialize }: ScheduleProp) => {
       <Separator />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
               name="courseId"
@@ -105,7 +126,7 @@ const ScheduleForm = ({ initialize }: ScheduleProp) => {
                   <FormLabel>Course</FormLabel>
                   <Select
                     onValueChange={field.onChange}
-                    defaultValue={initialize?.courseId.toString()}
+                    defaultValue={initialize?.course?.id.toString()}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -113,7 +134,14 @@ const ScheduleForm = ({ initialize }: ScheduleProp) => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="123">123</SelectItem>
+                      {courses.map((course: Course) => (
+                        <SelectItem
+                          key={course.id}
+                          value={course.id.toString()}
+                        >
+                          {course.name}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -126,18 +154,48 @@ const ScheduleForm = ({ initialize }: ScheduleProp) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Day</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                  >
+                  <Select onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a day" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="123">123</SelectItem>
+                      {dayOfWeek.map((day: DayOfWeek, index: number) => (
+                        <SelectItem key={index} value={day.value}>
+                          {day.label}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="grid grid-cols-3 gap-8">
+            <FormField
+              control={form.control}
+              name="startTime"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Start Time</FormLabel>
+                  <FormControl onChange={field.onChange}>
+                    <Input type="time" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="endTime"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>End Time</FormLabel>
+                  <FormControl onChange={field.onChange}>
+                    <Input type="time" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

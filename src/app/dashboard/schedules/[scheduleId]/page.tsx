@@ -1,9 +1,11 @@
-import React from 'react'
 import ScheduleForm from './components/ScheduleForm'
+import { getCoursesList } from '@/services/course.service'
+import { Course } from '@/types';
 
-const ScheduleIdPage = () => {
+const ScheduleIdPage =  async () => {
+  const courses: Course[] = await getCoursesList();
   return (
-    <ScheduleForm initialize={null} />
+    <ScheduleForm initialize={null} courses={courses} />
   )
 }
 
