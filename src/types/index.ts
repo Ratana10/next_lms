@@ -65,3 +65,14 @@ export type Course = {
     updatedAt: string,
     teacher?: Teacher
 }
+
+export type Schedule = {
+    id: number,
+    courseId: number;
+    day: string;
+    startTime: string,
+    endTime: string,
+    createdAt: string,
+    updatedAt: string,
+    course?: Course
+}
