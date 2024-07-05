@@ -50,6 +50,8 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
+  console.table(initialize);
+
   const form = useForm<z.infer<typeof courseSchema>>({
     resolver: zodResolver(courseSchema),
     defaultValues: initialize || {
@@ -154,7 +156,7 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Category</FormLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select onValueChange={field.onChange} defaultValue={initialize?.categoryId.toString()} >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a category" />
@@ -194,7 +196,7 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Teacher</FormLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select onValueChange={field.onChange} defaultValue={initialize?.teacherId.toString()}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a teacher " />

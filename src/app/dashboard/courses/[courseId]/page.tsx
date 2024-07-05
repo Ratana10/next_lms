@@ -13,6 +13,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const teachers = teachersData.data;
   const course = courseData.data;
 
+
   return (
     <CourseForm initialize={course} categories={categories} teachers={teachers} />
   );
