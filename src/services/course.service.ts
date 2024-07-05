@@ -8,7 +8,7 @@ export async function getAllCourses(page: number, search: string) {
   let size = 10;
   const token = await getToken();
   const res = await fetch(
-    `${process.env.API_BASE_URL}/api/v1/courses?size=${size}&page=${page}`,
+    `${process.env.API_BASE_URL}/api/v1/courses?size=${size}&page=${page}&search=${search}`,
     {
       method: "GET",
       headers: {
