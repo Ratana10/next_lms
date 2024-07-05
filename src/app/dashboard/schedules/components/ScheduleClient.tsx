@@ -43,7 +43,6 @@ const ScheduleClient = ({ schedules, pagination }: ScheduleClientProp) => {
         </Button>
       </div>
       <Separator />
-      <Search placeholder="Search..." />
       <DataTable columns={columns} data={schedules} />
 
       <PaginationSection
