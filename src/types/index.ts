@@ -63,4 +63,5 @@ export type Course = {
     teacherId: number;
     createdAt: string,
     updatedAt: string,
+    teacher?: Teacher
 }

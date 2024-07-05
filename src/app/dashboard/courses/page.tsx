@@ -16,18 +16,24 @@ const CoursePage = async ({
   const search = searchParams?.search || "";
   const data = await getAllCourses(currentPage, search);
 
-  const coursesFormatted = data.data.map((e: any, index: number) => ({
+  const coursesFormatted = data.data.map((e: Course, index: number) => ({
     id: e.id,
     no: index + 1,
     name: e.name,
     price: e.price,
+    teacher:
+      e.teacher?.firstname && e.teacher?.lastname
+        ? e.teacher?.firstname + " " + e.teacher?.lastname
+        : "N/A",
     createdAt: format(new Date(e.createdAt), "yyyy-MM-dd"),
     updatedAt: e.updatedAt
       ? format(new Date(e.updatedAt), "yyyy-MM-dd")
       : "...",
   }));
 
-  return <CourseClient courses={coursesFormatted} pagination={data.pagination} />;
+  return (
+    <CourseClient courses={coursesFormatted} pagination={data.pagination} />
+  );
 };
 
 export default CoursePage;
