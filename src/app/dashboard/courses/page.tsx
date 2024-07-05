@@ -27,7 +27,7 @@ const CoursePage = async ({
       : "...",
   }));
 
-  return <CourseClient courses={coursesFormatted} />;
+  return <CourseClient courses={coursesFormatted} pagination={data.pagination} />;
 };
 
 export default CoursePage;

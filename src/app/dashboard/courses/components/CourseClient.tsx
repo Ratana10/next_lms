@@ -10,13 +10,28 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { columns } from "./columns";
 import { Course, Pagination } from "@/types";
+import PaginationSection from "@/components/PaginationSection";
 
 interface CourseClientProp {
   courses: Course[];
+  pagination: Pagination;
 }
 
-const CourseClient = ({ courses}: CourseClientProp) => {
+const CourseClient = ({ courses, pagination }: CourseClientProp) => {
   const router = useRouter();
+
+  const onPreviousPage = () => {
+    if (pagination.pageNumber > 1) {
+      router.push(`/dashboard/courses?page=${pagination.pageNumber - 1}`);
+    }
+  };
+
+  const onNextPage = () => {
+    if (pagination.pageNumber < pagination.totalPages) {
+      router.push(`/dashboard/courses?page=${pagination.pageNumber + 1}`);
+    }
+  };
+
   return (
     <>
       <div className="flex justify-between">
@@ -29,6 +44,15 @@ const CourseClient = ({ courses}: CourseClientProp) => {
       <Separator />
       <Search placeholder="Search..." />
       <DataTable columns={columns} data={courses} />
+
+      <PaginationSection
+        isLast={pagination.last}
+        isFirst={pagination.first}
+        currentPage={pagination.numberOfElements}
+        totalPages={pagination.totalPages}
+        onPreviousPage={onPreviousPage}
+        onNextPage={onNextPage}
+      />
     </>
   );
 };
