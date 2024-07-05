@@ -11,14 +11,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-import {  z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import {  scheduleSchema } from "@/schema/definition";
+import { scheduleSchema } from "@/schema/definition";
 
 import Heading from "@/components/Heading";
 import { Trash } from "lucide-react";
-import {  Course, Schedule } from "@/types";
+import { Course, Schedule } from "@/types";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useState } from "react";
@@ -51,7 +51,7 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
 
   const form = useForm<z.infer<typeof scheduleSchema>>({
     resolver: zodResolver(scheduleSchema),
-    defaultValues: {
+    defaultValues: initialize || {
       courseId: 0,
       day: "",
       startTime: "",
@@ -126,7 +126,7 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
                   <FormLabel>Course</FormLabel>
                   <Select
                     onValueChange={field.onChange}
-                    defaultValue={initialize?.course?.id.toString()}
+                    defaultValue={initialize?.courseId.toString()}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -154,7 +154,10 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Day</FormLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={initialize?.day}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a day" />

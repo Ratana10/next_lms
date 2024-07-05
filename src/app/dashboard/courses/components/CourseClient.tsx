@@ -9,8 +9,9 @@ import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { columns } from "./columns";
-import { Course, Pagination } from "@/types";
+import { Course } from "@/types";
 import PaginationSection from "@/components/PaginationSection";
+import { Pagination } from "@/types/Pagination";
 
 interface CourseClientProp {
   courses: Course[];

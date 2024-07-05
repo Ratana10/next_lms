@@ -9,16 +9,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Course } from "@/types";
+import {  Schedule } from "@/types";
 import { useRouter } from "next/navigation";
-import { deleteCategory } from "@/services/categories.service";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Modal } from "@/components/Modal";
-import { deleteCourse } from "@/services/course.service";
+import { deleteSchedule } from "@/services/schedule.service";
 
 interface props {
-  data: Course;
+  data: Schedule;
 }
 const CellAction = ({ data }: props) => {
   const router = useRouter();
@@ -26,14 +25,14 @@ const CellAction = ({ data }: props) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const onUpdate = (id: number) => {
-    router.push(`/dashboard/courses/${id}`);
+    router.push(`/dashboard/schedules/${id}`);
   };
 
   const onDelete = async () => {
     try {
       setLoading(true);
-      await deleteCourse(data.id);
-      toast.success("Delete course successfully");
+      await deleteSchedule(data.id);
+      toast.success("Delete schedule successfully");
       router.refresh();
       setOpen(false);
     } catch (error) {
@@ -46,7 +45,7 @@ const CellAction = ({ data }: props) => {
   return (
     <>
       <Modal
-        title={`Are you sure to delete ${data.name}?`}
+        title={`Are you sure to delete ${data.course?.name}?`}
         description="This action cannot be undone."
         isOpen={open}
         onClose={() => setOpen(false)}

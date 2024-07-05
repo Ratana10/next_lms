@@ -32,16 +32,6 @@ export type Teacher = {
     updatedAt: string,
 }
 
-export type Pagination={
-    pageSize: number,
-    pageNumber: number,
-    totalPages: number,
-    numberOfElements: number,
-    totalElements: number,
-    first: boolean,
-    last: boolean,
-    empty: boolean
-}
 
 export type Student = {
     id: number,
@@ -68,7 +58,7 @@ export type Course = {
 
 export type Schedule = {
     id: number,
-    // courseId: number;
+    courseId: number;
     day: string;
     startTime: string,
     endTime: string,

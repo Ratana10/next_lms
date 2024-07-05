@@ -4,7 +4,6 @@ import {   Schedule } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import CellAction from "./CellAction";
 
-
 export const columns: ColumnDef<Schedule>[] = [
   {
     accessorKey: "no",
@@ -37,4 +36,8 @@ export const columns: ColumnDef<Schedule>[] = [
     accessorKey: "updatedAt",
     header: "UpdatedAt",
   },
+  {
+    id: "actions",
+    cell: ({ row }) => <CellAction data={row.original} />,
+  }
 ];

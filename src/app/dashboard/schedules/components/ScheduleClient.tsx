@@ -9,8 +9,9 @@ import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { columns } from "./columns";
-import {  Pagination, Schedule } from "@/types";
+import {   Schedule } from "@/types";
 import PaginationSection from "@/components/PaginationSection";
+import { Pagination } from "@/types/Pagination";
 
 interface ScheduleClientProp {
   schedules: Schedule[];

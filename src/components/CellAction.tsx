@@ -10,43 +10,40 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Category } from "@/types";
-import { useRouter } from "next/navigation";
 import { deleteCategory } from "@/services/categories.service";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Modal } from "@/components/Modal";
 
-interface props {
-  data: Category;
+interface props<T> {
+  data: T;
+  onUpdate: (id: number)=> void;
 }
-const CellAction = ({ data }: props) => {
-  const router = useRouter();
+const CellAction = <T extends { id: number }>({ data, onUpdate }: props<T>) => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const onUpdate = (id: number) => {
-    router.push(`/dashboard/categories/${id}`);
-  };
+  
 
   const onDelete = async () => {
-    try {
-      await deleteCategory(data.id);
-      setLoading(true);
-    } catch (error) {
-      toast.error(`Error[Category]: ${error}`);
-    } finally {
-      toast.success("Delete category successfully");
-      //refresh data
-      router.refresh();
-      setOpen(false);
-      setLoading(false);
-    }
+    // try {
+    //   await deleteCategory(data.id);
+    //   setLoading(true);
+    // } catch (error) {
+    //   toast.error(`Error[Category]: ${error}`);
+    // } finally {
+    //   toast.success("Delete category successfully");
+    //   //refresh data
+    //   router.refresh();
+    //   setOpen(false);
+    //   setLoading(false);
+    // }
   };
 
   return (
     <>
       <Modal
-        title={`Are you sure to delete [${data.name}]?`}
+        title={`Are you sure to delete?`}
         description="This action cannot be undone."
         isOpen={open}
         onClose={() => setOpen(false)}
