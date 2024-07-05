@@ -4,11 +4,12 @@ import Heading from "@/components/Heading";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Category, Pagination } from "@/types";
+import { Category } from "@/types";
 import { columns } from "./columns";
 import { Separator } from "@/components/ui/separator";
 import { DataTable } from "@/components/DataTable";
 import PaginationSection from "@/components/PaginationSection";
+import { Pagination } from "@/types/Pagination";
 
 interface CategoryClientProp {
   categories: Category[];

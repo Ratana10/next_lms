@@ -3,7 +3,7 @@
 import { DataTable } from "@/components/DataTable";
 import Heading from "@/components/Heading";
 import PaginationSection from "@/components/PaginationSection";
-import { Pagination, Student } from "@/types";
+import {  Student } from "@/types";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -11,6 +11,7 @@ import { columns } from "./columns";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Search from "@/components/Search";
+import { Pagination } from "@/types/Pagination";
 
 interface StudentClientProp {
   students: Student[];

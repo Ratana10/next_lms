@@ -8,8 +8,9 @@ import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { DataTable } from "@/components/DataTable";
-import { Pagination, Teacher } from "@/types";
+import {  Teacher } from "@/types";
 import { columns } from "./columns";
+import { Pagination } from "@/types/Pagination";
 
 interface TeacherClientProp {
   teachers: Teacher[];
