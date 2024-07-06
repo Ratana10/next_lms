@@ -4,6 +4,7 @@ import {  Course } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import CellAction from "./CellAction";
 import { Badge } from "@/components/ui/badge"
+import { formatToDollar } from "@/lib/utils";
 
 
 export const columns: ColumnDef<Course>[] = [
@@ -18,16 +19,7 @@ export const columns: ColumnDef<Course>[] = [
   {
     accessorKey: "price",
     header: "Price",
-    cell: ({row}) => {
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(row.getValue("price"))
-
-      return <div className="font-medium">{formatted}</div>
-
- 
-    }
+    cell: ({row}) => <div className="font-medium">{formatToDollar(row.getValue("price"))}</div>
   },
   {
     accessorKey: "teacher",

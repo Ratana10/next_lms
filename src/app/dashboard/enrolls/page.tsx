@@ -5,8 +5,18 @@ import { Response } from "@/types/Pagination";
 import { Enroll } from "@/types";
 import { format } from "date-fns";
 
-const EnrollPage = async () => {
-  const data = await getAllEnrolls(1);
+const EnrollPage = async ({
+  searchParams,
+}: {
+  searchParams?: {
+    search?: string;
+    page?: string;
+  };
+}) => {
+  const currentPage = Number(searchParams?.page || 1);
+
+  const data = await getAllEnrolls(currentPage);
+
   const formattedEnrolls = data.data.map((e: Enroll, index: number) => ({
     id: e.id,
     no: index + 1,

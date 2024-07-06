@@ -4,7 +4,7 @@ import {   Enroll } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import CellAction from "./CellAction";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { cn,  formatToDollar } from "@/lib/utils";
 
 export const columns: ColumnDef<Enroll>[] = [
   {
@@ -18,10 +18,12 @@ export const columns: ColumnDef<Enroll>[] = [
   {
     accessorKey: "total",
     header: "Total",
+    cell: ({row}) => <div className="font-medium">{formatToDollar(row.getValue("total"))}</div> 
   },
   {
     accessorKey: "remain",
     header: "Remain",
+    cell: ({row}) => <div className="font-medium">{formatToDollar(row.getValue("remain"))}</div> 
   },
   {
     accessorKey: "status",
