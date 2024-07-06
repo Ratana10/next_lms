@@ -3,6 +3,8 @@
 import {   Enroll } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import CellAction from "./CellAction";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 export const columns: ColumnDef<Enroll>[] = [
   {
@@ -14,10 +16,6 @@ export const columns: ColumnDef<Enroll>[] = [
     header: "Student",
   },
   {
-    accessorKey: "status",
-    header: "Status",
-  },
-  {
     accessorKey: "total",
     header: "Total",
   },
@@ -26,16 +24,25 @@ export const columns: ColumnDef<Enroll>[] = [
     header: "Remain",
   },
   {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => {
+      var status: string = row.getValue("status");
+      const badgeClass = cn(
+        "font-medium",
+        {
+          "bg-green-600": status === "PAID",
+          "bg-red-600": status === "UNPAID",
+          "bg-yellow-600": status === "PARTIAL",
+        }
+      );
+
+      return <Badge className={badgeClass}>{status}</Badge>;
+    },
+  },
+  {
     accessorKey: "date",
     header: "Date",
-  },
-  {
-    accessorKey: "createdAt",
-    header: "CreatedAt",
-  },
-  {
-    accessorKey: "updatedAt",
-    header: "UpdatedAt",
   },
   {
     id: "actions",
