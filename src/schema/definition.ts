@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { Option } from '@/components/ui/multiple-selector';
 
 
 export const loginSchema = z.object({
@@ -88,4 +89,16 @@ export const scheduleSchema = z.object({
   courseId: z.coerce.number().nullable(),
   startTime: z.string(),
   endTime: z.string(),
+});
+
+export const enrollSchema = z.object({
+  studentId: z.coerce.number().nullable(),
+  courses: z.array(z.object({
+    label: z.string(),
+    value: z.string(),
+    disable: z.boolean().optional(),
+  })).min(1),
+  date: z.date({
+    required_error: "Date is required.",
+  }),
 });

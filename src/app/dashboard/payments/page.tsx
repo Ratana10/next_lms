@@ -2,6 +2,8 @@ import { getAllCategories } from "@/services/categories.service";
 import { DataTable } from "./DataTable";
 import { Payment, columns } from "./columns";
 import Heading from "@/components/Heading";
+import { getCoursesList } from "@/services/course.service";
+import { Option } from "@/components/ui/multiple-selector";
 
 async function getData(): Promise<Payment[]> {
   return [
@@ -57,14 +59,12 @@ async function getData(): Promise<Payment[]> {
 }
 
 export default async function PaymentPage() {
-  const data = await getData();
+  const courses = await getCoursesList();
+ 
 
   return (
     <div>
-      <Heading title="Payment" descritpion="" />
-      <div className="">
-      <DataTable columns={columns} data={data} />
-    </div>
+     {/* <MultipleSelectorWithForm courses={courses} /> */}
     </div>
   );
 }

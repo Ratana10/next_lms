@@ -27,6 +27,30 @@ export async function getAllStudent(page: number, search: string) {
   return data;
 }
 
+export async function getStudentsList() {
+  
+  const token = await getToken();
+  const res = await fetch(
+    `${process.env.API_BASE_URL}/api/v1/students/all`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
+}
+
+
 export async function createStudent(student: z.infer<typeof studentSchema>) {
   const token = await getToken();
 

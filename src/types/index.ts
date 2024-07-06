@@ -66,3 +66,16 @@ export type Schedule = {
     updatedAt: string,
     course: Course | null
 }
+
+export type Enroll = {
+    id: number,
+    studentId: number;
+    courseIds: number[];
+    total: number,
+    remain: number,
+    status: string,
+    date: string,
+    createdAt: string,
+    updatedAt: string,
+    student?: Student
+}

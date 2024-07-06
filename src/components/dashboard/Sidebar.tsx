@@ -49,6 +49,11 @@ const Sidebar = () => {
       label: "Schedules",
       icon: <Home />,
     },
+    {
+      href: "/dashboard/enrolls",
+      label: "Enroll",
+      icon: <Home />,
+    },
   ];
   return (
     <div className="hidden border-r bg-muted/40 md:block">
