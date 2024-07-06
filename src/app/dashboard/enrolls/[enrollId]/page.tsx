@@ -2,15 +2,21 @@ import React from "react";
 import {  getCoursesList } from "@/services/course.service";
 import EnrollForm from "./components/EnrollForm";
 import { getStudentsList } from "@/services/student.service";
-import { getEnrollById } from "@/services/enroll.service";
+import { Option } from "@/components/ui/multiple-selector";
 
 const EnrollIdPage = async ({ params }: { params: { enrollId: string } }) => {
   const coursesData = await getCoursesList();
   const studentData = await getStudentsList();
-  const enrollById = await getEnrollById(parseInt(params.enrollId));
+  
+  const coursesOption: Option[] = coursesData.map((e: any, index: number) => ({
+    label: e.name,
+    value: e.id.toString(),
+    diable: false,
+    price: e.price,
+  }));
 
   return (
-    <EnrollForm initialize={null} students={studentData} courses={coursesData} />
+    <EnrollForm initialize={null} students={studentData} coursesOption={coursesOption} />
   );
 };
 

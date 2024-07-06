@@ -77,12 +77,12 @@ export async function updateEnroll(
   return data;
 }
 
-export async function getEnrollById(enrollId: number) {
+export async function deleteEnroll(enrollId: number) {
   const token = await getToken();
   const res = await fetch(
     `${process.env.API_BASE_URL}/api/v1/enrollments/${enrollId}`,
     {
-      method: "GET",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -91,5 +91,27 @@ export async function getEnrollById(enrollId: number) {
   );
   const data = await res.json();
 
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+
   return data;
 }
+
+
+// export async function getEnrollById(enrollId: number) {
+//   const token = await getToken();
+//   const res = await fetch(
+//     `${process.env.API_BASE_URL}/api/v1/enrollments/${enrollId}`,
+//     {
+//       method: "GET",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${token}`,
+//       },
+//     }
+//   );
+//   const data = await res.json();
+
+//   return data;
+// }

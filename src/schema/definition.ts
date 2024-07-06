@@ -92,13 +92,18 @@ export const scheduleSchema = z.object({
 });
 
 export const enrollSchema = z.object({
-  studentId: z.coerce.number().nullable(),
+  studentId: z.coerce.number().min(1, {
+    message: "Student is required.",
+  }),
   courses: z.array(z.object({
     label: z.string(),
     value: z.string(),
     disable: z.boolean().optional(),
-  })).min(1),
+  })).min(1, {
+    message: "Course is required.",
+  }),
   date: z.date({
     required_error: "Date is required.",
   }),
+  fee: z.coerce.number().optional()
 });

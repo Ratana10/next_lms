@@ -9,15 +9,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { enrollSchema } from "@/schema/definition";
-
 import Heading from "@/components/Heading";
 import { CalendarIcon, Trash } from "lucide-react";
-import { Course, Enroll, Student } from "@/types";
+import { Enroll, Student } from "@/types";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useState } from "react";
@@ -42,14 +40,15 @@ import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import MultipleSelector, { Option } from "@/components/ui/multiple-selector";
 import { createEnroll } from "@/services/enroll.service";
+import { Input } from "@/components/ui/input";
 
 type EnrollFormProp = {
   initialize: Enroll | null;
   students: Student[];
-  courses: Course[];
+  coursesOption: Option[];
 };
 
-const EnrollForm = ({ initialize, students, courses }: EnrollFormProp) => {
+const EnrollForm = ({ initialize, students, coursesOption }: EnrollFormProp) => {
   const title = initialize ? "Edit enroll" : "Create enroll";
   const description = initialize ? "Edit a enroll" : "Add new enroll";
   const btnText = initialize ? "Save change" : "Create";
@@ -57,12 +56,8 @@ const EnrollForm = ({ initialize, students, courses }: EnrollFormProp) => {
   const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [total, setTotal] = useState<number>(0);
 
-  const coursesOption: Option[] = courses.map((e: any, index: number) => ({
-    label: e.name,
-    value: e.id.toString(),
-    diable: false,
-  }));
 
   const form = useForm<z.infer<typeof enrollSchema>>({
     resolver: zodResolver(enrollSchema),
@@ -70,36 +65,22 @@ const EnrollForm = ({ initialize, students, courses }: EnrollFormProp) => {
       studentId: 0,
       courses: [],
       date: new Date(),
+      fee: 0,
     },
   });
 
   async function onSubmit(values: z.infer<typeof enrollSchema>) {
-    console.log(values);
-    // if (initialize) {
-    //   try {
-    //     setLoading(true);
-    //     await updateEnroll(initialize.id, values);
-    //     toast.success("Update successfully");
-    //     router.push("/dashboard/enrolls");
-    //     router.refresh();
-    //   } catch (error) {
-    //     toast.error(`${error}`);
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // } else {
-    //   try {
-    //     setLoading(true);
-    await createEnroll(values);
-    //     toast.success("Create successfully");
-    //     router.push("/dashboard/enrolls");
-    //     router.refresh();
-    //   } catch (error) {
-    //     toast.error(`${error}`);
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // }
+    try {
+      setLoading(true);
+      await createEnroll(values);
+      toast.success("Create successfully");
+      router.push("/dashboard/enrolls");
+      router.refresh();
+    } catch (error) {
+      toast.error(`${error}`);
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function onDelete() {
@@ -157,7 +138,7 @@ const EnrollForm = ({ initialize, students, courses }: EnrollFormProp) => {
                   <Select onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a category" />
+                        <SelectValue placeholder="Select a student" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -182,13 +163,21 @@ const EnrollForm = ({ initialize, students, courses }: EnrollFormProp) => {
               name="courses"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Frameworks</FormLabel>
+                  <FormLabel>Course</FormLabel>
                   <FormControl>
                     <MultipleSelector
                       {...field}
+                      onChange={(value: Option[]) => {
+                        field.onChange(value);
+                        var sum = value.reduce(
+                          (sum, option) => sum + (option.price ?? 0),
+                          0
+                        );
+                        setTotal(sum);
+                      }}
                       defaultOptions={coursesOption}
                       hidePlaceholderWhenSelected
-                      placeholder="Select frameworks you like..."
+                      placeholder="Select course to enroll"
                       emptyIndicator={
                         <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
                           no results found.
@@ -201,12 +190,36 @@ const EnrollForm = ({ initialize, students, courses }: EnrollFormProp) => {
               )}
             />
           </div>
+          <div className="grid grid-cols-2 gap-8">
+            <FormField
+              control={form.control}
+              name="fee"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="flex flex-row justify-between">
+                    <FormLabel>Fee</FormLabel>
+                    <FormLabel className="text-md text-green-600">
+                      Total : {total} $
+                    </FormLabel>
+                  </div>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="Enter your amount"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <FormField
             control={form.control}
             name="date"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Hire Date</FormLabel>
+                <FormLabel>Date</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>

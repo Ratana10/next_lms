@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Modal } from "@/components/Modal";
+import { deleteEnroll } from "@/services/enroll.service";
 
 interface props {
   data: Enroll;
@@ -28,17 +29,17 @@ const CellAction = ({ data }: props) => {
   };
 
   const onDelete = async () => {
-    // try {
-    //   setLoading(true);
-    //   await deleteEnroll(data.id);
-    //   toast.success("Delete enroll successfully");
-    //   router.refresh();
-    //   setOpen(false);
-    // } catch (error) {
-    //   toast.error(`${error}`);
-    // } finally {
-    //   setLoading(false);
-    // }
+    try {
+      setLoading(true);
+      await deleteEnroll(data.id);
+      toast.success("Delete enroll successfully");
+      router.refresh();
+      setOpen(false);
+    } catch (error) {
+      toast.error(`${error}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
