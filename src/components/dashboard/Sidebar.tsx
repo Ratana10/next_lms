@@ -31,7 +31,7 @@ const Sidebar = () => {
     },
     {
       href: "/dashboard/teachers",
-      label: "Teacher",
+      label: "Teachers",
       icon: <Home />,
     },
     {
@@ -51,7 +51,12 @@ const Sidebar = () => {
     },
     {
       href: "/dashboard/enrolls",
-      label: "Enroll",
+      label: "Enrolls",
+      icon: <Home />,
+    },
+    {
+      href: "/dashboard/payments",
+      label: "Payments",
       icon: <Home />,
     },
   ];

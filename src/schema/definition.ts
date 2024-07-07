@@ -107,3 +107,16 @@ export const enrollSchema = z.object({
   }),
   fee: z.coerce.number().optional()
 });
+
+export const paymentSchema = z.object({
+  enrollmentId: z.coerce.number().min(1, {
+    message: "Student is required.",
+  }),
+  amount: z.coerce.number().min(1, {
+    message: "Amount is required.",
+  }),
+  date: z.date({
+    required_error: "Date is required.",
+  }),
+});
+

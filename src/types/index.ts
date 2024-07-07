@@ -80,3 +80,12 @@ export type Enroll = {
     student?: Student
     courses?: Course[]
 }
+
+export type Payment = {
+    id: number,
+    amount: number,
+    date: string,
+    createdAt: string,
+    updatedAt: string,
+    enrollment?: Enroll,
+}

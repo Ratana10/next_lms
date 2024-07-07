@@ -21,6 +21,22 @@ export async function getAllEnrolls(page: number, search: string) {
   return await res.json();
 }
 
+export async function getListEnroll() {
+  const token = await getToken();
+  const res = await fetch(
+    `${process.env.API_BASE_URL}/api/v1/enrollments?all=true`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return await res.json();
+}
+
 
 export async function createEnroll(enroll: z.infer<typeof enrollSchema>) {
   const token = await getToken();

@@ -1,70 +1,28 @@
-import { getAllCategories } from "@/services/categories.service";
-import { DataTable } from "./DataTable";
-import { Payment, columns } from "./columns";
-import Heading from "@/components/Heading";
-import { getCoursesList } from "@/services/course.service";
-import { Option } from "@/components/ui/multiple-selector";
+import { getAllPayments } from "@/services/payment.service"
+import { Payment } from "@/types";
+import PaymentClient from "./components/PaymentClient";
+import { format } from "date-fns";
+import { Response } from "@/types/Pagination";
 
-async function getData(): Promise<Payment[]> {
-  return [
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "489e1d42",
-      amount: 125,
-      status: "processing",
-      email: "example@gmail.com",
-    },
-    {
-      id: "489e1d42",
-      amount: 125,
-      status: "processing",
-      email: "example@gmail.com",
-    },
-    {
-      id: "489e1d42",
-      amount: 125,
-      status: "processing",
-      email: "example@gmail.com",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "489e1d42",
-      amount: 125,
-      status: "processing",
-      email: "example@gmail.com",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "489e1d42",
-      amount: 125,
-      status: "processing",
-      email: "example@gmail.com",
-    },
-  ];
-}
+const PaymentPage = async () => {
+  const data : Response<Payment[]> = await getAllPayments(1);
+  console.log(data);
 
-export default async function PaymentPage() {
-  const courses = await getCoursesList();
- 
+  const payments : Payment[]  = data.data;
 
+  const formattedPayments = payments.map((e:Payment, index: number) => ({
+    no: index +1,
+    id: e.id,
+    amount: e.amount,
+    date: format(new Date(e.date), "yyyy-MM-dd"),
+    createdAt: format(new Date(e.createdAt), "yyyy-MM-dd"),
+    updatedAt: e.updatedAt ? format(new Date(e.updatedAt), "yyyy-MM-dd") : '...',
+  }))
+
+  // TODO update latter
   return (
-    <div>
-     {/* <MultipleSelectorWithForm courses={courses} /> */}
-    </div>
-  );
+    <PaymentClient payments={formattedPayments} pagination={data.pagination} />
+  )
 }
+
+export default PaymentPage
