@@ -105,7 +105,7 @@ export const enrollSchema = z.object({
   date: z.date({
     required_error: "Date is required.",
   }),
-  fee: z.coerce.number().optional()
+  amount: z.coerce.number().optional()
 });
 
 export const paymentSchema = z.object({

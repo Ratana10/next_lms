@@ -65,7 +65,7 @@ const EnrollForm = ({ initialize, students, coursesOption }: EnrollFormProp) => 
       studentId: "",
       courses: [],
       date: new Date(),
-      fee: 0,
+      amount: 0,
     },
   });
 
@@ -193,7 +193,7 @@ const EnrollForm = ({ initialize, students, coursesOption }: EnrollFormProp) => 
           <div className="grid grid-cols-2 gap-8">
             <FormField
               control={form.control}
-              name="fee"
+              name="amount"
               render={({ field }) => (
                 <FormItem>
                   <div className="flex flex-row justify-between">

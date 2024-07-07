@@ -45,6 +45,7 @@ export async function createEnroll(enroll: z.infer<typeof enrollSchema>) {
   const enrollRequest = {
     studentId: enroll.studentId,
     date: enroll.date,
+    amount: enroll.amount,
     courseIds
   } 
 
