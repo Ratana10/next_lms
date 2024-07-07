@@ -43,7 +43,7 @@ import { createEnroll } from "@/services/enroll.service";
 import { Input } from "@/components/ui/input";
 
 type EnrollFormProp = {
-  initialize: Enroll | null;
+  initialize: any | null;
   students: Student[];
   coursesOption: Option[];
 };
@@ -56,13 +56,13 @@ const EnrollForm = ({ initialize, students, coursesOption }: EnrollFormProp) => 
   const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [total, setTotal] = useState<number>(0);
+  const [total, setTotal] = useState<number>(initialize ? initialize.total : 0);
 
 
   const form = useForm<z.infer<typeof enrollSchema>>({
     resolver: zodResolver(enrollSchema),
-    defaultValues: {
-      studentId: 0,
+    defaultValues: initialize || {
+      studentId: "",
       courses: [],
       date: new Date(),
       fee: 0,
@@ -135,7 +135,7 @@ const EnrollForm = ({ initialize, students, coursesOption }: EnrollFormProp) => 
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Student</FormLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select onValueChange={field.onChange} defaultValue={initialize ? initialize.studentId : ""}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a student" />
@@ -165,7 +165,7 @@ const EnrollForm = ({ initialize, students, coursesOption }: EnrollFormProp) => 
                 <FormItem>
                   <FormLabel>Course</FormLabel>
                   <FormControl>
-                    <MultipleSelector
+                    <MultipleSelector 
                       {...field}
                       onChange={(value: Option[]) => {
                         field.onChange(value);

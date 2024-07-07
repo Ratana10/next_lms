@@ -78,4 +78,5 @@ export type Enroll = {
     createdAt: string,
     updatedAt: string,
     student?: Student
+    courses?: Course[]
 }
