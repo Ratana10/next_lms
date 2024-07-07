@@ -35,7 +35,6 @@ const EnrollIdPage = async ({ params }: { params: { enrollId: string } }) => {
     };
   }
 
-  console.table(newData);
   return (
     <EnrollForm
       initialize={newData}

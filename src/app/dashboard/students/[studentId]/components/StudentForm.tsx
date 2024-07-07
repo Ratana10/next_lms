@@ -44,7 +44,6 @@ const StudentForm = ({ initialize }: StudentProp) => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  console.log("test form student", initialize);
   const form = useForm<z.infer<typeof studentSchema>>({
     resolver: zodResolver(studentSchema),
     defaultValues: initialize || {

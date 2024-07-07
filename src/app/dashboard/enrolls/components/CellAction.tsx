@@ -1,6 +1,6 @@
 "use client";
 
-import { Edit, MoreHorizontal, Trash } from "lucide-react";
+import {  CircleDollarSign, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -42,6 +42,10 @@ const CellAction = ({ data }: props) => {
     }
   };
 
+  const makePayment = (enrollmentId: number)=> {
+    router.push(`/dashboard/enrolls/${enrollmentId}/payments`)
+  }
+
   return (
     <>
       <Modal
@@ -61,6 +65,13 @@ const CellAction = ({ data }: props) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem
+            disabled={loading}
+            onClick={() => makePayment(data.id)}
+            className="cursor-pointer"
+          >
+            <CircleDollarSign className="w-4 h-4 mr-2" /> Make payment
+          </DropdownMenuItem>
           <DropdownMenuItem
             disabled={loading}
             onClick={() => onUpdate(data.id)}

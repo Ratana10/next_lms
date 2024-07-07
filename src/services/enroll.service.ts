@@ -127,6 +127,8 @@ export async function getEnrollById(enrollId: number) {
     }
   );
   const data = await res.json();
-
-  return data;
+  const enroll = data.data;
+  return {
+    enroll
+  };
 }

@@ -10,7 +10,6 @@ const ScheduleIdPage = async ({
 }) => {
   const courses: Course[] = await getCoursesList();
   const data =  await getScheduleById(parseInt(params.scheduleId));
-  console.table(data.data);
   return <ScheduleForm initialize={data.data} courses={courses} />;
 };
 

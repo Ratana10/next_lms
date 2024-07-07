@@ -20,3 +20,17 @@ export async function getAllPayments(page: number) {
 
   return await res.json();
 }
+
+export async function createPayment(payment: z.infer<typeof paymentSchema>) {
+  const token = await getToken();
+  const res = await fetch(`${process.env.API_BASE_URL}/api/v1/payments`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payment),
+  });
+
+  return await res.json();
+}

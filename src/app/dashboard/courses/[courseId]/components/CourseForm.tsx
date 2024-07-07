@@ -50,7 +50,6 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  console.table(initialize);
 
   const form = useForm<z.infer<typeof courseSchema>>({
     resolver: zodResolver(courseSchema),

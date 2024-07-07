@@ -6,7 +6,6 @@ import { Response } from "@/types/Pagination";
 
 const PaymentPage = async () => {
   const data : Response<Payment[]> = await getAllPayments(1);
-  console.log(data);
 
   const payments : Payment[]  = data.data;
 
