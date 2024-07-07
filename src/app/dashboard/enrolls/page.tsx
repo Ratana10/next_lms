@@ -14,8 +14,8 @@ const EnrollPage = async ({
   };
 }) => {
   const currentPage = Number(searchParams?.page || 1);
-
-  const data = await getAllEnrolls(currentPage);
+  const search = searchParams?.search || "";
+  const data = await getAllEnrolls(currentPage, search);
 
   const formattedEnrolls = data.data.map((e: Enroll, index: number) => ({
     id: e.id,

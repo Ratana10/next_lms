@@ -4,13 +4,11 @@ import { getToken } from "@/lib/session";
 import { enrollSchema } from "@/schema/definition";
 import { z } from "zod";
 
-export async function getAllEnrolls(page: number) {
+export async function getAllEnrolls(page: number, search: string) {
   let size = 10;
   const token = await getToken();
   const res = await fetch(
-    `${process.env.API_BASE_URL}/api/v1/enrollments?size=${size}&page=${
-      page || 1
-    }`,
+    `${process.env.API_BASE_URL}/api/v1/enrollments?size=${size}&page=${page}&search=${search}`,
     {
       method: "GET",
       headers: {
@@ -99,19 +97,19 @@ export async function deleteEnroll(enrollId: number) {
 }
 
 
-// export async function getEnrollById(enrollId: number) {
-//   const token = await getToken();
-//   const res = await fetch(
-//     `${process.env.API_BASE_URL}/api/v1/enrollments/${enrollId}`,
-//     {
-//       method: "GET",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${token}`,
-//       },
-//     }
-//   );
-//   const data = await res.json();
+export async function getEnrollById(enrollId: number) {
+  const token = await getToken();
+  const res = await fetch(
+    `${process.env.API_BASE_URL}/api/v1/enrollments/${enrollId}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const data = await res.json();
 
-//   return data;
-// }
+  return data;
+}

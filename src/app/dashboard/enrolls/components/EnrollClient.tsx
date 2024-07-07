@@ -9,7 +9,7 @@ import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { columns } from "./columns";
-import {   Enroll, Schedule } from "@/types";
+import {   Enroll } from "@/types";
 import PaginationSection from "@/components/PaginationSection";
 import { Pagination } from "@/types/Pagination";
 
@@ -43,6 +43,7 @@ const EnrollClient = ({ enrolls, pagination }: EnrollClientProp) => {
         </Button>
       </div>
       <Separator />
+      <Search placeholder="Search student name ..." />
       <DataTable columns={columns} data={enrolls} />
 
       <PaginationSection
