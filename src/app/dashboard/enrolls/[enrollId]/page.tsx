@@ -4,13 +4,12 @@ import EnrollForm from "./components/EnrollForm";
 import { getStudentsList } from "@/services/student.service";
 import { Option } from "@/components/ui/multiple-selector";
 import { getEnrollById } from "@/services/enroll.service";
-import { Enroll } from "@/types";
 
 const EnrollIdPage = async ({ params }: { params: { enrollId: string } }) => {
   const coursesData = await getCoursesList();
   const studentData = await getStudentsList();
-  const {enroll} = await getEnrollById(parseInt(params.enrollId));
-  
+  const { enroll } = await getEnrollById(parseInt(params.enrollId));
+
   const coursesOption: Option[] = coursesData.map((e: any, index: number) => ({
     label: e.name,
     value: e.id.toString(),
@@ -18,10 +17,9 @@ const EnrollIdPage = async ({ params }: { params: { enrollId: string } }) => {
     price: e.price,
   }));
 
-
-  var newData;
+  var newFormatted;
   if (enroll != null) {
-    newData = {
+    newFormatted = {
       studentId: enroll.student?.id.toString(),
       courses: enroll.courses?.map((e: any, index: number) => ({
         label: e.name,
@@ -36,7 +34,7 @@ const EnrollIdPage = async ({ params }: { params: { enrollId: string } }) => {
 
   return (
     <EnrollForm
-      initialize={newData}
+      initialize={newFormatted}
       students={studentData}
       coursesOption={coursesOption}
     />

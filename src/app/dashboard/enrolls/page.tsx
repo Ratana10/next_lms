@@ -1,9 +1,9 @@
-import { getAllEnrolls } from "@/services/enroll.service";
+import { getAllEnrolls, getPaymentsByEnrollId } from "@/services/enroll.service";
 import React from "react";
 import EnrollClient from "./components/EnrollClient";
-import { Response } from "@/types/Pagination";
 import { Enroll } from "@/types";
 import { format } from "date-fns";
+import { formattedDate } from "@/lib/formatted";
 
 const EnrollPage = async ({
   searchParams,
@@ -20,6 +20,7 @@ const EnrollPage = async ({
 
   const {enrolls, pagination} = await getAllEnrolls({page, search, status});
 
+
   const formattedEnrolls = enrolls.map((e: Enroll, index: number) => ({
     id: e.id,
     no: index + 1,
@@ -28,10 +29,8 @@ const EnrollPage = async ({
     remain: e.remain,
     status: e.status,
     date: e.date,
-    createdAt: format(new Date(e.createdAt), "yyyy-MM-dd"),
-    updatedAt: e.updatedAt
-      ? format(new Date(e.updatedAt), "yyyy-MM-dd")
-      : "...",
+    createdAt: formattedDate(e.createdAt),
+    updatedAt: formattedDate(e.updatedAt)
   }));
   return (
     <EnrollClient enrolls={formattedEnrolls} pagination={pagination} />

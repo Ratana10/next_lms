@@ -3,7 +3,7 @@
 import { DataTable } from "@/components/DataTable";
 import Heading from "@/components/Heading";
 import PaginationSection from "@/components/PaginationSection";
-import {  Student } from "@/types";
+import { Student } from "@/types";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -43,7 +43,9 @@ const StudentClient = ({ students, pagination }: StudentClientProp) => {
         </Button>
       </div>
       <Separator />
-      <Search placeholder="Search..." />
+      <div>
+        <Search placeholder="Search..." />
+      </div>
       <DataTable columns={columns} data={students} />
 
       <PaginationSection

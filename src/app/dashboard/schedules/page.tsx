@@ -3,8 +3,8 @@ import {  Schedule } from '@/types'
 import React from 'react'
 import ScheduleClient from './components/ScheduleClient'
 import { format } from 'date-fns'
-import { formatTimeTo12Hour } from '@/lib/formatTimeTo12Hour'
 import { Response } from '@/types/Pagination'
+import { formatTimeTo12Hour } from '@/lib/formatted'
 
 
 const SchedulePage = async () => {

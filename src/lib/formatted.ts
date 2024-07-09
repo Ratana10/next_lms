@@ -8,3 +8,9 @@ export const formatTimeTo12Hour = (time: string) => {
   date.setSeconds(seconds)
   return format(date, 'hh:mm a');
 }
+
+export const formattedDate = (date: string) => {
+  return date
+      ? format(new Date(date), "yyyy-MM-dd")
+      : "...";
+}

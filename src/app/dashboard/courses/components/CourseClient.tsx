@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React from "react";
 import { columns } from "./columns";
 import { Course } from "@/types";
 import PaginationSection from "@/components/PaginationSection";
@@ -43,7 +42,9 @@ const CourseClient = ({ courses, pagination }: CourseClientProp) => {
         </Button>
       </div>
       <Separator />
-      <Search placeholder="Search..." />
+      <div>
+        <Search placeholder="Search..." />
+      </div>
       <DataTable columns={columns} data={courses} />
 
       <PaginationSection

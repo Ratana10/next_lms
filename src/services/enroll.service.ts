@@ -124,6 +124,24 @@ export async function getEnrollById(enrollId: number) {
   );
   const data = await res.json();
   return {
-    enroll: data.enroll,
+    enroll: data.data,
   };
+}
+
+
+export async function getPaymentsByEnrollId(enrollId: number) {
+  const token = await getToken();
+  const res = await fetch(`${process.env.API_BASE_URL}/api/v1/enrollments/${enrollId}/payments`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data  =await res.json();
+
+  return {
+    payments: data.data
+  }
 }

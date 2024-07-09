@@ -1,14 +1,27 @@
-import { getEnrollById } from "@/services/enroll.service";
-import EnrollPaymentForm from "./components/EnrollPaymentForm";
+import { getPaymentsByEnrollId } from "@/services/enroll.service";
+import React from "react";
+import EnrollPaymentClient from "./components/EnrollPaymentClient";
+import { Payment } from "@/types";
+import { formattedDate } from "@/lib/formatted";
 
-const EnrollPaymentpage = async ({
+const EnrollPaymentPage = async ({
   params,
 }: {
   params: { enrollId: string };
 }) => {
-  const { enroll } = await getEnrollById(parseInt(params.enrollId));
+  const enrollId = Number(params.enrollId);
 
-  return <EnrollPaymentForm initialize={enroll} />;
+  const { payments } = await getPaymentsByEnrollId(enrollId);
+
+  const formattedPayments = payments.map((e: Payment, index: number) => ({
+    no: index + 1,
+    id: e.id,
+    amount: e.amount,
+    date: formattedDate(e.date),
+    createdAt: formattedDate(e.createdAt),
+    updatedAt: formattedDate(e.updatedAt),
+  }));
+  return <EnrollPaymentClient payments={formattedPayments} />;
 };
 
-export default EnrollPaymentpage;
+export default EnrollPaymentPage;
