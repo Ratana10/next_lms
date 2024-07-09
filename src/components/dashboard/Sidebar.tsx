@@ -1,28 +1,13 @@
-import Link from "next/link";
-import {
-  Bell,
-  CircleUser,
-  Home,
-  LineChart,
-  Menu,
-  Package,
-  Package2,
-  Search,
-  ShoppingCart,
-  Users,
-} from "lucide-react";
+"use client";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import Link from "next/link";
+import { Home, Package2 } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const Sidebar = () => {
+  const pathname = usePathname();
+
   const navs = [
     {
       href: "/dashboard/categories",
@@ -60,6 +45,7 @@ const Sidebar = () => {
       icon: <Home />,
     },
   ];
+  console.log("pathname", pathname);
   return (
     <div className="hidden border-r bg-muted/40 md:block">
       <div className="flex h-full max-h-screen flex-col gap-2">
@@ -75,7 +61,10 @@ const Sidebar = () => {
               <Link
                 key={nav.href}
                 href={nav.href}
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                className={cn(
+                  "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
+                  pathname.includes(nav.href) ? "bg-slate-300" : ""
+                )}
               >
                 {nav.icon}
                 {nav.label}
