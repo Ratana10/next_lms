@@ -18,23 +18,12 @@ export async function getAllEnrolls(page: number, search: string) {
     }
   );
 
-  return await res.json();
-}
+  const data = await res.json();
 
-export async function getListEnroll() {
-  const token = await getToken();
-  const res = await fetch(
-    `${process.env.API_BASE_URL}/api/v1/enrollments?all=true`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-
-  return await res.json();
+  return{
+    enrolls: data.data,
+    pagination: data.pagination
+  }
 }
 
 
@@ -64,9 +53,12 @@ export async function createEnroll(enroll: z.infer<typeof enrollSchema>) {
     throw new Error(data.message);
   }
 
-  return data;
+  return {
+    data: data.data
+  };
 }
 
+// TODO latter
 export async function updateEnroll(
   enrollId: number,
   enroll: z.infer<typeof enrollSchema>
@@ -109,8 +101,6 @@ export async function deleteEnroll(enrollId: number) {
   if (!res.ok) {
     throw new Error(data.message);
   }
-
-  return data;
 }
 
 
@@ -127,8 +117,7 @@ export async function getEnrollById(enrollId: number) {
     }
   );
   const data = await res.json();
-  const enroll = data.data;
   return {
-    enroll
+    enroll: data.enroll
   };
 }

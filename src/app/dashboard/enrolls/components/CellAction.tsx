@@ -1,6 +1,6 @@
 "use client";
 
-import {  CircleDollarSign, Edit, MoreHorizontal, Trash } from "lucide-react";
+import { CircleDollarSign, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,7 +9,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {  Enroll } from "@/types";
+import { Enroll } from "@/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -42,9 +42,9 @@ const CellAction = ({ data }: props) => {
     }
   };
 
-  const makePayment = (enrollmentId: number)=> {
-    router.push(`/dashboard/enrolls/${enrollmentId}/payments`)
-  }
+  const makePayment = (enrollmentId: number) => {
+    router.push(`/dashboard/enrolls/${enrollmentId}/payments`);
+  };
 
   return (
     <>
@@ -65,13 +65,16 @@ const CellAction = ({ data }: props) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem
-            disabled={loading}
-            onClick={() => makePayment(data.id)}
-            className="cursor-pointer"
-          >
-            <CircleDollarSign className="w-4 h-4 mr-2" /> Make payment
-          </DropdownMenuItem>
+          {data.status !== "PAID" && (
+            <DropdownMenuItem
+              disabled={loading}
+              onClick={() => makePayment(data.id)}
+              className="cursor-pointer"
+            >
+              <CircleDollarSign className="w-4 h-4 mr-2" /> Make payment
+            </DropdownMenuItem>
+          )}
+
           <DropdownMenuItem
             disabled={loading}
             onClick={() => onUpdate(data.id)}

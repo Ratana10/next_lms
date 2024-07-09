@@ -15,9 +15,9 @@ const EnrollPage = async ({
 }) => {
   const currentPage = Number(searchParams?.page || 1);
   const search = searchParams?.search || "";
-  const data = await getAllEnrolls(currentPage, search);
+  const {enrolls, pagination} = await getAllEnrolls(currentPage, search);
 
-  const formattedEnrolls = data.data.map((e: Enroll, index: number) => ({
+  const formattedEnrolls = enrolls.map((e: Enroll, index: number) => ({
     id: e.id,
     no: index + 1,
     student: e.student?.lastname + " " + e.student?.firstname,
@@ -31,7 +31,7 @@ const EnrollPage = async ({
       : "...",
   }));
   return (
-    <EnrollClient enrolls={formattedEnrolls} pagination={data.pagination} />
+    <EnrollClient enrolls={formattedEnrolls} pagination={pagination} />
   );
 };
 

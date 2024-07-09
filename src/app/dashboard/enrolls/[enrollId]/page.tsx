@@ -9,7 +9,7 @@ import { Enroll } from "@/types";
 const EnrollIdPage = async ({ params }: { params: { enrollId: string } }) => {
   const coursesData = await getCoursesList();
   const studentData = await getStudentsList();
-  const data = await getEnrollById(parseInt(params.enrollId));
+  const {enroll} = await getEnrollById(parseInt(params.enrollId));
   
   const coursesOption: Option[] = coursesData.map((e: any, index: number) => ({
     label: e.name,
@@ -19,7 +19,6 @@ const EnrollIdPage = async ({ params }: { params: { enrollId: string } }) => {
   }));
 
 
-  const enroll: Enroll = data.data;
   var newData;
   if (enroll != null) {
     newData = {
