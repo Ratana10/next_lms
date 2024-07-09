@@ -32,9 +32,9 @@ const PaymentClient = ({ payments, pagination }: PaymentClientProp) => {
   return (
     <>
       <div className="flex justify-between">
-      <Heading title="Payments" descritpion="Manage payments" />
+        <Heading title="Payments" descritpion="Manage payments" />
       </div>
-      <Separator className="my-4" />
+      <Separator />
       <DataTable data={payments} columns={columns} />
       <PaginationSection
         isLast={pagination.last}
