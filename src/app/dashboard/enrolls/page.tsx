@@ -11,11 +11,14 @@ const EnrollPage = async ({
   searchParams?: {
     search?: string;
     page?: string;
+    status: string;
   };
 }) => {
-  const currentPage = Number(searchParams?.page || 1);
+  const page = Number(searchParams?.page || 1);
   const search = searchParams?.search || "";
-  const {enrolls, pagination} = await getAllEnrolls(currentPage, search);
+  const status = searchParams?.status || "";
+
+  const {enrolls, pagination} = await getAllEnrolls({page, search, status});
 
   const formattedEnrolls = enrolls.map((e: Enroll, index: number) => ({
     id: e.id,

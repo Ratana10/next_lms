@@ -4,11 +4,19 @@ import { getToken } from "@/lib/session";
 import { enrollSchema } from "@/schema/definition";
 import { z } from "zod";
 
-export async function getAllEnrolls(page: number, search: string) {
+export async function getAllEnrolls({
+  page,
+  search,
+  status,
+}: {
+  page: number;
+  search: string;
+  status: string;
+}) {
   let size = 10;
   const token = await getToken();
   const res = await fetch(
-    `${process.env.API_BASE_URL}/api/v1/enrollments?size=${size}&page=${page}&search=${search}`,
+    `${process.env.API_BASE_URL}/api/v1/enrollments?size=${size}&page=${page}&search=${search}&status=${status}`,
     {
       method: "GET",
       headers: {
@@ -20,12 +28,11 @@ export async function getAllEnrolls(page: number, search: string) {
 
   const data = await res.json();
 
-  return{
+  return {
     enrolls: data.data,
-    pagination: data.pagination
-  }
+    pagination: data.pagination,
+  };
 }
-
 
 export async function createEnroll(enroll: z.infer<typeof enrollSchema>) {
   const token = await getToken();
@@ -35,8 +42,8 @@ export async function createEnroll(enroll: z.infer<typeof enrollSchema>) {
     studentId: enroll.studentId,
     date: enroll.date,
     amount: enroll.amount,
-    courseIds
-  } 
+    courseIds,
+  };
 
   const res = await fetch(`${process.env.API_BASE_URL}/api/v1/enrollments`, {
     method: "POST",
@@ -54,7 +61,7 @@ export async function createEnroll(enroll: z.infer<typeof enrollSchema>) {
   }
 
   return {
-    data: data.data
+    data: data.data,
   };
 }
 
@@ -103,7 +110,6 @@ export async function deleteEnroll(enrollId: number) {
   }
 }
 
-
 export async function getEnrollById(enrollId: number) {
   const token = await getToken();
   const res = await fetch(
@@ -118,6 +124,6 @@ export async function getEnrollById(enrollId: number) {
   );
   const data = await res.json();
   return {
-    enroll: data.enroll
+    enroll: data.enroll,
   };
 }
