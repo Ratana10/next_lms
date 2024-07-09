@@ -30,7 +30,6 @@ import { loginSchema } from "@/schema/definition";
 export function LoginForm() {
   const [errors, setErrors] = useState(null);
 
-
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -40,10 +39,12 @@ export function LoginForm() {
   });
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    await login(values);
+    try {
+      await login(values);
+    } catch (error) {}
   }
 
-  function handleClearErrors(){
+  function handleClearErrors() {
     setErrors(null);
   }
 
@@ -54,7 +55,7 @@ export function LoginForm() {
           <CardHeader>
             <CardTitle className="text-2xl">Login</CardTitle>
             <CardDescription>
-              Enter your email below to login to your account.
+              Enter your username below to login to your account.
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
@@ -66,7 +67,7 @@ export function LoginForm() {
                   <FormItem onClick={handleClearErrors}>
                     <FormLabel>Username</FormLabel>
                     <FormControl>
-                      <Input placeholder="username" {...field} />
+                      <Input autoFocus placeholder="username" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -92,9 +93,7 @@ export function LoginForm() {
               <Alert variant="destructive">
                 <ExclamationTriangleIcon className="h-4 w-4" />
                 <AlertTitle>Invalid</AlertTitle>
-                <AlertDescription>
-                  {errors}
-                </AlertDescription>
+                <AlertDescription>{errors}</AlertDescription>
               </Alert>
             ) : (
               ""

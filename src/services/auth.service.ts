@@ -4,17 +4,32 @@ import {z} from "zod";
 import { signIn } from "@/auth";
 import { loginSchema } from "@/schema/definition";
 import { LoginRequest, RegisterRequest } from "@/types";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { AuthError } from "next-auth";
 
 export async function login(values: z.infer<typeof loginSchema>) {
-    await signIn('credentials',{
-        redirect: true,
-        redirectTo: '/dashboard',
-        username: values.username,
-        password: values.password
-    })
+    try {
+        await signIn('credentials',{
+            redirect: true,
+            redirectTo: DEFAULT_LOGIN_REDIRECT,
+            username: values.username,
+            password: values.password
+        })
+    } catch (error) {
+        if(error instanceof AuthError){
+            switch(error.type){
+                case "CredentialsSignin": 
+                return {
+                    error: "Invalid creditails!"
+                }
+                default:
+                    return {error: "Something went wrong!"}
+            }
+        }
+        throw error;
+    }
+    
 }
-
-
 
 export async function loginService(loginRequest: LoginRequest){
     const res = await fetch(`${process.env.API_BASE_URL}/api/v1/auth/login`, {
