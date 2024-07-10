@@ -89,3 +89,14 @@ export type Payment = {
     updatedAt: string,
     enrollment?: Enroll,
 }
+
+
+export type Account = {
+    id: number,
+    firstname: string,
+    lastname: string,
+    username: string,
+    role: string,
+    createdAt: string,
+    updatedAt: string,
+}

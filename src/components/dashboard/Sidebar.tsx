@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Home, Package2 } from "lucide-react";
+import { DollarSign, Home, Package2, User } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -42,7 +42,12 @@ const Sidebar = () => {
     {
       href: "/dashboard/payments",
       label: "Payments",
-      icon: <Home />,
+      icon: <DollarSign />,
+    },
+    {
+      href: "/dashboard/accounts",
+      label: "Accounts",
+      icon: <User />,
     },
   ];
   console.log("pathname", pathname);
