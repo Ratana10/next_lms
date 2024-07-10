@@ -29,16 +29,13 @@ export async function getAllCourses(page: number, search: string) {
 
 export async function getCoursesList() {
   const token = await getToken();
-  const res = await fetch(
-    `${process.env.API_BASE_URL}/api/v1/courses/all`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const res = await fetch(`${process.env.API_BASE_URL}/api/v1/courses/all`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   const data = await res.json();
 
@@ -131,4 +128,27 @@ export async function deleteCourse(courseId: number) {
   }
 
   return data;
+}
+
+export async function getStudentsEnrollCourseId(courseId: number) {
+  const token = await getToken();
+  const res = await fetch(
+    `${process.env.API_BASE_URL}/api/v1/courses/${courseId}/students`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+
+  return {
+    students: data.data,
+  };
 }

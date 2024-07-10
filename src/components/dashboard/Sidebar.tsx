@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { DollarSign, Home, Package2, User } from "lucide-react";
+import { ClipboardCheck, DollarSign, Home, Package2, User } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -43,6 +43,11 @@ const Sidebar = () => {
       href: "/dashboard/payments",
       label: "Payments",
       icon: <DollarSign />,
+    },
+    {
+      href: "/dashboard/attendances",
+      label: "Attendances",
+      icon: <ClipboardCheck />,
     },
     {
       href: "/dashboard/accounts",

@@ -100,3 +100,27 @@ export type Account = {
     createdAt: string,
     updatedAt: string,
 }
+
+export type AttendanceData= {
+    PRESENT: number[],
+    ABSENT: number[],
+    PERMISSION: number[],
+}
+
+export type AttendanceRequest= {
+    courseId: number,
+    date: Date | undefined,
+    attendance: AttendanceData,
+}
+
+export type AttendanceDetail = {
+    id: number,
+    student: Student,
+    status: string,
+}
+
+export type Attendance = {
+    course?: Course,
+    date: Date | undefined,
+    attendantDetail?: AttendanceDetail
+}
