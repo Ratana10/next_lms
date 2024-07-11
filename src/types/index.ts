@@ -120,7 +120,8 @@ export type AttendanceDetail = {
 }
 
 export type Attendance = {
-    course?: Course,
-    date: Date | undefined,
-    attendantDetail?: AttendanceDetail
+    id: number,
+    courseName: string,
+    date: string ,
+    attendanceDetails: AttendanceDetail[]
 }

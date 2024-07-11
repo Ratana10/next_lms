@@ -1,6 +1,6 @@
-import { getStudentsEnrollCourseId } from "@/services/course.service";
-import StudentClient from "./components/StudentClient";
-import { Student } from "@/types";
+import React from "react";
+import AttendanceCourseStudentClient from "./components/AttendanceCourseStudentClient";
+import { getAttendanceByCourse } from "@/services/attendance.service";
 
 const AttendanceCourseStudentPage = async ({
   params,
@@ -8,17 +8,24 @@ const AttendanceCourseStudentPage = async ({
   params: { courseId: string };
 }) => {
   const courseId = Number(params.courseId);
-  const { students } = await getStudentsEnrollCourseId(courseId);
+  const { attendances } = await getAttendanceByCourse(courseId);
 
-  const formattedStudents = students.map((e: Student, index: number) => ({
-    id: e.id,
-    no: index + 1,
-    firstname: e.firstname,
-    lastname: e.lastname,
-    gender: e.gender,
-  }));
+  // test data
+  let index = 1;
+  attendances.forEach((att: any) => {
+    att.attendanceDetails.forEach((detail: any) => {
+      console.log(
+        index++,
+        detail.student.firstname +
+          detail.student.lastname +
+          detail.student.gender +
+          detail.status +
+          att.date
+      );
+    });
+  });
 
-  return <StudentClient students={formattedStudents} />;
+  return <AttendanceCourseStudentClient data={attendances} />;
 };
 
 export default AttendanceCourseStudentPage;

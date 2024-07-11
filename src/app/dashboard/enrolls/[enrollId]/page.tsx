@@ -6,11 +6,11 @@ import { Option } from "@/components/ui/multiple-selector";
 import { getEnrollById } from "@/services/enroll.service";
 
 const EnrollIdPage = async ({ params }: { params: { enrollId: string } }) => {
-  const coursesData = await getCoursesList();
+  const {courses} = await getCoursesList();
   const studentData = await getStudentsList();
   const { enroll } = await getEnrollById(parseInt(params.enrollId));
 
-  const coursesOption: Option[] = coursesData.map((e: any, index: number) => ({
+  const coursesOption: Option[] = courses.map((e: any, index: number) => ({
     label: e.name,
     value: e.id.toString(),
     diable: false,

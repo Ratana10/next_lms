@@ -29,7 +29,7 @@ export async function getAllCourses(page: number, search: string) {
 
 export async function getCoursesList() {
   const token = await getToken();
-  const res = await fetch(`${process.env.API_BASE_URL}/api/v1/courses/all`, {
+  const res = await fetch(`${process.env.API_BASE_URL}/api/v1/courses?all=true`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -43,7 +43,10 @@ export async function getCoursesList() {
     throw new Error(data.message);
   }
 
-  return data;
+  return {
+    courses: data.data,
+    pagination: data.pagination
+  };
 }
 
 export async function createCourse(course: z.infer<typeof courseSchema>) {

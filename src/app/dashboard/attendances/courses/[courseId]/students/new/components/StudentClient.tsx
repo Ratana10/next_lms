@@ -19,13 +19,15 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { createAttendance } from "@/services/attendance.service";
 import { columns } from "./columns";
+import toast from "react-hot-toast";
 
 export const attendanceStatus = ["PRESENT", "PERMISSION", "ABSENT"];
 
 interface StudentClientProp {
+  courseId: number;
   students: Student[];
 }
-const StudentClient = ({ students }: StudentClientProp) => {
+const StudentClient = ({ courseId, students }: StudentClientProp) => {
   const router = useRouter();
   const [date, setDate] = useState<Date>();
   const [attendanceData, setAttendanceData] = useState<{
@@ -65,12 +67,17 @@ const StudentClient = ({ students }: StudentClientProp) => {
 
   const onCreate = async () => {
     const data = {
-      courseId: 1,
+      courseId: courseId,
       date: date,
       attendance: attendanceData,
     };
-    console.log("test data", data);
+    try {
     await createAttendance(data);
+      router.push("/dashboard/attendances")
+      router.refresh();
+    } catch (error: any) {
+      toast.error(error);
+    }
   };
 
   return (
