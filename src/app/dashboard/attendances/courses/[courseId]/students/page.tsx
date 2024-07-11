@@ -10,15 +10,23 @@ const AttendanceCourseStudentPage = async ({
   params: { courseId: string };
   searchParams?: {
     page?: string;
+    startDate?: string;
+    endDate?: string;
   };
 }) => {
   const page = Number(searchParams?.page || 1);
+  const startDate = searchParams?.startDate || "";
+  const endDate = searchParams?.endDate || "";
+
   const courseId = Number(params.courseId);
+  
   const { attendances } = await getAttendanceByCourse(courseId);
 
   const { attendanceDetails, pagination } = await getAttendanceDetailByCourse(
     courseId,
-    page
+    page,
+    startDate,
+    endDate
   );
 
   return (

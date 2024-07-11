@@ -15,17 +15,15 @@ export async function createAttendance(value: any) {
   });
   const data = await res.json();
 
-  if(!res.ok) throw new Error(data.message)
-  
+  if (!res.ok) throw new Error(data.message);
 
   return {
-    data
-  }
+    data,
+  };
 }
 
 export async function getAttendanceByCourse(courseId: number) {
   const token = await getToken();
-
   const res = await fetch(
     `${process.env.API_BASE_URL}/api/v1/attendances?courseId=${courseId}`,
     {
@@ -38,8 +36,8 @@ export async function getAttendanceByCourse(courseId: number) {
   );
   const data = await res.json();
 
-  if(!res.ok) throw new Error(data.message)
-    return {
-      attendances: data.data
-  }
+  if (!res.ok) throw new Error(data.message);
+  return {
+    attendances: data.data,
+  };
 }

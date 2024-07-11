@@ -8,12 +8,13 @@ import { Attendance, AttendanceDetail } from "@/types";
 import BackButton from "@/components/BackButton";
 import { Pagination } from "@/types/Pagination";
 import PaginationSection from "@/components/PaginationSection";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getNoNumber } from "@/lib/utils";
 import { formattedDate } from "@/lib/formatted";
 import { DatePickerWithRange } from "@/components/DatePickerWithRange";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
+import { format } from "date-fns";
 
 interface AttendanceCourseStudentPageProp {
   data: Attendance[];
@@ -27,9 +28,35 @@ const AttendanceCourseStudentClient = ({
   pagination,
 }: AttendanceCourseStudentPageProp) => {
   const router = useRouter();
-  const  pathname = usePathname();
-  const [date, setDate] = useState<DateRange | undefined>();
-  
+  const pathname = usePathname();
+
+  const searchParams = useSearchParams();
+
+  const initialStartDate = searchParams.get("startDate")
+    ? new Date(searchParams.get("startDate")!)
+    : undefined;
+  const initialEndDate = searchParams.get("endDate")
+    ? new Date(searchParams.get("endDate")!)
+    : undefined;
+
+  const [date, setDate] = useState<DateRange | undefined>({
+    from: initialStartDate,
+    to: initialEndDate,
+  });
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+
+    if (date?.from && date?.to) {
+      searchParams.set("startDate", format(date.from, "yyyy-MM-dd"));
+      searchParams.set("endDate", format(date.to, "yyyy-MM-dd"));
+    } else {
+      searchParams.delete("startDate");
+      searchParams.delete("endDate");
+    }
+
+    router.push(`${pathname}?${searchParams.toString()}`);
+  }, [date, router]);
 
   const formatted = attendanceDetails.map(
     (detail: AttendanceDetail, index: number) => ({
