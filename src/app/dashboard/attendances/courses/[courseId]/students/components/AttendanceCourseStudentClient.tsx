@@ -4,7 +4,7 @@ import { DataTable } from "@/components/DataTable";
 import Heading from "@/components/Heading";
 import { Separator } from "@/components/ui/separator";
 import { columns } from "./columns";
-import { Attendance, AttendanceDetail } from "@/types";
+import { Attendance, AttendanceDetail, Course } from "@/types";
 import BackButton from "@/components/BackButton";
 import { Pagination } from "@/types/Pagination";
 import PaginationSection from "@/components/PaginationSection";
@@ -17,13 +17,13 @@ import { DateRange } from "react-day-picker";
 import { format } from "date-fns";
 
 interface AttendanceCourseStudentPageProp {
-  data: Attendance[];
+  attendances: Attendance[];
   attendanceDetails: AttendanceDetail[];
   pagination: Pagination;
 }
 
 const AttendanceCourseStudentClient = ({
-  data,
+  attendances,
   attendanceDetails,
   pagination,
 }: AttendanceCourseStudentPageProp) => {
@@ -32,17 +32,19 @@ const AttendanceCourseStudentClient = ({
 
   const searchParams = useSearchParams();
 
-  const initialStartDate = searchParams.get("startDate")
-    ? new Date(searchParams.get("startDate")!)
-    : undefined;
-  const initialEndDate = searchParams.get("endDate")
-    ? new Date(searchParams.get("endDate")!)
-    : undefined;
+  // const initialStartDate = searchParams.get("startDate")
+  //   ? new Date(searchParams.get("startDate")!)
+  //   : new Date();
+  // const initialEndDate = searchParams.get("endDate")
+  //   ? new Date(searchParams.get("endDate")!)
+  //   : new Date();
 
-  const [date, setDate] = useState<DateRange | undefined>({
-    from: initialStartDate,
-    to: initialEndDate,
-  });
+  // const [date, setDate] = useState<DateRange | undefined>({
+  //   from: new Date(),
+  //   to: new Date(),
+  // });
+
+  const [date, setDate] = useState<DateRange | undefined>();
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -87,11 +89,11 @@ const AttendanceCourseStudentClient = ({
       <BackButton href="/dashboard/attendances" text="Back" />
       <div className="flex justify-between">
         <Heading
-          title={`${data[0].courseName}`}
+          title={`${attendances[0].courseName}`}
           descritpion="List of student's attendance"
         />
         {/* Date Picker Range */}
-        <DatePickerWithRange date={date} setDate={setDate} />
+        <DatePickerWithRange placeholder="Pick date" date={date} setDate={setDate} />
       </div>
       <Separator />
       {/* Display attendance-details */}

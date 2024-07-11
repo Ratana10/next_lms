@@ -3,6 +3,7 @@ import React from 'react'
 import { Course } from '@/types';
 import { formattedDate } from '@/lib/formatted';
 import AttendanceClient from './components/AttendanceClient';
+import { formattedFullname } from '@/lib/utils';
 
 const AttendancePage = async () => {
   const {courses, pagination}=await getCoursesList();
@@ -12,10 +13,7 @@ const AttendancePage = async () => {
     no: index+1,
     name: e.name,
     price: e.price,
-    teacher:
-      e.teacher?.firstname && e.teacher?.lastname
-        ? e.teacher?.firstname + " " + e.teacher?.lastname
-        : "N/A",
+    teacher: formattedFullname(e.teacher?.lastname, e.teacher?.firstname),
     createdAt: formattedDate(e.createdAt),
     updatedAt: formattedDate(e.createdAt)
   }));

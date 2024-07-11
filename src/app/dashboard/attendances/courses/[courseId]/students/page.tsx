@@ -29,9 +29,11 @@ const AttendanceCourseStudentPage = async ({
     endDate
   );
 
+  if(!attendances || attendances.length === 0) return;
+
   return (
     <AttendanceCourseStudentClient
-      data={attendances}
+      attendances={attendances}
       attendanceDetails={attendanceDetails}
       pagination={pagination}
     />

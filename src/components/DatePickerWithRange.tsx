@@ -17,9 +17,10 @@ interface DatePickerWithRangeProps {
   className?: React.HTMLAttributes<HTMLDivElement>;
   date: DateRange | undefined;
   setDate: React.Dispatch<React.SetStateAction<DateRange | undefined>>;
+  placeholder: string;
 }
 export function DatePickerWithRange({
-  className, date, setDate
+  className, date, setDate, placeholder
 }: DatePickerWithRangeProps) {
 
   return (
@@ -45,7 +46,7 @@ export function DatePickerWithRange({
                 format(date.from, "LLL dd, y")
               )
             ) : (
-              <span>Pick a date</span>
+              <span>{placeholder}</span>
             )}
           </Button>
         </PopoverTrigger>

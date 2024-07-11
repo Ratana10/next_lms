@@ -20,6 +20,7 @@ import { cn } from "@/lib/utils";
 import { createAttendance } from "@/services/attendance.service";
 import { columns } from "./columns";
 import toast from "react-hot-toast";
+import BackButton from "@/components/BackButton";
 
 export const attendanceStatus = ["PRESENT", "PERMISSION", "ABSENT"];
 
@@ -82,6 +83,7 @@ const StudentClient = ({ courseId, students }: StudentClientProp) => {
 
   return (
     <>
+    <BackButton text="Back" href="/dashboard/attendances" />
       <div className="flex justify-between">
         <Heading
           title="Students Attendance"

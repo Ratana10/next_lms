@@ -19,3 +19,11 @@ export const getNoNumber = (
 ) => {
   return (pageNumber - 1) * pageSize + index + 1;
 };
+
+export const formattedFullname = (
+  lastname: string | undefined,
+  firstname: string | undefined
+) => {
+  if (!lastname || !firstname) return "N/A";
+  return lastname + " " + firstname;
+};
