@@ -26,13 +26,17 @@ export const columns: ColumnDef<any>[] = [
     header: "Status",
     cell: ({ row }) => {
       var status: string = row.getValue("status");
-      const badgeClass = cn("font-medium", {
-        "bg-green-600": status === "PRESENT",
-        "bg-yellow-600": status === "PERMISSION",
-        "bg-red-600": status === "ABSENT",
-      });
-
-      return <Badge className={badgeClass}>{status}</Badge>;
+      return (
+        <Badge
+          className={cn("font-medium  text-center inline-block", {
+            "bg-green-600": status === "PRESENT",
+            "bg-yellow-600": status === "PERMISSION",
+            "bg-red-600": status === "ABSENT",
+          })}
+        >
+          {status}
+        </Badge>
+      );
     },
   },
   {
