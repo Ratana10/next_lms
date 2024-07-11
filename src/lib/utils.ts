@@ -27,3 +27,7 @@ export const formattedFullname = (
   if (!lastname || !firstname) return "N/A";
   return lastname + " " + firstname;
 };
+
+export const formattedGender = (gender: string) => {
+  return gender === "MALE" ? "M" : "F"
+}

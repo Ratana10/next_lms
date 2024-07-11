@@ -30,20 +30,6 @@ const AttendanceCourseStudentClient = ({
   const router = useRouter();
   const pathname = usePathname();
 
-  const searchParams = useSearchParams();
-
-  // const initialStartDate = searchParams.get("startDate")
-  //   ? new Date(searchParams.get("startDate")!)
-  //   : new Date();
-  // const initialEndDate = searchParams.get("endDate")
-  //   ? new Date(searchParams.get("endDate")!)
-  //   : new Date();
-
-  // const [date, setDate] = useState<DateRange | undefined>({
-  //   from: new Date(),
-  //   to: new Date(),
-  // });
-
   const [date, setDate] = useState<DateRange | undefined>();
 
   useEffect(() => {
@@ -59,18 +45,6 @@ const AttendanceCourseStudentClient = ({
 
     router.push(`${pathname}?${searchParams.toString()}`);
   }, [date, router]);
-
-  const formatted = attendanceDetails.map(
-    (detail: AttendanceDetail, index: number) => ({
-      no: getNoNumber(index, pagination.pageNumber, pagination.pageSize),
-      id: detail.id,
-      firstname: detail.student.firstname,
-      lastname: detail.student.lastname,
-      gender: detail.student.gender === "MALE" ? "M" : "F",
-      status: detail.status,
-      date: formattedDate(detail.date),
-    })
-  );
 
   const onPreviousPage = () => {
     if (pagination.pageNumber > 1) {
@@ -93,11 +67,15 @@ const AttendanceCourseStudentClient = ({
           descritpion="List of student's attendance"
         />
         {/* Date Picker Range */}
-        <DatePickerWithRange placeholder="Pick date" date={date} setDate={setDate} />
+        <DatePickerWithRange
+          placeholder="Pick date"
+          date={date}
+          setDate={setDate}
+        />
       </div>
       <Separator />
       {/* Display attendance-details */}
-      <DataTable columns={columns} data={formatted} />
+      <DataTable columns={columns} data={attendanceDetails} />
 
       <PaginationSection
         isLast={pagination.last}

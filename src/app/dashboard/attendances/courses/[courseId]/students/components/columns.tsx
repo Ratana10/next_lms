@@ -2,24 +2,28 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { cn, formattedFullname, formattedGender } from "@/lib/utils";
+import { AttendanceDetail } from "@/types";
+import CellAction from "./CellAction";
 
-export const columns: ColumnDef<any>[] = [
+export const columns: ColumnDef<AttendanceDetail>[] = [
   {
     accessorKey: "no",
     header: "NO",
   },
   {
-    accessorKey: "firstname",
-    header: "Firstname",
-  },
-  {
-    accessorKey: "lastname",
-    header: "Lastname",
+    accessorKey: "name",
+    header: "Name",
+    cell: ({ row }) =>
+      formattedFullname(
+        row.original.student.lastname,
+        row.original.student.firstname
+      ),
   },
   {
     accessorKey: "gender",
     header: "Gender",
+    cell: ({ row }) => formattedGender(row.original.student.gender),
   },
   {
     accessorKey: "status",
@@ -42,5 +46,9 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "date",
     header: "Date",
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => <CellAction data={row.original} />,
   },
 ];

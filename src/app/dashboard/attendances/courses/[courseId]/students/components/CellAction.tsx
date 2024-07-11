@@ -9,7 +9,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Course } from "@/types";
+import { AttendanceDetail, Course } from "@/types";
 import { useRouter } from "next/navigation";
 import { deleteCategory } from "@/services/categories.service";
 import { useState } from "react";
@@ -18,7 +18,7 @@ import { Modal } from "@/components/Modal";
 import { deleteCourse } from "@/services/course.service";
 
 interface props {
-  data: Course;
+  data: AttendanceDetail;
 }
 const CellAction = ({ data }: props) => {
   const router = useRouter();
