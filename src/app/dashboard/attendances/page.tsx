@@ -17,7 +17,7 @@ const AttendancePage = async () => {
     createdAt: formattedDate(e.createdAt),
     updatedAt: formattedDate(e.createdAt)
   }));
-
+  
   return (
     <AttendanceClient courses={coursesFormatted} pagination={pagination} />
   )

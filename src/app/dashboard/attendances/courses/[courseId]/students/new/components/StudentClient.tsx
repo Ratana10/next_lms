@@ -2,7 +2,7 @@
 
 import { DataTable } from "@/components/DataTable";
 import Heading from "@/components/Heading";
-import { Student } from "@/types";
+import { AttendanceDetail, Student } from "@/types";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -26,11 +26,11 @@ export const attendanceStatus = ["PRESENT", "PERMISSION", "ABSENT"];
 
 interface StudentClientProp {
   courseId: number;
-  students: Student[];
+  students: AttendanceDetail[];
 }
 const StudentClient = ({ courseId, students }: StudentClientProp) => {
   const router = useRouter();
-  const [date, setDate] = useState<Date>();
+  const [date, setDate] = useState<Date | undefined>(new Date());
   const [attendanceData, setAttendanceData] = useState<{
     [key: string]: number[];
   }>({
@@ -39,7 +39,18 @@ const StudentClient = ({ courseId, students }: StudentClientProp) => {
     PERMISSION: [],
   });
 
+  const [formattedStudents, setFormattedStudents] =
+    useState<AttendanceDetail[]>(students);
+
   const onSelectChange = (studentId: number, status: string) => {
+    setFormattedStudents((prevStudents) =>
+      prevStudents.map((student) => {
+        return student.student.id === studentId
+          ? { ...student, status }
+          : student;
+      })
+    );
+
     setAttendanceData((prevState) => {
       const newState = { ...prevState };
 
@@ -69,13 +80,15 @@ const StudentClient = ({ courseId, students }: StudentClientProp) => {
   const onCreate = async () => {
     const data = {
       courseId: courseId,
-      date: date,
+      date: format(date!, "yyyy-MM-dd"),
       attendance: attendanceData,
     };
+
     try {
-    await createAttendance(data);
-      router.push("/dashboard/attendances")
+      await createAttendance(data);
+      router.push("/dashboard/attendances");
       router.refresh();
+      toast.success("create attendance success")
     } catch (error: any) {
       toast.error(error);
     }
@@ -83,7 +96,7 @@ const StudentClient = ({ courseId, students }: StudentClientProp) => {
 
   return (
     <>
-    <BackButton text="Back" href="/dashboard/attendances" />
+      <BackButton text="Back" href="/dashboard/attendances" />
       <div className="flex justify-between">
         <Heading
           title="Students Attendance"
@@ -112,12 +125,15 @@ const StudentClient = ({ courseId, students }: StudentClientProp) => {
           <Calendar
             mode="single"
             selected={date}
-            onSelect={setDate}
+            onSelect={(value) => setDate(value)}
             initialFocus
           />
         </PopoverContent>
       </Popover>
-      <DataTable columns={columns({ onSelectChange })} data={students} />
+      <DataTable
+        columns={columns({ onSelectChange })}
+        data={formattedStudents}
+      />
     </>
   );
 };

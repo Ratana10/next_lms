@@ -1,6 +1,6 @@
 "use client";
 
-import { Student } from "@/types";
+import { AttendanceDetail, Student } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 
 import {
@@ -19,28 +19,33 @@ interface ColumnsProps {
 }
 export const columns = ({
   onSelectChange,
-}: ColumnsProps): ColumnDef<Student>[] => [
+}: ColumnsProps): ColumnDef<AttendanceDetail>[] => [
   {
     accessorKey: "no",
     header: "NO",
   },
   {
-    accessorKey: "firstname",
+    accessorKey: "student.firstname",
     header: "Firstname",
   },
   {
-    accessorKey: "lastname",
+    accessorKey: "student.lastname",
     header: "Lastname",
   },
   {
-    accessorKey: "gender",
+    accessorKey: "student.gender",
     header: "Gender",
   },
   {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => (
-      <Select onValueChange={(value) => onSelectChange(row.original.id, value)}>
+      <Select
+        onValueChange={(value) =>
+          onSelectChange(row.original.student.id, value)
+        }
+        value={row.original.status}
+      >
         <SelectTrigger className="w-[150px]">
           <SelectValue placeholder="Select a attendance" />
         </SelectTrigger>

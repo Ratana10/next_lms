@@ -1,6 +1,6 @@
 import { getStudentsEnrollCourseId } from "@/services/course.service";
+import { AttendanceDetail, Student } from "@/types";
 import StudentClient from "./components/StudentClient";
-import { Student } from "@/types";
 
 const AttendanceCourseStudentPage = async ({
   params,
@@ -10,13 +10,20 @@ const AttendanceCourseStudentPage = async ({
   const courseId = Number(params.courseId);
   const { students } = await getStudentsEnrollCourseId(courseId);
 
-  const formattedStudents = students.map((e: Student, index: number) => ({
-    id: e.id,
-    no: index + 1,
-    firstname: e.firstname,
-    lastname: e.lastname,
-    gender: e.gender,
-  }));
+  // format Student to Attendance Detail
+  const formattedStudents: AttendanceDetail[] = students.map(
+    (e: Student, index: number) => ({
+      no: index + 1,
+      student: {
+        id: e.id,
+        firstname: e.firstname,
+        lastname: e.lastname,
+        gender: e.gender,
+      },
+      status: "",
+      date: "",
+    })
+  );
 
   return <StudentClient courseId={courseId} students={formattedStudents} />;
 };
