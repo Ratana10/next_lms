@@ -2,7 +2,6 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { loginSchema } from "./schema/definition";
 import { loginService } from "./services/auth.service";
-import toast from "react-hot-toast";
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
@@ -33,11 +32,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     async session({ session, token }) {
-      if (token?.sub) {
-        session.user.id = token.sub;
-        session.user.username = token.username;
-        session.user.token = token.token;
-        session.user.role = token.role;
+      if (token) {
+        session.user.id = token.id as string;
+        session.user.username = token.username as string;
+        session.user.token = token.token as string;
+        session.user.role = token.role as string;
       }
       return session;
     },
