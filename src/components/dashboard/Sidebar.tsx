@@ -11,7 +11,7 @@ const Sidebar = () => {
   const navs = [
     {
       href: "/dashboard/categories",
-      label: "Category",
+      label: "Categories",
       icon: <Home />,
     },
     {

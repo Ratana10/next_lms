@@ -8,9 +8,7 @@ import { z } from "zod";
 export async function getAllCategories(page: number) {
   const token = await getToken();
   const res = await fetch(
-    `${process.env.API_BASE_URL}/api/v1/categories?size=10&page=${
-      page || 1
-    }`,
+    `${process.env.API_BASE_URL}/api/v1/categories?size=10&page=${page}`,
     {
       method: "GET",
       headers: {
@@ -20,21 +18,25 @@ export async function getAllCategories(page: number) {
     }
   );
 
-  return await res.json();
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+  return {
+    categories: data.data,
+    pagination: data.pagination,
+  };
 }
 
 export async function getAllCategoriesV2() {
   const token = await getToken();
-  const res = await fetch(
-    `${process.env.API_BASE_URL}/api/v1/categories/all`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const res = await fetch(`${process.env.API_BASE_URL}/api/v1/categories/all`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return await res.json();
 }
@@ -50,7 +52,15 @@ export async function createCategory(category: z.infer<typeof categorySchema>) {
     body: JSON.stringify(category),
   });
 
-  return await res.json();
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+  return {
+    category: data.data,
+    message: data.message,
+    status: data.httpStatus,
+  };
 }
 
 export async function getCategoryById(categoryId: number) {
@@ -67,12 +77,11 @@ export async function getCategoryById(categoryId: number) {
   );
   const data = await res.json();
 
-  if (res.ok) {
-    console.log("sucess");
-    return data.data;
-  } else {
-    console.log("fail");
-  }
+  return {
+    category: data.data,
+    message: data.message,
+    status: data.httpStatus,
+  };
 }
 
 export async function updateCategory(
@@ -92,14 +101,15 @@ export async function updateCategory(
     }
   );
   const data = await res.json();
-  console.log("test res", data);
-
-  if (res.ok) {
-    console.log("sucess");
-    return data.data;
-  } else {
-    console.log("fail");
+  if (!res.ok) {
+    throw new Error(data.message);
   }
+
+  return {
+    category: data.data,
+    message: data.message,
+    status: data.httpStatus,
+  };
 }
 
 export async function deleteCategory(categoryId: number) {
@@ -115,11 +125,13 @@ export async function deleteCategory(categoryId: number) {
     }
   );
   const data = await res.json();
-
-  if (res.ok) {
-    console.log("sucess");
-    return data.data;
-  } else {
-    console.log("fail");
+  if (!res.ok) {
+    throw new Error(data.message);
   }
+
+  return {
+    category: data.data,
+    message: data.message,
+    status: data.httpStatus,
+  };
 }

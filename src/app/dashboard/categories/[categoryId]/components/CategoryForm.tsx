@@ -56,28 +56,28 @@ const CategoryForm = ({ initialize }: CategoryProp) => {
       try {
         await updateCategory(initialize.id, values);
         setLoading(true);
+        toast.success("Update successfully");
+        router.push("/dashboard/categories");
+        setLoading(false);
+        router.refresh();
       } catch (error) {
         toast.error(`Error[Category]: ${error}`);
       } finally {
-        setLoading(false);
         setOpen(false);
-        toast.success("Update successfully");
-        router.push("/dashboard/categories");
-        router.refresh();
       }
     } else {
       // Create new category
       try {
         await createCategory(values);
         setLoading(true);
-      } catch (error) {
-        toast.error(`Error[Category]: ${error}`);
-      } finally {
-        setLoading(false);
-        setOpen(false);
         toast.success("Create successfully");
         router.push("/dashboard/categories");
         router.refresh();
+        setLoading(false);
+      } catch (error) {
+        toast.error(`Error[Category]: ${error}`);
+      } finally {
+        setOpen(false);
       }
     }
   }
@@ -87,13 +87,13 @@ const CategoryForm = ({ initialize }: CategoryProp) => {
       try {
         await deleteCategory(initialize.id);
         setLoading(true);
+        toast.success("delete successfully");
+        router.push("/dashboard/categories");
       } catch (error) {
         toast.error(`Error[Category]: ${error}`);
       } finally {
         setLoading(false);
         setOpen(false);
-        toast.success("delete successfully");
-        router.push("/dashboard/categories");
       }
     }
   }
@@ -132,7 +132,7 @@ const CategoryForm = ({ initialize }: CategoryProp) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Name *</FormLabel>
                   <FormControl>
                     <Input autoFocus placeholder="Enter name" {...field} />
                   </FormControl>

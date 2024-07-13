@@ -32,21 +32,21 @@ const CellAction = ({ data }: props) => {
     try {
       await deleteCategory(data.id);
       setLoading(true);
+      toast.success("Delete category successfully");
+      //refresh data
+      setLoading(false);
+      router.refresh();
     } catch (error) {
       toast.error(`Error[Category]: ${error}`);
     } finally {
-      toast.success("Delete category successfully");
-      //refresh data
-      router.refresh();
       setOpen(false);
-      setLoading(false);
     }
   };
 
   return (
     <>
       <Modal
-        title={`Are you sure to delete [${data.name}]?`}
+        title={`Are you sure to delete?`}
         description="This action cannot be undone."
         isOpen={open}
         onClose={() => setOpen(false)}

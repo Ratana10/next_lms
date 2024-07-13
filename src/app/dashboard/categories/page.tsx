@@ -1,39 +1,25 @@
 import { getAllCategories } from "@/services/categories.service";
 import CategoryClient from "./components/CategoryClient";
 import { Category } from "@/types";
-import { format } from "date-fns";
+import { formattedDate, getNoNumber } from "@/lib/formatted";
+import { PageProps } from "@/types/PageProps";
 
-interface SearchParams {
-  query?: string;
-  page?: string;
-}
-const CategoryPage = async ({
-  searchParams,
-}: {
-  searchParams?: {
-    query?: string;
-    page?: string;
-  };
-}) => {
-  const currentPage = Number(searchParams?.page) || 1;
+const CategoryPage = async ({ searchParams }: PageProps) => {
+  const page = Number(searchParams?.page) || 1;
 
-  const data = await getAllCategories(currentPage);
-  const categories = data.data;
-  const pagination = data.pagination;
+  const { categories, pagination } = await getAllCategories(page);
 
   const categoriesFormatted: Category[] = categories.map(
     (e: Category, index: number) => ({
+      no: getNoNumber(index, pagination.pageNumber, pagination.pageSize),
       id: e.id,
-      no: index + 1,
       name: e.name,
-      createdAt: format(new Date(e.createdAt), "yyyy-MM-dd"),
-      updatedAt: e.updatedAt ? format(new Date(e.updatedAt), "yyyy-MM-dd") : '...',
+      createdAt: formattedDate(e.createdAt),
+      updatedAt: formattedDate(e.updatedAt),
     })
   );
   return (
-    <div>
-      <CategoryClient categories={categoriesFormatted} pagination={pagination} />
-    </div>
+    <CategoryClient categories={categoriesFormatted} pagination={pagination} />
   );
 };
 

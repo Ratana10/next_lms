@@ -19,23 +19,18 @@ interface CategoryClientProp {
 const CategoryClient = ({ categories, pagination }: CategoryClientProp) => {
   const router = useRouter();
 
-  const totalPages = pagination.totalPages;
-  const currentPage = pagination.pageNumber;
-  const isLast = pagination.last;
-  const isFirst = pagination.first;
-
   const onPreviousPage = () => {
-    if (currentPage > 1) {
-      router.push(`/dashboard/categories?page=${currentPage - 1}`);
+    if (pagination.pageNumber > 1) {
+      router.push(`/dashboard/categories?page=${pagination.pageNumber - 1}`);
     }
   };
 
   const onNextPage = () => {
-    if (currentPage < totalPages) {
-      router.push(`/dashboard/categories?page=${currentPage + 1}`);
+    if (pagination.pageNumber < pagination.totalPages) {
+      router.push(`/dashboard/categories?page=${pagination.pageNumber + 1}`);
     }
   };
-  
+
   return (
     <>
       <div className="flex justify-between">
@@ -49,10 +44,10 @@ const CategoryClient = ({ categories, pagination }: CategoryClientProp) => {
       <DataTable columns={columns} data={categories} />
 
       <PaginationSection
-        isLast={isLast}
-        isFirst={isFirst}
-        currentPage={currentPage}
-        totalPages={totalPages}
+        isLast={pagination.last}
+        isFirst={pagination.first}
+        currentPage={pagination.pageNumber}
+        totalPages={pagination.totalPages}
         onPreviousPage={onPreviousPage}
         onNextPage={onNextPage}
       />
