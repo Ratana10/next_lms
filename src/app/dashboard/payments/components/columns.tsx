@@ -13,7 +13,6 @@ export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "amount",
     header: "Amount",
-    cell: ({row}) => <div>{formatToDollar(row.getValue("amount"))}</div>
   },
   {
     accessorKey: "date",

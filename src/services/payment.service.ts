@@ -18,7 +18,14 @@ export async function getAllPayments(page: number) {
     }
   );
 
-  return await res.json();
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+  return {
+    payments: data.data,
+    pagination: data.pagination,
+  };
 }
 
 export async function createPayment(payment: z.infer<typeof paymentSchema>) {
@@ -32,5 +39,12 @@ export async function createPayment(payment: z.infer<typeof paymentSchema>) {
     body: JSON.stringify(payment),
   });
 
-  return await res.json();
+  const data =  await res.json();
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+  return {
+    payments: data.data,
+    message: data.message,
+  };
 }

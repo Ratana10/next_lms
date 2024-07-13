@@ -32,7 +32,7 @@ const PaymentClient = ({ payments, pagination }: PaymentClientProp) => {
   return (
     <>
       <div className="flex justify-between">
-        <Heading title="Payments" descritpion="Manage payments" />
+        <Heading title="Transactions" descritpion="Manage transactions" />
       </div>
       <Separator />
       <DataTable data={payments} columns={columns} />

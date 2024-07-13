@@ -1,27 +1,24 @@
-import { getAllPayments } from "@/services/payment.service"
+import { getAllPayments } from "@/services/payment.service";
 import { Payment } from "@/types";
 import PaymentClient from "./components/PaymentClient";
-import { format } from "date-fns";
-import { Response } from "@/types/Pagination";
+import { formattedDate, formatToDollar, getNoNumber } from "@/lib/formatted";
+import { PageProps } from "@/types/PageProps";
 
-const PaymentPage = async () => {
-  const data : Response<Payment[]> = await getAllPayments(1);
+const PaymentPage = async ({ searchParams }: PageProps) => {
 
-  const payments : Payment[]  = data.data;
+  const page = Number(searchParams?.page || 1) 
+  const { payments, pagination } = await getAllPayments(page);
 
-  const formattedPayments = payments.map((e:Payment, index: number) => ({
-    no: index +1,
+  const formattedPayments = payments.map((e: Payment, index: number) => ({
+    no: getNoNumber(index, pagination.pageNumber, pagination.pageSize),
     id: e.id,
-    amount: e.amount,
-    date: format(new Date(e.date), "yyyy-MM-dd"),
-    createdAt: format(new Date(e.createdAt), "yyyy-MM-dd"),
-    updatedAt: e.updatedAt ? format(new Date(e.updatedAt), "yyyy-MM-dd") : '...',
-  }))
+    amount: formatToDollar(e.amount),
+    date: formattedDate(e.date),
+    createdAt: formattedDate(e.createdAt),
+    updatedAt: formattedDate(e.updatedAt),
+  }));
 
-  // TODO update latter
-  return (
-    <PaymentClient payments={formattedPayments} pagination={data.pagination} />
-  )
-}
+  return <PaymentClient payments={formattedPayments} pagination={pagination} />;
+};
 
-export default PaymentPage
+export default PaymentPage;
