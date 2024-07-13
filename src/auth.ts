@@ -18,7 +18,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         try {
           const { token } = await loginService({ username, password });
           let user = {
-            id: 1,
+            id: "1",
             username,
             role: "ADMIN",
             token,
@@ -32,7 +32,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
-    session({ session, token }) {
+    async session({ session, token }) {
       if (token?.sub) {
         session.user.id = token.sub;
         session.user.username = token.username;
@@ -41,7 +41,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session;
     },
-    jwt({ token, user }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.username = user.username;

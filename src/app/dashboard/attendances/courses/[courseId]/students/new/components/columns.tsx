@@ -54,7 +54,8 @@ export const columns = ({
             <SelectLabel>Status</SelectLabel>
             {attendanceStatus.map((status) => (
               <SelectItem key={status} value={status}>
-                {status}
+                <p className="text-red-500">{status}</p>
+                
               </SelectItem>
             ))}
           </SelectGroup>

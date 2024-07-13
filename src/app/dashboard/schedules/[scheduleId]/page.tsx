@@ -1,5 +1,5 @@
+import { getAllCourses } from "@/services/course.service";
 import ScheduleForm from "./components/ScheduleForm";
-import { getCoursesList } from "@/services/course.service";
 import { getScheduleById } from "@/services/schedule.service";
 
 const ScheduleIdPage = async ({
@@ -7,7 +7,7 @@ const ScheduleIdPage = async ({
 }: {
   params: { scheduleId: string };
 }) => {
-  const {courses} = await getCoursesList();
+  const {courses} = await getAllCourses(1, "")
   const data =  await getScheduleById(parseInt(params.scheduleId));
   return <ScheduleForm initialize={data.data} courses={courses} />;
 };

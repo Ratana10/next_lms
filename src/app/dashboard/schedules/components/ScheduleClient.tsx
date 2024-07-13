@@ -2,7 +2,6 @@
 
 import { DataTable } from "@/components/DataTable";
 import Heading from "@/components/Heading";
-import Search from "@/components/Search";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Plus } from "lucide-react";

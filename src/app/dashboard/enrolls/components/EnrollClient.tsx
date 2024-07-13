@@ -14,7 +14,6 @@ import PaginationSection from "@/components/PaginationSection";
 import { Pagination } from "@/types/Pagination";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,

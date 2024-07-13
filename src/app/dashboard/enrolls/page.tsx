@@ -1,8 +1,7 @@
-import { getAllEnrolls, getPaymentsByEnrollId } from "@/services/enroll.service";
+import { getAllEnrolls } from "@/services/enroll.service";
 import React from "react";
 import EnrollClient from "./components/EnrollClient";
 import { Enroll } from "@/types";
-import { format } from "date-fns";
 import { formattedDate } from "@/lib/formatted";
 
 const EnrollPage = async ({

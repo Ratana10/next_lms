@@ -5,7 +5,6 @@ const DashboardPage = async () => {
     return (
     <div>
       dashboard page
-      {session?.user.username}
     </div>
   )
 }

@@ -2,7 +2,6 @@
 
 import { DataTable } from "@/components/DataTable";
 import Heading from "@/components/Heading";
-import Search from "@/components/Search";
 import { Separator } from "@/components/ui/separator";
 import { columns } from "./columns";
 import { Course } from "@/types";
