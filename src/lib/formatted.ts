@@ -11,6 +11,6 @@ export const formatTimeTo12Hour = (time: string) => {
 
 export const formattedDate = (date: string) => {
   return date
-      ? format(new Date(date), "yyyy-MM-dd")
+      ? format(new Date(date), "dd-MM-yyyy")
       : "...";
 }

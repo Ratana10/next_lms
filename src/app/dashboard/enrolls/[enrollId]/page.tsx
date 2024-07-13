@@ -1,12 +1,12 @@
 import React from "react";
-import { getCoursesList } from "@/services/course.service";
 import EnrollForm from "./components/EnrollForm";
 import { getStudentsList } from "@/services/student.service";
 import { Option } from "@/components/ui/multiple-selector";
 import { getEnrollById } from "@/services/enroll.service";
+import { getAllCourses } from "@/services/course.service";
 
 const EnrollIdPage = async ({ params }: { params: { enrollId: string } }) => {
-  const {courses} = await getCoursesList();
+  const {courses} = await getAllCourses(1, "");
   const studentData = await getStudentsList();
   const { enroll } = await getEnrollById(parseInt(params.enrollId));
 

@@ -13,4 +13,5 @@ export type Pagination={
 export interface Response<T> {
   data: T;
   pagination: Pagination;
+  message?: string;
 }
