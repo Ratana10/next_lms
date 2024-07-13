@@ -14,17 +14,17 @@ import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { format } from "date-fns";
 
-interface AttendanceCourseStudentPageProp {
+interface DetailProp {
   attendances: Attendance[];
   attendanceDetails: AttendanceDetail[];
   pagination: Pagination;
 }
 
-const AttendanceCourseStudentClient = ({
+const DetailClient = ({
   attendances,
   attendanceDetails,
   pagination,
-}: AttendanceCourseStudentPageProp) => {
+}: DetailProp) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -87,4 +87,4 @@ const AttendanceCourseStudentClient = ({
   );
 };
 
-export default AttendanceCourseStudentClient;
+export default DetailClient;

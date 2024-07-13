@@ -1,15 +1,15 @@
-import { getStudentsEnrollCourseId } from "@/services/course.service";
+import {
+  getCourseById,
+  getStudentsEnrollCourseId,
+} from "@/services/course.service";
 import { AttendanceDetail, Student } from "@/types";
-import StudentClient from "./components/StudentClient";
+import StudentClient from "./components/DetailNewClient";
 
-const AttendanceCourseStudentPage = async ({
-  params,
-}: {
-  params: { courseId: string };
-}) => {
+const DetailNewPage = async ({ params }: { params: { courseId: string } }) => {
   const courseId = Number(params.courseId);
   const { students } = await getStudentsEnrollCourseId(courseId);
-
+  const { course } = await getCourseById(courseId);
+  console.log("course", course)
   // format Student to Attendance Detail
   const formattedStudents: AttendanceDetail[] = students.map(
     (e: Student, index: number) => ({
@@ -25,7 +25,7 @@ const AttendanceCourseStudentPage = async ({
     })
   );
 
-  return <StudentClient courseId={courseId} students={formattedStudents} />;
+  return <StudentClient course={course} courseId={courseId} students={formattedStudents} />;
 };
 
-export default AttendanceCourseStudentPage;
+export default DetailNewPage;

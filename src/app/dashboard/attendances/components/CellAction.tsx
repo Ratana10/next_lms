@@ -1,6 +1,6 @@
 "use client";
 
-import { Edit, MoreHorizontal, Trash } from "lucide-react";
+import { Eye, MoreHorizontal, SquarePlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,20 +10,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Course } from "@/types";
-import { useRouter } from "next/navigation";
-import { deleteCategory } from "@/services/categories.service";
-import { useState } from "react";
-import toast from "react-hot-toast";
-import { Modal } from "@/components/Modal";
-import { deleteCourse } from "@/services/course.service";
+import Link from "next/link";
 
-interface props {
+interface Props {
   data: Course;
 }
-const CellAction = ({ data }: props) => {
-  const router = useRouter();
-  const [loading, setLoading] = useState<boolean>(false);
-
+const CellAction = ({ data }: Props) => {
   return (
     <>
       <DropdownMenu>
@@ -34,25 +26,21 @@ const CellAction = ({ data }: props) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem
-            disabled={loading}
-            onClick={() =>
-              router.push(`/dashboard/attendances/courses/${data.id}/students`)
-            }
-            className="cursor-pointer"
-          >
-            View attendances
+          <DropdownMenuItem asChild>
+            <Link
+              href={`/dashboard/attendances/${data.id}`}
+              className="cursor-pointer"
+            >
+              <Eye className="w-4 h-4 mr-2" /> Attendances
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem
-            disabled={loading}
-            onClick={() =>
-              router.push(
-                `/dashboard/attendances/courses/${data.id}/students/new`
-              )
-            }
-            className="cursor-pointer"
-          >
-            Create Attendance
+          <DropdownMenuItem asChild>
+            <Link
+              href={`/dashboard/attendances/${data.id}/new`}
+              className="cursor-pointer"
+            >
+              <SquarePlus className="w-4 h-4 mr-2" /> Attendance
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

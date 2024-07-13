@@ -2,7 +2,7 @@
 
 import { DataTable } from "@/components/DataTable";
 import Heading from "@/components/Heading";
-import { AttendanceDetail, Student } from "@/types";
+import { AttendanceDetail, Course, Student } from "@/types";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -24,11 +24,12 @@ import BackButton from "@/components/BackButton";
 
 export const attendanceStatus = ["PRESENT", "PERMISSION", "ABSENT"];
 
-interface StudentClientProp {
+interface Props {
   courseId: number;
+  course: Course;
   students: AttendanceDetail[];
 }
-const StudentClient = ({ courseId, students }: StudentClientProp) => {
+const DetailNewClient = ({ courseId, course, students }: Props) => {
   const router = useRouter();
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [attendanceData, setAttendanceData] = useState<{
@@ -79,7 +80,7 @@ const StudentClient = ({ courseId, students }: StudentClientProp) => {
 
   const onCreate = async () => {
     const data = {
-      courseId: courseId,
+      courseId: course.id,
       date: format(date!, "yyyy-MM-dd"),
       attendance: attendanceData,
     };
@@ -99,8 +100,8 @@ const StudentClient = ({ courseId, students }: StudentClientProp) => {
       <BackButton text="Back" href="/dashboard/attendances" />
       <div className="flex justify-between">
         <Heading
-          title="Students Attendance"
-          descritpion="Manage students attendance"
+          title={`${course.name} Attendance`}
+          descritpion="Add new attendance"
         />
         <Button onClick={onCreate}>
           <Plus className="w-4 h-4 mr-2" />
@@ -138,4 +139,4 @@ const StudentClient = ({ courseId, students }: StudentClientProp) => {
   );
 };
 
-export default StudentClient;
+export default DetailNewClient;

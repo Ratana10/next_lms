@@ -68,7 +68,11 @@ export async function getCourseById(courseId: number) {
   );
   const data = await res.json();
 
-  return data;
+  return {
+    course: data.data,
+    message: data.message,
+    status: data.httpStatus
+  };
 }
 
 export async function updateCourse(

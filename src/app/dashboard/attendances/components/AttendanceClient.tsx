@@ -32,7 +32,7 @@ const AttendanceClient = ({ courses, pagination }: AttendanceClientProp) => {
   return (
     <>
       <div className="flex justify-between">
-        <Heading title="Classes" descritpion="Manage attendance" />
+        <Heading title="Classes" descritpion="Manage student's attendance" />
       </div>
       <Separator />
       <DataTable columns={columns} data={courses} />

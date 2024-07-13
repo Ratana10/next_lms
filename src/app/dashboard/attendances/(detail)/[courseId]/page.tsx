@@ -1,9 +1,8 @@
-import React from "react";
-import AttendanceCourseStudentClient from "./components/AttendanceCourseStudentClient";
-import { getAttendanceByCourse } from "@/services/attendance.service";
+import { formattedDate, getNoNumber } from "@/lib/formatted";
 import { getAttendanceDetailByCourse } from "@/services/attendance-detail.service";
+import { getAttendanceByCourse } from "@/services/attendance.service";
 import { AttendanceDetail } from "@/types";
-import { getNoNumber } from "@/lib/formatted";
+import DetailClient from "./components/DetailClient";
 
 interface Params {
   courseId: string;
@@ -19,7 +18,9 @@ interface Props {
   params: Params;
   searchParams: SearchParams;
 }
-const AttendanceCourseStudentPage = async ({ params, searchParams }: Props) => {
+
+const DetailPage = async ({ params, searchParams }: Props) => {
+  
   const page = Number(searchParams?.page || 1);
   const startDate = searchParams?.startDate || "";
   const endDate = searchParams?.endDate || "";
@@ -43,12 +44,12 @@ const AttendanceCourseStudentPage = async ({ params, searchParams }: Props) => {
       id: e.id,
       student: e.student,
       status: e.status,
-      date: e.date,
+      date: formattedDate(e.date),
     })
   );
 
   return (
-    <AttendanceCourseStudentClient
+    <DetailClient
       attendances={attendances}
       attendanceDetails={formattedAttDetails}
       pagination={pagination}
@@ -56,4 +57,4 @@ const AttendanceCourseStudentPage = async ({ params, searchParams }: Props) => {
   );
 };
 
-export default AttendanceCourseStudentPage;
+export default DetailPage;
