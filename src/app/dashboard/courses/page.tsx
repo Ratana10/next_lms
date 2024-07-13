@@ -3,7 +3,7 @@ import { getAllCourses } from "@/services/course.service";
 import { Course } from "@/types";
 import { format } from "date-fns";
 import CourseClient from "./components/CourseClient";
-import { formattedFullname, getNoNumber } from "@/lib/utils";
+import { formattedFullname, getNoNumber } from "@/lib/formatted";
 import { formattedDate } from "@/lib/formatted";
 
 const CoursePage = async ({

@@ -2,9 +2,10 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
-import { cn, formattedFullname, formattedGender } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { AttendanceDetail } from "@/types";
 import CellAction from "./CellAction";
+import { formattedFullname, formattedGender } from "@/lib/formatted";
 
 export const columns: ColumnDef<AttendanceDetail>[] = [
   {

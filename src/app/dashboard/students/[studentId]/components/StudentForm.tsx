@@ -51,7 +51,7 @@ const StudentForm = ({ initialize }: StudentProp) => {
       lastname: "",
       phone: "",
       email: "",
-      gender: "",
+      gender: "MALE",
     },
   });
 
@@ -93,6 +93,7 @@ const StudentForm = ({ initialize }: StudentProp) => {
         setOpen(false);
         toast.success("delete successfully");
         router.push("/dashboard/students");
+        router.refresh();
       } catch (error) {
         toast.error(`${error}`);
       } finally {
@@ -135,7 +136,7 @@ const StudentForm = ({ initialize }: StudentProp) => {
               name="firstname"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Firstname</FormLabel>
+                  <FormLabel>Firstname *</FormLabel>
                   <FormControl>
                     <Input autoFocus placeholder="Enter firstname" {...field} />
                   </FormControl>
@@ -148,7 +149,7 @@ const StudentForm = ({ initialize }: StudentProp) => {
               name="lastname"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Lastname</FormLabel>
+                  <FormLabel>Lastname *</FormLabel>
                   <FormControl>
                     <Input placeholder="Enter lastname" {...field} />
                   </FormControl>

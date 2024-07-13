@@ -3,7 +3,7 @@ import React from "react";
 import { Course } from "@/types";
 import { formattedDate } from "@/lib/formatted";
 import AttendanceClient from "./components/AttendanceClient";
-import { formattedFullname, getNoNumber } from "@/lib/utils";
+import { formattedFullname, getNoNumber } from "@/lib/formatted";
 import { PageProps } from "@/types/PageProps";
 
 const AttendancePage = async ({ searchParams }: PageProps) => {

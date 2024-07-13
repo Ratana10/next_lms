@@ -1,6 +1,6 @@
 "use client";
 
-import { formatToDollar } from "@/lib/utils";
+import { formatToDollar } from "@/lib/formatted";
 import {  Payment } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 

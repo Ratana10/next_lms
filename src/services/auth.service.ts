@@ -18,7 +18,6 @@ export async function login(values: z.infer<typeof loginSchema>) {
     });
 
   } catch (error: any) {
-    console.log("AUTH SERVICE ERROR", error)
     throw new Error("Invalid Credential")
     // if (error instanceof AuthError) {
     //   switch (error.type) {
@@ -42,7 +41,6 @@ export async function loginService(loginRequest: LoginRequest) {
   });
 
   const data = await res.json();
-  console.log("LOGIN TEST", data)
   if (!res.ok) {
     throw new Error(data.message);
   }

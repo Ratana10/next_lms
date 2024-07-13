@@ -4,7 +4,8 @@ import {   Enroll } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import CellAction from "./CellAction";
 import { Badge } from "@/components/ui/badge";
-import { cn,  formatToDollar } from "@/lib/utils";
+import { cn} from "@/lib/utils";
+import { formatToDollar } from "@/lib/formatted";
 
 export const columns: ColumnDef<Enroll>[] = [
   {

@@ -24,7 +24,10 @@ export async function getAllStudent(page: number, search: string) {
     throw new Error(data.message);
   }
 
-  return data;
+  return {
+    students: data.data,
+    pagination: data.pagination
+  };
 }
 
 export async function getStudentsList() {
@@ -69,7 +72,11 @@ export async function createStudent(student: z.infer<typeof studentSchema>) {
     throw new Error(data.message);
   }
 
-  return data;
+  return {
+    student: data.data,
+    message: data.message,
+    status: data.httpStatus
+  };
 }
 
 export async function getStudentById(studentId: number) {
@@ -86,7 +93,15 @@ export async function getStudentById(studentId: number) {
   );
   const data = await res.json();
 
-  return data;
+  // we don't throw error becuase when student doen't exists we creaet the new one
+  // if(!res.ok){
+  //   throw new Error(data.message);
+  // }
+  return {
+    student: data.data,
+    message: data.message,
+    status: data.httpStatus
+  };
 }
 
 export async function updateStudent(
@@ -111,7 +126,11 @@ export async function updateStudent(
     throw new Error(data.message);
   }
 
-  return data;
+  return {
+    student: data.data,
+    message: data.message,
+    status: data.httpStatus
+  };
 }
 
 export async function deleteStudent(studentId: number) {
@@ -132,5 +151,9 @@ export async function deleteStudent(studentId: number) {
     throw new Error(data.message);
   }
 
-  return data;
+  return {
+    student: data.data,
+    message: data.message,
+    status: data.httpStatus
+  };
 }

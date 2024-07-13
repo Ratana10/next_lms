@@ -6,12 +6,12 @@ import PaginationSection from "@/components/PaginationSection";
 import { Student } from "@/types";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React from "react";
 import { columns } from "./columns";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Search from "@/components/Search";
 import { Pagination } from "@/types/Pagination";
+import Link from "next/link";
 
 interface StudentClientProp {
   students: Student[];
@@ -37,14 +37,16 @@ const StudentClient = ({ students, pagination }: StudentClientProp) => {
     <>
       <div className="flex justify-between">
         <Heading title="Students" descritpion="Manage students" />
-        <Button onClick={() => router.push("/dashboard/students/new")}>
-          <Plus className="w-4 h-4 mr-2" />
-          Add
-        </Button>
+        <Link href={"/dashboard/students/new"}>
+          <Button>
+            <Plus className="w-4 h-4 mr-2" />
+            Add
+          </Button>
+        </Link>
       </div>
       <Separator />
       <div>
-        <Search placeholder="Search..." />
+        <Search placeholder="Search by name, phone, email ..." />
       </div>
       <DataTable columns={columns} data={students} />
 

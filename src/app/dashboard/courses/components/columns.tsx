@@ -4,7 +4,7 @@ import {  Course } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import CellAction from "./CellAction";
 import { Badge } from "@/components/ui/badge"
-import { formatToDollar } from "@/lib/utils";
+import { formatToDollar } from "@/lib/formatted";
 
 
 export const columns: ColumnDef<Course>[] = [

@@ -3,7 +3,7 @@ import AttendanceCourseStudentClient from "./components/AttendanceCourseStudentC
 import { getAttendanceByCourse } from "@/services/attendance.service";
 import { getAttendanceDetailByCourse } from "@/services/attendance-detail.service";
 import { AttendanceDetail } from "@/types";
-import { getNoNumber } from "@/lib/utils";
+import { getNoNumber } from "@/lib/formatted";
 
 interface Params {
   courseId: string;

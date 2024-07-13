@@ -1,40 +1,37 @@
 import { getAllStudent } from "@/services/student.service";
 import { Student } from "@/types";
-import { format } from "date-fns";
 import StudentClient from "./components/StudentClient";
+import {
+  formattedGender,
+  formattedFullname,
+  formattedDate,
+  getNoNumber,
+  formattedPhone,
+  formattedEmail,
+} from "@/lib/formatted";
+import { PageProps } from "@/types/PageProps";
 
-const StudentPage = async ({
-  searchParams,
-}: {
-  searchParams?: {
-    page?: string;
-    search?: string;
-  };
-}) => {
+const StudentPage = async ({ searchParams }: PageProps) => {
   const currentPage = Number(searchParams?.page) || 1;
-  const search = searchParams?.search || ""
-  const data = await getAllStudent(currentPage, search);
+  const search = searchParams?.search || "";
+  const { students, pagination } = await getAllStudent(currentPage, search);
 
-
-  const studentsFormatted: Student[] = data.data.map(
+  const studentsFormatted: Student[] = students.map(
     (e: Student, index: number) => ({
       id: e.id,
-      no: index + 1,
-      firstname: e.firstname,
-      lastname: e.lastname,
-      gender: e.gender === "MALE" ? "M" : "F",
-      phone: e.phone,
-      email: e.email,
-      createdAt: format(new Date(e.createdAt), "yyyy-MM-dd"),
-      updatedAt: e.updatedAt
-        ? format(new Date(e.updatedAt), "yyyy-MM-dd")
-        : "...",
+      no: getNoNumber(index, pagination.pageNumber, pagination.pageSize),
+      // firstname: e.firstname,
+      // lastname: e.lastname,
+      name: formattedFullname(e.lastname, e.firstname),
+      gender: formattedGender(e.gender),
+      phone: formattedPhone(e.phone),
+      email: formattedEmail(e.email),
+      createdAt: formattedDate(e.createdAt),
+      updatedAt: formattedDate(e.updatedAt),
     })
   );
 
-  return (
-    <StudentClient students={studentsFormatted} pagination={data.pagination} />
-  );
+  return <StudentClient students={studentsFormatted} pagination={pagination} />;
 };
 
 export default StudentPage;

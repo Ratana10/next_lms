@@ -17,7 +17,6 @@ const AccountPage = async () => {
     updatedAt: formattedDate(e.updatedAt),
   })) 
 
-  console.log(formattedAccounts)
   return <AccountClient accounts={formattedAccounts} />
 }
 

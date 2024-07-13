@@ -10,12 +10,8 @@ export const columns: ColumnDef<Student>[] = [
     header: "NO",
   },
   {
-    accessorKey: "firstname",
-    header: "Firstname",
-  },
-  {
-    accessorKey: "lastname",
-    header: "Lastname",
+    accessorKey: "name",
+    header: "Name",
   },
   {
     accessorKey: "gender",
