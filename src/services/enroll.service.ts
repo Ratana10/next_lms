@@ -129,9 +129,9 @@ export async function getEnrollById(enrollId: number) {
 }
 
 
-export async function getPaymentsByEnrollId(enrollId: number) {
+export async function getPaymentsByEnrollId(enrollId: number, page: number) {
   const token = await getToken();
-  const res = await fetch(`${process.env.API_BASE_URL}/api/v1/enrollments/${enrollId}/payments`, {
+  const res = await fetch(`${process.env.API_BASE_URL}/api/v1/enrollments/${enrollId}/payments?page=${page}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -142,6 +142,7 @@ export async function getPaymentsByEnrollId(enrollId: number) {
   const data  =await res.json();
 
   return {
-    payments: data.data
+    payments: data.data,
+    pagination: data.pagination
   }
 }

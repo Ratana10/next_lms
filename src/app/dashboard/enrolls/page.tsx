@@ -2,7 +2,7 @@ import { getAllEnrolls } from "@/services/enroll.service";
 import React from "react";
 import EnrollClient from "./components/EnrollClient";
 import { Enroll } from "@/types";
-import { formattedDate } from "@/lib/formatted";
+import { formattedDate, formattedFullname, formatToDollar, getNoNumber } from "@/lib/formatted";
 
 const EnrollPage = async ({
   searchParams,
@@ -22,12 +22,12 @@ const EnrollPage = async ({
 
   const formattedEnrolls = enrolls.map((e: Enroll, index: number) => ({
     id: e.id,
-    no: index + 1,
-    student: e.student?.lastname + " " + e.student?.firstname,
-    total: e.total,
-    remain: e.remain,
+    no: getNoNumber(index, pagination.pageNumber, pagination.pageSize),
+    student: formattedFullname(e.student?.lastname, e.student?.firstname),
+    total: formatToDollar(e.total),
+    remain: formatToDollar(e.remain),
     status: e.status,
-    date: e.date,
+    date: formattedDate(e.date),
     createdAt: formattedDate(e.createdAt),
     updatedAt: formattedDate(e.updatedAt)
   }));

@@ -21,6 +21,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { Modal } from "@/components/Modal";
 import { deleteEnroll } from "@/services/enroll.service";
+import Link from "next/link";
 
 interface props {
   data: Enroll;
@@ -30,9 +31,6 @@ const CellAction = ({ data }: props) => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const onUpdate = (id: number) => {
-    router.push(`/dashboard/enrolls/${id}`);
-  };
 
   const onDelete = async () => {
     try {
@@ -46,14 +44,6 @@ const CellAction = ({ data }: props) => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const makePayment = (enrollmentId: number) => {
-    router.push(`/dashboard/enrolls/${enrollmentId}/payments/new`);
-  };
-
-  const onViewPayment = async (enrollId: number) => {
-    router.push(`/dashboard/enrolls/${enrollId}/payments`);
   };
 
   return (
@@ -78,25 +68,34 @@ const CellAction = ({ data }: props) => {
           {data.status !== "PAID" && (
             <DropdownMenuItem
               disabled={loading}
-              onClick={() => makePayment(data.id)}
               className="cursor-pointer"
+              asChild
             >
-              <CircleDollarSign className="w-4 h-4 mr-2" /> Make Payment
+              <Link href={`/dashboard/enrolls/${data.id}/payments/new`}>
+                <CircleDollarSign className="w-4 h-4 mr-2" /> Make Payment
+              </Link>
             </DropdownMenuItem>
           )}
+          {data.status !== "UNPAID" && (
+            <DropdownMenuItem
+              disabled={loading}
+              className="cursor-pointer"
+              asChild
+            >
+              <Link href={`/dashboard/enrolls/${data.id}/payments`}>
+                <Wallet className="w-4 h-4 mr-2" /> View Payments
+              </Link>
+            </DropdownMenuItem>
+          )}
+
           <DropdownMenuItem
             disabled={loading}
-            onClick={() => onViewPayment(data.id)}
             className="cursor-pointer"
+            asChild
           >
-            <Wallet className="w-4 h-4 mr-2" /> View Payments
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            disabled={loading}
-            onClick={() => onUpdate(data.id)}
-            className="cursor-pointer"
-          >
-            <Edit className="w-4 h-4 mr-2" /> Update
+            <Link href={`/dashboard/enrolls/${data.id}`}>
+              <Edit className="w-4 h-4 mr-2" /> Update
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem
             disabled={loading}

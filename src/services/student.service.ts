@@ -34,7 +34,7 @@ export async function getStudentsList() {
   
   const token = await getToken();
   const res = await fetch(
-    `${process.env.API_BASE_URL}/api/v1/students/all`,
+    `${process.env.API_BASE_URL}/api/v1/students?all=true`,
     {
       method: "GET",
       headers: {
@@ -50,7 +50,10 @@ export async function getStudentsList() {
     throw new Error(data.message);
   }
 
-  return data;
+  return {
+    students: data.data,
+    pagination: data.pagination
+  };
 }
 
 

@@ -1,27 +1,35 @@
 import { getPaymentsByEnrollId } from "@/services/enroll.service";
-import React from "react";
 import EnrollPaymentClient from "./components/EnrollPaymentClient";
 import { Payment } from "@/types";
-import { formattedDate } from "@/lib/formatted";
+import { formattedDate, formatToDollar, getNoNumber } from "@/lib/formatted";
 
-const EnrollPaymentPage = async ({
-  params,
-}: {
-  params: { enrollId: string };
-}) => {
+interface Props {
+  params: {
+    enrollId: string
+  };
+  searchParams: {
+    page?: string;
+  };
+}
+const EnrollPaymentPage = async ({ params, searchParams }: Props) => {
+
   const enrollId = Number(params.enrollId);
+  const page = Number(searchParams?.page || 1);
 
-  const { payments } = await getPaymentsByEnrollId(enrollId);
+
+  const { payments, pagination } = await getPaymentsByEnrollId(enrollId,page);
 
   const formattedPayments = payments.map((e: Payment, index: number) => ({
-    no: index + 1,
+    no: getNoNumber(index, pagination.pageNumber, pagination.pageSize),
     id: e.id,
-    amount: e.amount,
+    amount: formatToDollar(e.amount),
     date: formattedDate(e.date),
     createdAt: formattedDate(e.createdAt),
     updatedAt: formattedDate(e.updatedAt),
   }));
-  return <EnrollPaymentClient payments={formattedPayments} />;
+  return (
+    <EnrollPaymentClient payments={formattedPayments} pagination={pagination} />
+  );
 };
 
 export default EnrollPaymentPage;
