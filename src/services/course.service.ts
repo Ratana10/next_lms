@@ -171,3 +171,33 @@ export async function getStudentsEnrollCourseId(courseId: number) {
     students: data.data,
   };
 }
+
+
+
+export async function getCourseSchedules(
+  courseId: number,
+  page: number
+) {
+  const size = 10;
+  const token = await getToken();
+  const res = await fetch(
+    `${process.env.API_BASE_URL}/api/v1/courses/${courseId}/schedules??size=${size}&page=${page}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+
+  return {
+    schedules: data.data,
+    pagination: data.pagination,
+  }
+}

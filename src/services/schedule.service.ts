@@ -83,7 +83,9 @@ export async function getScheduleById(scheduleId: number) {
   );
   const data = await res.json();
 
-  return data;
+  return {
+    schedule: data.data
+  }
 }
 
 export async function deleteSchedule(scheduleId: number) {

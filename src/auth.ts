@@ -22,7 +22,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             role: "ADMIN",
             token,
           };
-console.log("user", user)
           return user;
         } catch (error: any) {
           throw new Error(`${error}`);

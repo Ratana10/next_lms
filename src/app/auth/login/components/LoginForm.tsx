@@ -47,7 +47,6 @@ export function LoginForm() {
       toast.success("Login success");
       router.refresh(); 
     } catch (error: any) {
-      console.log(error);
       toast.error(`${error}`);
 
     }

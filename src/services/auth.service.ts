@@ -33,7 +33,6 @@ export async function loginService(loginRequest: LoginRequest) {
 
   const data = await res.json();
   if (!res.ok) {
-    console.log(data.message);
     throw new Error(`${data.message}`);
   }
 

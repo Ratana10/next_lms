@@ -1,32 +1,27 @@
-import { getAllSchedule } from '@/services/schedule.service'
-import {  Schedule } from '@/types'
-import React from 'react'
-import ScheduleClient from './components/ScheduleClient'
-import { format } from 'date-fns'
-import { Response } from '@/types/Pagination'
-import { formatTimeTo12Hour } from '@/lib/formatted'
+import { formattedDate, formattedFullname, getNoNumber } from "@/lib/formatted";
+import { getAllCourses } from "@/services/course.service";
+import { Course } from "@/types";
+import { PageProps } from "@/types/PageProps";
+import React from "react";
+import CourseClient from "./components/CourseClient";
 
+const SchedulePage = async ({ searchParams }: PageProps) => {
+  const page = Number(searchParams?.page || 1);
 
-const SchedulePage = async () => {
-  const data : Response<Schedule[]>  = await getAllSchedule(1)
+  const {courses, pagination}=await getAllCourses(page, "");
 
-  const scheduleFormatted = data.data.map((e: Schedule, index: number) => ({
+  const coursesFormatted = courses.map((e: Course, index: number) => ({
+    no: getNoNumber(index, pagination.pageNumber, pagination.pageSize),
     id: e.id,
-    no: index + 1,
-    courseId: e.courseId,
-    course: e.course,
-    day: e.day,
-    startTime: formatTimeTo12Hour(e.startTime),
-    endTime: formatTimeTo12Hour(e.endTime),
-    createdAt: format(new Date(e.createdAt), "yyyy-MM-dd"),
-    updatedAt: e.updatedAt
-      ? format(new Date(e.updatedAt), "yyyy-MM-dd")
-      : "...",
+    name: e.name,
+    price: e.price,
+    teacher: formattedFullname(e.teacher?.lastname, e.teacher?.firstname),
+    createdAt: formattedDate(e.createdAt),
+    updatedAt: formattedDate(e.updatedAt),
+
   }));
+  
+  return <CourseClient courses={coursesFormatted} pagination={pagination} />;
+};
 
-  return (
-    <ScheduleClient schedules={scheduleFormatted} pagination={data.pagination} />
-  )
-}
-
-export default SchedulePage
+export default SchedulePage;
