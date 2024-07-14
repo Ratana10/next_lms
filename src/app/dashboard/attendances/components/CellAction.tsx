@@ -28,18 +28,20 @@ const CellAction = ({ data }: Props) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem asChild>
             <Link
-              href={`/dashboard/attendances/${data.id}`}
+              href={`/dashboard/attendances/${data.id}/new`}
               className="cursor-pointer"
             >
-              <Eye className="w-4 h-4 mr-2" /> Attendances
+              <SquarePlus className="w-4 h-4 mr-2" />
+              Create Attendance
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link
-              href={`/dashboard/attendances/${data.id}/new`}
+              href={`/dashboard/attendances/${data.id}`}
               className="cursor-pointer"
             >
-              <SquarePlus className="w-4 h-4 mr-2" /> Attendance
+              <Eye className="w-4 h-4 mr-2" />
+              View Attendances
             </Link>
           </DropdownMenuItem>
         </DropdownMenuContent>
