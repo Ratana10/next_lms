@@ -5,29 +5,20 @@ import { signIn } from "@/auth";
 import { loginSchema } from "@/schema/definition";
 import { LoginRequest, RegisterRequest } from "@/types";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
-import { AuthError } from "next-auth";
 
 export async function login(values: z.infer<typeof loginSchema>) {
   try {
-   await signIn("credentials", {
+    await signIn("credentials", {
       redirect: true,
       redirectTo: DEFAULT_LOGIN_REDIRECT,
       username: values.username,
       password: values.password,
-      
     });
-
   } catch (error: any) {
-    throw new Error("Invalid Credential")
-    // if (error instanceof AuthError) {
-    //   switch (error.type) {
-    //     case "CredentialsSignin":
-    //       return { error: "Invalid cridential" };
-    //     default:
-    //       return { error: "Something went wrong!" };
-    //   }
-    // }
-    // throw error;
+    if (error.cause && error.cause.err && error.cause.err.message) {
+      console.error("Login error:", error.cause.err.message);
+      throw new Error(`${error.cause.err.message}`);
+    }
   }
 }
 
@@ -42,7 +33,8 @@ export async function loginService(loginRequest: LoginRequest) {
 
   const data = await res.json();
   if (!res.ok) {
-    throw new Error(data.message);
+    console.log(data.message);
+    throw new Error(`${data.message}`);
   }
 
   return {

@@ -29,9 +29,10 @@ import { login } from "@/services/auth.service";
 import { loginSchema } from "@/schema/definition";
 import toast from "react-hot-toast";
 import Toast from "@/modal/toaster";
+import { useRouter } from "next/navigation";
 export function LoginForm() {
   const [errors, setErrors] = useState(null);
-
+  const router = useRouter();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -43,8 +44,12 @@ export function LoginForm() {
   async function onSubmit(values: z.infer<typeof loginSchema>) {
     try {
       await login(values);
+      toast.success("Login success");
+      router.refresh(); 
     } catch (error: any) {
-      toast.error("Invalid username or password");
+      console.log(error);
+      toast.error(`${error}`);
+
     }
   }
 
