@@ -30,3 +30,32 @@ export async function getAttendanceDetailByCourse(
     pagination: data.pagination,
   };
 }
+
+export async function updateAttendanceDetailStatus(
+  attendanceDetailId: number,
+  status: string
+) {
+  const token = await getToken();
+
+  const res = await fetch(
+    `${process.env.API_BASE_URL}/api/v1/attendance-details/${attendanceDetailId}/status`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ status }),
+    }
+  );
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+
+  return {
+    attendanceDetail: data.data,
+    message: data.message,
+    status: data.httpStatus,
+  };
+}
