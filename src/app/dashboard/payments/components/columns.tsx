@@ -3,6 +3,7 @@
 import { formatToDollar } from "@/lib/formatted";
 import {  Payment } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
+import CellAction from "./CellAction";
 
 
 export const columns: ColumnDef<Payment>[] = [
@@ -26,8 +27,8 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: "updatedAt",
     header: "UpdatedAt",
   },
-  // {
-  //   id: "actions",
-  //   cell: ({ row }) => <CellAction data={row.original} />,
-  // },
+  {
+    id: "actions",
+    cell: ({ row }) => <CellAction data={row.original} />,
+  },
 ];
