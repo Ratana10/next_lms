@@ -1,6 +1,6 @@
 "use client";
 
-import { Edit, MoreHorizontal, Trash } from "lucide-react";
+import { Edit, Eye, MoreHorizontal, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -75,6 +75,14 @@ const CellAction = ({ data }: props) => {
           >
             <Trash className="w-4 h-4 mr-2 " />
             Delete
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            disabled={loading}
+            onClick={() => router.push(`/dashboard/students/${data.id}/courses`)}
+            className="cursor-pointer"
+          >
+            <Eye className="w-4 h-4 mr-2 "/>
+            View courses
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

@@ -160,3 +160,28 @@ export async function deleteStudent(studentId: number) {
     status: data.httpStatus
   };
 }
+
+export async function getStudentsEnrollInCourse(studentId: number) {
+  
+  const token = await getToken();
+  const res = await fetch(
+    `${process.env.API_BASE_URL}/api/v1/students/${studentId}/courses`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+
+  return {
+    courses: data.data,
+  };
+}

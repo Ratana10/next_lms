@@ -34,18 +34,17 @@ const CellAction = ({ data }: props) => {
       await deleteSchedule(data.id);
       toast.success("Delete schedule successfully");
       router.refresh();
+      setLoading(false);
       setOpen(false);
     } catch (error) {
       toast.error(`${error}`);
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
     <>
       <Modal
-        title={`Are you sure to delete ${data.course?.name}?`}
+        title={`Are you sure to delete?`}
         description="This action cannot be undone."
         isOpen={open}
         onClose={() => setOpen(false)}
