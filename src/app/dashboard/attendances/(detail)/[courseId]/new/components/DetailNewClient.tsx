@@ -21,7 +21,6 @@ import { createAttendance } from "@/services/attendance.service";
 import { columns } from "./columns";
 import toast from "react-hot-toast";
 import BackButton from "@/components/BackButton";
-import PaginationSection from "@/components/PaginationSection";
 import { Pagination } from "@/types/Pagination";
 
 export const attendanceStatus = ["PRESENT", "PERMISSION", "ABSENT"];
@@ -81,20 +80,6 @@ const DetailNewClient = ({ courseId, course, students, pagination }: Props) => {
     });
   };
 
-
-  const onPreviousPage = () => {
-    if (pagination.pageNumber > 1) {
-      router.push(`/dashboard/attendances/${course.id}/new?page=${pagination.pageNumber - 1}`);
-      router.refresh();
-    }
-  };
-
-  const onNextPage = () => {
-    if (pagination.pageNumber < pagination.totalPages) {
-      router.push(`/dashboard/attendances/${course.id}/new?page=${pagination.pageNumber + 1}`);
-      router.refresh();
-    }
-  };
 
   const onCreate = async () => {
     const data = {
