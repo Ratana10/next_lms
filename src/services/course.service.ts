@@ -152,7 +152,7 @@ export async function deleteCourse(courseId: number) {
 export async function getStudentsEnrollCourseId(courseId: number, page: number) {
   const token = await getToken();
   const res = await fetch(
-    `${process.env.API_BASE_URL}/api/v1/courses/${courseId}/students?page=${page}`,
+    `${process.env.API_BASE_URL}/api/v1/courses/${courseId}/students`,
     {
       method: "GET",
       headers: {

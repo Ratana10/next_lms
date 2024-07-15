@@ -1,6 +1,6 @@
 "use client";
 
-import { DataTable } from "@/components/DataTable";
+import { DataTable } from "../components/DataTable";
 import Heading from "@/components/Heading";
 import { AttendanceDetail, Course, Student } from "@/types";
 import { Plus } from "lucide-react";
@@ -152,15 +152,7 @@ const DetailNewClient = ({ courseId, course, students, pagination }: Props) => {
       <DataTable
         columns={columns({ onSelectChange })}
         data={formattedStudents}
-        
-      />
-      <PaginationSection
-       isLast={pagination.last}
-       isFirst={pagination.first}
-       currentPage={pagination.pageNumber}
-       totalPages={pagination.totalPages}
-       onPreviousPage={onPreviousPage}
-       onNextPage={onNextPage}
+        pagesize={pagination.totalElements}
       />
     </>
   );
