@@ -12,9 +12,7 @@ const AccountPage = async () => {
     firstname: e.firstname,
     lastname: e.lastname,
     username: e.username,
-    role: e.role,
-    createdAt: formattedDate(e.createdAt),
-    updatedAt: formattedDate(e.updatedAt),
+    role: e.role
   })) 
 
   return <AccountClient accounts={formattedAccounts} />

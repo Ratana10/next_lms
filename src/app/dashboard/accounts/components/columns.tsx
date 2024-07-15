@@ -25,13 +25,5 @@ export const columns: ColumnDef<Account>[] = [
     accessorKey: "role",
     header: "Role",
     cell: ({row}) => <Badge variant="outline">{row.getValue("role")}</Badge>
-  },
-  {
-    accessorKey: "createdAt",
-    header: "CreatedAt",
-  },
-  {
-    accessorKey: "updatedAt",
-    header: "UpdatedAt",
-  },
+  }
 ];
