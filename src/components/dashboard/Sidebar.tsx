@@ -1,7 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { ClipboardCheck, DollarSign, Home, Package2, User } from "lucide-react";
+import {
+  Book,
+  BookUser,
+  CalendarCheck,
+  ClipboardCheck,
+  CreditCard,
+  Gauge,
+  Package2,
+  Shapes,
+  Star,
+  User,
+  Users,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -12,42 +24,42 @@ const Sidebar = () => {
     {
       href: "/dashboard",
       label: "Dashboards",
-      icon: <Home />,
+      icon: <Gauge />,
     },
     {
       href: "/dashboard/categories",
       label: "Categories",
-      icon: <Home />,
+      icon: <Star />,
     },
     {
       href: "/dashboard/teachers",
       label: "Teachers",
-      icon: <Home />,
+      icon: <Users />,
     },
     {
       href: "/dashboard/students",
       label: "Students",
-      icon: <Home />,
+      icon: <BookUser />,
     },
     {
       href: "/dashboard/courses",
       label: "Courses",
-      icon: <Home />,
+      icon: <Book />,
     },
     {
       href: "/dashboard/schedules",
       label: "Schedules",
-      icon: <Home />,
+      icon: <CalendarCheck />,
     },
     {
       href: "/dashboard/enrolls",
       label: "Enrolls",
-      icon: <Home />,
+      icon: <Shapes />,
     },
     {
       href: "/dashboard/payments",
       label: "Payments",
-      icon: <DollarSign />,
+      icon: <CreditCard />,
     },
     {
       href: "/dashboard/attendances",
@@ -71,12 +83,12 @@ const Sidebar = () => {
         </div>
         <div className="flex-1">
           <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-          {navs.map((nav) => {
+            {navs.map((nav) => {
               const activeRoute = pathname.startsWith("/dashboard/")
-              ? pathname.replace("/dashboard/", "").split("/")[0]
-              : pathname;
+                ? pathname.replace("/dashboard/", "").split("/")[0]
+                : pathname;
 
-                const isActive = nav.href.endsWith(activeRoute);
+              const isActive = nav.href.endsWith(activeRoute);
 
               return (
                 <Link
