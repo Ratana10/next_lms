@@ -39,6 +39,7 @@ import {
   deleteTeacher,
   updateTeacher,
 } from "@/services/teacher.service";
+import { ButtonLoading } from "@/components/ButtonLoading";
 
 
 interface TeacherFormProps {
@@ -70,28 +71,28 @@ const TeacherForm = ({ initialize }: TeacherFormProps) => {
   async function onSubmit(values: z.infer<typeof teacherSchema>) {
     if (initialize) {
       try {
-        await updateTeacher(initialize.id, values);
         setLoading(true);
-      } catch (error) {
-        toast.error(`Error[Teacher]: ${error}`);
-      } finally {
-        setLoading(false);
-        setOpen(false);
+        await updateTeacher(initialize.id, values);
         toast.success("Update successfully");
         router.push(REDIRECT_URL);
         router.refresh();
+      } catch (error) {
+        toast.error(`ERROR: ${error}`);
+      } finally {
+        setLoading(false);
+        setOpen(false);
       }
     } else {
       try {
-        await createTeacher(values);
         setLoading(true);
-      } catch (error) {
-        toast.error(`Error[teacher]: ${error}`);
-      } finally {
-        setLoading(false);
+        await createTeacher(values);
         toast.success("Create successfully");
         router.push(REDIRECT_URL);
         router.refresh();
+      } catch (error) {
+        toast.error(`ERROR: ${error}`);
+      } finally {
+        setLoading(false);
       }
     }
   }
@@ -99,15 +100,16 @@ const TeacherForm = ({ initialize }: TeacherFormProps) => {
   async function onDelete() {
     if (initialize && initialize.id) {
       try {
-        await deleteTeacher(initialize.id);
         setLoading(true);
+        await deleteTeacher(initialize.id);
+        toast.success("delete successfully");
+        router.push(REDIRECT_URL);
       } catch (error) {
-        toast.error(`Error[Teacher]: ${error}`);
+        toast.error(`ERROR: ${error}`);
       } finally {
         setLoading(false);
         setOpen(false);
-        toast.success("delete successfully");
-        router.push(REDIRECT_URL);
+        
       }
     }
   }
@@ -146,7 +148,7 @@ const TeacherForm = ({ initialize }: TeacherFormProps) => {
               name="firstname"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Firstname</FormLabel>
+                  <FormLabel>Firstname *</FormLabel>
                   <FormControl>
                     <Input placeholder="Enter firstname" {...field} />
                   </FormControl>
@@ -159,7 +161,7 @@ const TeacherForm = ({ initialize }: TeacherFormProps) => {
               name="lastname"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Lastname</FormLabel>
+                  <FormLabel>Lastname *</FormLabel>
                   <FormControl>
                     <Input placeholder="Enter lastname" {...field} />
                   </FormControl>
@@ -198,7 +200,7 @@ const TeacherForm = ({ initialize }: TeacherFormProps) => {
               name="gender"
               render={({ field }) => (
                 <FormItem className="space-y-3">
-                  <FormLabel>Gender</FormLabel>
+                  <FormLabel>Gender *</FormLabel>
                   <FormControl>
                     <RadioGroup
                       onValueChange={field.onChange}
@@ -230,7 +232,7 @@ const TeacherForm = ({ initialize }: TeacherFormProps) => {
               name="hireDate"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Hire Date</FormLabel>
+                  <FormLabel>Hire Date *</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -284,10 +286,9 @@ const TeacherForm = ({ initialize }: TeacherFormProps) => {
               )}
             />
           </div>
-          <Button disabled={loading} type="submit">
-            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          <ButtonLoading isLoading={loading} type="submit">
             {btnText}
-          </Button>
+          </ButtonLoading>
         </form>
       </Form>
     </>

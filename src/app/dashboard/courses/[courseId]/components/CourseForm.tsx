@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { createCourse, deleteCourse, updateCourse } from "@/services/course.service";
+import { ButtonLoading } from "@/components/ButtonLoading";
 
 type CourseProp = {
   initialize: Course | null;
@@ -57,7 +58,7 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
       name: "",
       categoryId: 0,
       price: 0,
-      teacherId: 0,
+      teacherId: undefined,
       description: "",
     },
   });
@@ -141,7 +142,7 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Name *</FormLabel>
                   <FormControl>
                     <Input autoFocus placeholder="Enter name" {...field} />
                   </FormControl>
@@ -154,7 +155,7 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
               name="categoryId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Category</FormLabel>
+                  <FormLabel>Category *</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={initialize?.categoryId.toString()} >
                     <FormControl>
                       <SelectTrigger>
@@ -181,7 +182,7 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
               name="price"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Price</FormLabel>
+                  <FormLabel>Price *</FormLabel>
                   <FormControl>
                     <Input type="number" placeholder="Enter price" {...field} />
                   </FormControl>
@@ -194,7 +195,7 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
               name="teacherId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Teacher</FormLabel>
+                  <FormLabel>Teacher *</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={initialize?.teacherId.toString()}>
                     <FormControl>
                       <SelectTrigger>
@@ -234,9 +235,9 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
               )}
             />
           </div>
-          <Button disabled={loading} type="submit">
+          <ButtonLoading isLoading={loading} type="submit">
             {btnText}
-          </Button>
+          </ButtonLoading>
         </form>
       </Form>
     </>

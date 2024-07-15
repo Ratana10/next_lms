@@ -6,7 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { CircleUser } from "lucide-react";
+import { CircleUser, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { signOut } from "next-auth/react"
 
@@ -20,8 +20,8 @@ const Header = () => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onClick={()=> signOut()}>
-            Logout
+          <DropdownMenuItem className="cursor-pointer" onClick={()=> signOut()}>
+          <LogOut className="w-4 h-4 mr-2" /> Logout
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

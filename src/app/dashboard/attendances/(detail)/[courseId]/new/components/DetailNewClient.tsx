@@ -22,6 +22,7 @@ import { columns } from "./columns";
 import toast from "react-hot-toast";
 import BackButton from "@/components/BackButton";
 import { Pagination } from "@/types/Pagination";
+import { ButtonLoading } from "@/components/ButtonLoading";
 
 export const attendanceStatus = ["PRESENT", "PERMISSION", "ABSENT"];
 
@@ -33,6 +34,8 @@ interface Props {
 }
 const DetailNewClient = ({ courseId, course, students, pagination }: Props) => {
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
+  
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [attendanceData, setAttendanceData] = useState<{
     [key: string]: number[];
@@ -44,7 +47,7 @@ const DetailNewClient = ({ courseId, course, students, pagination }: Props) => {
 
   const [formattedStudents, setFormattedStudents] =
     useState<AttendanceDetail[]>(students);
-
+  
   const onSelectChange = (studentId: number, status: string) => {
     setFormattedStudents((prevStudents) =>
       prevStudents.map((student) => {
@@ -89,12 +92,14 @@ const DetailNewClient = ({ courseId, course, students, pagination }: Props) => {
     };
 
     try {
+      setLoading(true)
       await createAttendance(data);
       router.push("/dashboard/attendances");
       router.refresh();
       toast.success("create attendance success")
     } catch (error: any) {
       toast.error(error);
+      setLoading(false)
     }
   };
 
@@ -106,10 +111,10 @@ const DetailNewClient = ({ courseId, course, students, pagination }: Props) => {
           title={`${course.name} Attendance`}
           descritpion="Add new attendance"
         />
-        <Button onClick={onCreate}>
+        <ButtonLoading isLoading={loading} onClick={onCreate}>
           <Plus className="w-4 h-4 mr-2" />
           Create
-        </Button>
+        </ButtonLoading>
       </div>
       <Separator />
       <Popover>

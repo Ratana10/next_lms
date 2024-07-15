@@ -77,18 +77,30 @@ export const courseSchema = z.object({
     message: "Name is required.",
   }),
   description: z.string().optional(),
-  price: z.coerce.number().optional(),
-  teacherId: z.coerce.number().optional(),
+  price: z.coerce.number().min(1, {
+    message: "Price is required.",
+  }),
+  teacherId: z.coerce.number().min(1, {
+    message: "Teacher is required.",
+  }),
   categoryId: z.coerce.number().min(1, {
     message: "Category is required.",
   }),
 });
 
 export const scheduleSchema = z.object({
-  day: z.string().nullable(),
-  courseId: z.coerce.number().nullable(),
-  startTime: z.string(),
-  endTime: z.string(),
+  day: z.string().min(1, {
+    message: "Day is required.",
+  }),
+  courseId: z.coerce.number().min(1, {
+    message: "Course is required.",
+  }),
+  startTime: z.string().min(1, {
+    message: "StartTime is required.",
+  }),
+  endTime: z.string().min(1, {
+    message: "EndTime is required.",
+  }),
 });
 
 export const enrollSchema = z.object({

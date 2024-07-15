@@ -30,6 +30,7 @@ import BackButton from "@/components/BackButton";
 import { Modal } from "@/components/Modal";
 import { Separator } from "@/components/ui/separator";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { ButtonLoading } from "@/components/ButtonLoading";
 
 type StudentProp = {
   initialize: Student | null;
@@ -188,7 +189,7 @@ const StudentForm = ({ initialize }: StudentProp) => {
               name="gender"
               render={({ field }) => (
                 <FormItem className="space-y-3">
-                  <FormLabel>Gender</FormLabel>
+                  <FormLabel>Gender *</FormLabel>
                   <FormControl>
                     <RadioGroup
                       onValueChange={field.onChange}
@@ -216,9 +217,9 @@ const StudentForm = ({ initialize }: StudentProp) => {
               )}
             />
           </div>
-          <Button disabled={loading} type="submit">
+          <ButtonLoading isLoading={loading} type="submit">
             {btnText}
-          </Button>
+          </ButtonLoading>
         </form>
       </Form>
     </>

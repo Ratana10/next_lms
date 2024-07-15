@@ -30,9 +30,12 @@ import { loginSchema } from "@/schema/definition";
 import toast from "react-hot-toast";
 import Toast from "@/modal/toaster";
 import { useRouter } from "next/navigation";
+import { ButtonLoading } from "@/components/ButtonLoading";
 export function LoginForm() {
   const [errors, setErrors] = useState(null);
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
+  
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -43,12 +46,14 @@ export function LoginForm() {
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
     try {
+      setLoading(true)
       await login(values);
       toast.success("Login success");
       router.refresh(); 
     } catch (error: any) {
       toast.error(`${error}`);
-
+    }finally{
+      setLoading(false)
     }
   }
 
@@ -110,9 +115,9 @@ export function LoginForm() {
               )}
             </CardContent>
             <CardFooter>
-              <Button className="w-full" type="submit">
+              <ButtonLoading isLoading={loading} className="w-full" type="submit">
                 Sign in
-              </Button>
+              </ButtonLoading>
             </CardFooter>
           </Card>
         </form>

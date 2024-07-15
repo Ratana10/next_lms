@@ -32,6 +32,7 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { createPayment } from "@/services/payment.service";
+import { ButtonLoading } from "@/components/ButtonLoading";
 
 type EnrollPaymentProp = {
   initialize: Enroll;
@@ -84,7 +85,7 @@ const EnrollPaymentForm = ({ initialize }: EnrollPaymentProp) => {
               name="enrollmentId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>EnrollmentId</FormLabel>
+                  <FormLabel>EnrollmentId *</FormLabel>
                   <FormControl>
                     <Input disabled={true} type="number" {...field} />
                   </FormControl>
@@ -100,7 +101,7 @@ const EnrollPaymentForm = ({ initialize }: EnrollPaymentProp) => {
               render={({ field }) => (
                 <FormItem>
                   <div className="flex flex-row justify-between">
-                    <FormLabel>Amount</FormLabel>
+                    <FormLabel>Amount *</FormLabel>
                     <FormLabel className="text-md text-green-600">
                       Remain: {initialize.remain} $
                     </FormLabel>
@@ -123,7 +124,7 @@ const EnrollPaymentForm = ({ initialize }: EnrollPaymentProp) => {
             name="date"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Date</FormLabel>
+                <FormLabel>Date *</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -159,9 +160,9 @@ const EnrollPaymentForm = ({ initialize }: EnrollPaymentProp) => {
               </FormItem>
             )}
           />
-          <Button disabled={loading} type="submit">
+          <ButtonLoading isLoading={loading} type="submit">
             {btnText}
-          </Button>
+          </ButtonLoading>
         </form>
       </Form>
     </>

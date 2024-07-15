@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { enrollSchema } from "@/schema/definition";
 import Heading from "@/components/Heading";
 import { CalendarIcon, Trash } from "lucide-react";
-import { Enroll, Student } from "@/types";
+import {  Student } from "@/types";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useState } from "react";
@@ -41,6 +41,7 @@ import { Calendar } from "@/components/ui/calendar";
 import MultipleSelector, { Option } from "@/components/ui/multiple-selector";
 import { createEnroll } from "@/services/enroll.service";
 import { Input } from "@/components/ui/input";
+import { ButtonLoading } from "@/components/ButtonLoading";
 
 type EnrollFormProp = {
   initialize: any | null;
@@ -134,7 +135,7 @@ const EnrollForm = ({ initialize, students, coursesOption }: EnrollFormProp) => 
               name="studentId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Student</FormLabel>
+                  <FormLabel>Student *</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={initialize ? initialize.studentId : ""}>
                     <FormControl>
                       <SelectTrigger>
@@ -163,7 +164,7 @@ const EnrollForm = ({ initialize, students, coursesOption }: EnrollFormProp) => 
               name="courses"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Course</FormLabel>
+                  <FormLabel>Course *</FormLabel>
                   <FormControl>
                     <MultipleSelector 
                       {...field}
@@ -219,7 +220,7 @@ const EnrollForm = ({ initialize, students, coursesOption }: EnrollFormProp) => 
             name="date"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Date</FormLabel>
+                <FormLabel>Date *</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -255,9 +256,9 @@ const EnrollForm = ({ initialize, students, coursesOption }: EnrollFormProp) => 
               </FormItem>
             )}
           />
-          <Button disabled={loading} type="submit">
+          <ButtonLoading isLoading={loading} type="submit">
             {btnText}
-          </Button>
+          </ButtonLoading>
         </form>
       </Form>
     </>

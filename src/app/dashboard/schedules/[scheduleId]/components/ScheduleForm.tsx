@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/select";
 import { DayOfWeek, dayOfWeek } from "@/lib/dayOfWeek";
 import { createSchedule, updateSchedule } from "@/services/schedule.service";
+import { ButtonLoading } from "@/components/ButtonLoading";
 
 type ScheduleProp = {
   initialize: Schedule | null;
@@ -123,7 +124,7 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
               name="courseId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Course</FormLabel>
+                  <FormLabel>Course *</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={initialize?.courseId.toString()}
@@ -153,7 +154,7 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
               name="day"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Day</FormLabel>
+                  <FormLabel>Day *</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={initialize?.day}
@@ -182,7 +183,7 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
               name="startTime"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Start Time</FormLabel>
+                  <FormLabel>Start Time *</FormLabel>
                   <FormControl onChange={field.onChange}>
                     <Input type="time" {...field} />
                   </FormControl>
@@ -195,7 +196,7 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
               name="endTime"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>End Time</FormLabel>
+                  <FormLabel>End Time *</FormLabel>
                   <FormControl onChange={field.onChange}>
                     <Input type="time" {...field} />
                   </FormControl>
@@ -204,9 +205,9 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
               )}
             />
           </div>
-          <Button disabled={loading} type="submit">
+          <ButtonLoading isLoading={loading} type="submit">
             {btnText}
-          </Button>
+          </ButtonLoading>
         </form>
       </Form>
     </>

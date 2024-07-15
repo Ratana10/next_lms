@@ -29,6 +29,7 @@ import { useState } from "react";
 import BackButton from "@/components/BackButton";
 import { Modal } from "@/components/Modal";
 import { Separator } from "@/components/ui/separator";
+import { ButtonLoading } from "@/components/ButtonLoading";
 
 type CategoryProp = {
   initialize: Category | null;
@@ -54,30 +55,30 @@ const CategoryForm = ({ initialize }: CategoryProp) => {
     if (initialize) {
       // Update exists category
       try {
-        await updateCategory(initialize.id, values);
         setLoading(true);
+        await updateCategory(initialize.id, values);
         toast.success("Update successfully");
         router.push("/dashboard/categories");
-        setLoading(false);
         router.refresh();
       } catch (error) {
-        toast.error(`Error[Category]: ${error}`);
+        toast.error(`ERROR: ${error}`);
       } finally {
+        setLoading(false);
         setOpen(false);
       }
     } else {
       // Create new category
       try {
-        await createCategory(values);
         setLoading(true);
+        await createCategory(values);
         toast.success("Create successfully");
         router.push("/dashboard/categories");
         router.refresh();
-        setLoading(false);
       } catch (error) {
-        toast.error(`Error[Category]: ${error}`);
+        toast.error(`ERROR: ${error}`);
       } finally {
         setOpen(false);
+        setLoading(false);
       }
     }
   }
@@ -85,8 +86,8 @@ const CategoryForm = ({ initialize }: CategoryProp) => {
   async function onDelete() {
     if (initialize && initialize.id) {
       try {
-        await deleteCategory(initialize.id);
         setLoading(true);
+        await deleteCategory(initialize.id);
         toast.success("delete successfully");
         router.push("/dashboard/categories");
       } catch (error) {
@@ -141,9 +142,9 @@ const CategoryForm = ({ initialize }: CategoryProp) => {
               )}
             />
           </div>
-          <Button disabled={loading} type="submit">
+          <ButtonLoading isLoading={loading} type="submit">
             {btnText}
-          </Button>
+          </ButtonLoading>
         </form>
       </Form>
     </>
