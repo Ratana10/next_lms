@@ -4,7 +4,7 @@ import { DataTable } from "@/components/DataTable";
 import Heading from "@/components/Heading";
 import { Separator } from "@/components/ui/separator";
 import { columns } from "./columns";
-import { Attendance, AttendanceDetail } from "@/types";
+import { Attendance, AttendanceDetail, Course } from "@/types";
 import BackButton from "@/components/BackButton";
 import { Pagination } from "@/types/Pagination";
 import PaginationSection from "@/components/PaginationSection";
@@ -18,12 +18,14 @@ interface DetailProp {
   attendances: Attendance[];
   attendanceDetails: AttendanceDetail[];
   pagination: Pagination;
+  course: Course;
 }
 
 const DetailClient = ({
   attendances,
   attendanceDetails,
   pagination,
+  course
 }: DetailProp) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -61,7 +63,7 @@ const DetailClient = ({
       <BackButton href="/dashboard/attendances" text="Back" />
       <div className="flex justify-between">
         <Heading
-          title={`${attendances[0].courseName}`}
+          title={`${course.name}`}
           descritpion="List of student's attendance"
         />
         {/* Date Picker Range */}
