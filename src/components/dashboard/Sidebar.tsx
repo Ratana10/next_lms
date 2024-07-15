@@ -10,6 +10,11 @@ const Sidebar = () => {
 
   const navs = [
     {
+      href: "/dashboard",
+      label: "Dashboards",
+      icon: <Home />,
+    },
+    {
       href: "/dashboard/categories",
       label: "Categories",
       icon: <Home />,
@@ -66,19 +71,27 @@ const Sidebar = () => {
         </div>
         <div className="flex-1">
           <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-            {navs.map((nav) => (
-              <Link
-                key={nav.href}
-                href={nav.href}
-                className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
-                  pathname.includes(nav.href) ? "bg-slate-300" : ""
-                )}
-              >
-                {nav.icon}
-                {nav.label}
-              </Link>
-            ))}
+          {navs.map((nav) => {
+              const activeRoute = pathname.startsWith("/dashboard/")
+              ? pathname.replace("/dashboard/", "").split("/")[0]
+              : pathname;
+
+                const isActive = nav.href.endsWith(activeRoute);
+
+              return (
+                <Link
+                  key={nav.href}
+                  href={nav.href}
+                  className={cn(
+                    "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
+                    isActive ? "bg-slate-300" : ""
+                  )}
+                >
+                  {nav.icon}
+                  {nav.label}
+                </Link>
+              );
+            })}
           </nav>
         </div>
       </div>

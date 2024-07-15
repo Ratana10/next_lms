@@ -17,6 +17,7 @@ const EnrollPage = async ({
   const search = searchParams?.search || "";
   const status = searchParams?.status || "";
 
+
   const {enrolls, pagination} = await getAllEnrolls({page, search, status});
 
 

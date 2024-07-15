@@ -3,13 +3,25 @@ import {
   getStudentsEnrollCourseId,
 } from "@/services/course.service";
 import { AttendanceDetail, Student } from "@/types";
-import StudentClient from "./components/DetailNewClient";
-
-const DetailNewPage = async ({ params }: { params: { courseId: string } }) => {
+import DetailNewClient from "./components/DetailNewClient";
+interface Prop {
+  params: {
+    courseId: string;
+  };
+  searchParams: {
+    page?: string;
+  };
+}
+const DetailNewPage = async ({ params, searchParams }: Prop) => {
   const courseId = Number(params.courseId);
-  const { students } = await getStudentsEnrollCourseId(courseId);
+  const page = Number(searchParams?.page) || 1;
+
+  const { students, pagination } = await getStudentsEnrollCourseId(
+    courseId,
+    page
+  );
   const { course } = await getCourseById(courseId);
-  
+  console.log(pagination);
   // format Student to Attendance Detail
   const formattedStudents: AttendanceDetail[] = students.map(
     (e: Student, index: number) => ({
@@ -25,7 +37,14 @@ const DetailNewPage = async ({ params }: { params: { courseId: string } }) => {
     })
   );
 
-  return <StudentClient course={course} courseId={courseId} students={formattedStudents} />;
+  return (
+    <DetailNewClient
+      course={course}
+      courseId={courseId}
+      students={formattedStudents}
+      pagination={pagination}
+    />
+  );
 };
 
 export default DetailNewPage;

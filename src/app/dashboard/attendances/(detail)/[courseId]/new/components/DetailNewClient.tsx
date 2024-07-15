@@ -21,6 +21,8 @@ import { createAttendance } from "@/services/attendance.service";
 import { columns } from "./columns";
 import toast from "react-hot-toast";
 import BackButton from "@/components/BackButton";
+import PaginationSection from "@/components/PaginationSection";
+import { Pagination } from "@/types/Pagination";
 
 export const attendanceStatus = ["PRESENT", "PERMISSION", "ABSENT"];
 
@@ -28,8 +30,9 @@ interface Props {
   courseId: number;
   course: Course;
   students: AttendanceDetail[];
+  pagination: Pagination;
 }
-const DetailNewClient = ({ courseId, course, students }: Props) => {
+const DetailNewClient = ({ courseId, course, students, pagination }: Props) => {
   const router = useRouter();
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [attendanceData, setAttendanceData] = useState<{
@@ -76,6 +79,21 @@ const DetailNewClient = ({ courseId, course, students }: Props) => {
       }
       return newState;
     });
+  };
+
+
+  const onPreviousPage = () => {
+    if (pagination.pageNumber > 1) {
+      router.push(`/dashboard/attendances/${course.id}/new?page=${pagination.pageNumber - 1}`);
+      router.refresh();
+    }
+  };
+
+  const onNextPage = () => {
+    if (pagination.pageNumber < pagination.totalPages) {
+      router.push(`/dashboard/attendances/${course.id}/new?page=${pagination.pageNumber + 1}`);
+      router.refresh();
+    }
   };
 
   const onCreate = async () => {
@@ -134,6 +152,15 @@ const DetailNewClient = ({ courseId, course, students }: Props) => {
       <DataTable
         columns={columns({ onSelectChange })}
         data={formattedStudents}
+        
+      />
+      <PaginationSection
+       isLast={pagination.last}
+       isFirst={pagination.first}
+       currentPage={pagination.pageNumber}
+       totalPages={pagination.totalPages}
+       onPreviousPage={onPreviousPage}
+       onNextPage={onNextPage}
       />
     </>
   );

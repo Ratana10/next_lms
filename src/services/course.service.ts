@@ -149,10 +149,10 @@ export async function deleteCourse(courseId: number) {
   return data;
 }
 
-export async function getStudentsEnrollCourseId(courseId: number) {
+export async function getStudentsEnrollCourseId(courseId: number, page: number) {
   const token = await getToken();
   const res = await fetch(
-    `${process.env.API_BASE_URL}/api/v1/courses/${courseId}/students`,
+    `${process.env.API_BASE_URL}/api/v1/courses/${courseId}/students?page=${page}`,
     {
       method: "GET",
       headers: {
@@ -169,6 +169,7 @@ export async function getStudentsEnrollCourseId(courseId: number) {
 
   return {
     students: data.data,
+    pagination: data.pagination
   };
 }
 
