@@ -21,7 +21,6 @@ const DetailNewPage = async ({ params, searchParams }: Prop) => {
     page
   );
   const { course } = await getCourseById(courseId);
-  console.log(pagination);
   // format Student to Attendance Detail
   const formattedStudents: AttendanceDetail[] = students.map(
     (e: Student, index: number) => ({
@@ -40,7 +39,6 @@ const DetailNewPage = async ({ params, searchParams }: Prop) => {
   return (
     <DetailNewClient
       course={course}
-      courseId={courseId}
       students={formattedStudents}
       pagination={pagination}
     />

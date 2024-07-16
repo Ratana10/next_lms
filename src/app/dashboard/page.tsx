@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import DashboardClient from "./components/DashboardClient";
+import DashboardClient from "./(root)/components/DashboardClient";
 
 const DashboardPage = async () => {
   const session = await auth();

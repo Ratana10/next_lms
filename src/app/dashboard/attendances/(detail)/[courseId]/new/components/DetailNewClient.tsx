@@ -27,12 +27,11 @@ import { ButtonLoading } from "@/components/ButtonLoading";
 export const attendanceStatus = ["PRESENT", "PERMISSION", "ABSENT"];
 
 interface Props {
-  courseId: number;
   course: Course;
   students: AttendanceDetail[];
   pagination: Pagination;
 }
-const DetailNewClient = ({ courseId, course, students, pagination }: Props) => {
+const DetailNewClient = ({ course, students, pagination }: Props) => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   

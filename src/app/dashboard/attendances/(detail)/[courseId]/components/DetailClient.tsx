@@ -13,6 +13,9 @@ import { DatePickerWithRange } from "@/components/DatePickerWithRange";
 import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { format } from "date-fns";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import Link from "next/link";
 
 interface DetailProp {
   attendances: Attendance[];
@@ -25,7 +28,7 @@ const DetailClient = ({
   attendances,
   attendanceDetails,
   pagination,
-  course
+  course,
 }: DetailProp) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -66,12 +69,21 @@ const DetailClient = ({
           title={`${course.name}`}
           descritpion="List of student's attendance"
         />
-        {/* Date Picker Range */}
-        <DatePickerWithRange
-          placeholder="Pick date"
-          date={date}
-          setDate={setDate}
-        />
+        <div className="flex flex-row gap-5">
+          {/* Date Picker Range */}
+
+          <DatePickerWithRange
+            placeholder="Pick date"
+            date={date}
+            setDate={setDate}
+          />
+          <Button asChild>
+            <Link href={`/dashboard/attendances/${course.id}/new`}>
+              <Plus className="w-4 h-4 mr-2" />
+              Create
+            </Link>
+          </Button>
+        </div>
       </div>
       <Separator />
       {/* Display attendance-details */}
