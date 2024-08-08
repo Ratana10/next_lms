@@ -14,6 +14,7 @@ const CategoryPage = async ({ searchParams }: PageProps) => {
       no: getNoNumber(index, pagination.pageNumber, pagination.pageSize),
       id: e.id,
       name: e.name,
+      description: e.description,
       createdAt: formattedDate(e.createdAt),
       updatedAt: formattedDate(e.updatedAt),
     })

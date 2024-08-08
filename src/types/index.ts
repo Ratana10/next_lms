@@ -15,12 +15,14 @@ export type RegisterRequest = {
 export type Category ={
     id: number,
     name: string,
+    description: string,
     createdAt: string,
     updatedAt: string,
 }
 
 export type Teacher = {
     id: number,
+    code: string,
     firstname: string,
     lastname: string,
     email: string,

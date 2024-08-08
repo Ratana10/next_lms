@@ -22,13 +22,6 @@ export const columns: ColumnDef<Course>[] = [
     cell: ({row}) => <div className="font-medium">{formatToDollar(row.getValue("price"))}</div>
   },
   {
-    accessorKey: "teacher",
-    header: "Teacher",
-    cell: ({row}) => (
-      <Badge className="bg-green-600 font-medium">{row.getValue("teacher")}</Badge>
-    )
-  },
-  {
     accessorKey: "createdAt",
     header: "CreatedAt",
   },

@@ -20,7 +20,16 @@ export async function getAllTeacher(page: number) {
     }
   );
 
-  return await res.json();
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+
+  return {
+    teachers: data.data,
+    pagination: data.pagination
+  };
 }
 
 export async function createTeacher(teacher: z.infer<typeof teacherSchema>) {

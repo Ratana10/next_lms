@@ -2,6 +2,7 @@ import { getAllTeacher } from "@/services/teacher.service";
 import TeacherClient from "./components/TeacherClient";
 import { Teacher } from "@/types";
 import { format } from "date-fns";
+import { formattedDate, formattedGender, getNoNumber } from "@/lib/formatted";
 
 const TeacherPage = async ({
   searchParams,
@@ -13,24 +14,26 @@ const TeacherPage = async ({
 }) => {
   const currentPage = Number(searchParams?.page) || 1;
 
-  const data = await getAllTeacher(currentPage);
+  const { teachers, pagination } = await getAllTeacher(currentPage);
 
-  const teacherFormatted = data.data.map((e: Teacher, index: number) => ({
+  const teacherFormatted = teachers.map((e: Teacher, index: number) => ({
     id: e.id,
     no: index + 1,
+    code: e.code,
     firstname: e.firstname,
     lastname: e.lastname,
-    gender: e.gender === "FEMALE" ? "F" : "M",
+    gender: formattedGender(e.gender),
     hireDate: e.hireDate,
-    createdAt: format(new Date(e.createdAt), "yyyy-MM-dd"),
-    updatedAt: e.updatedAt
-      ? format(new Date(e.updatedAt), "yyyy-MM-dd")
-      : "...",
+    email: e.email,
+    phone: e.phone,
+    address: e.address,
+    createdAt: formattedDate(e.createdAt),
+    updatedAt: formattedDate(e.updatedAt),
   }));
 
   return (
     <div>
-      <TeacherClient teachers={teacherFormatted} pagination={data.pagination} />
+      <TeacherClient teachers={teacherFormatted} pagination={pagination} />
     </div>
   );
 };

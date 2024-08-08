@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { deleteTeacher } from "@/services/teacher.service";
+import { ModalTeacher } from "./ModalTeacher";
 
 interface props {
   data: Teacher;
@@ -24,6 +25,7 @@ const CellAction = ({ data }: props) => {
   const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [popup, setPopup] = useState<boolean>(false);
 
   const onUpdate = (id: number) => {
     router.push(`/dashboard/teachers/${id}`);
@@ -53,6 +55,11 @@ const CellAction = ({ data }: props) => {
         onDelete={onDelete}
         loading={loading}
       />
+      <ModalTeacher
+        isOpen={popup}
+        onClose={() => setPopup(false)}
+        teacher={data}
+      />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
@@ -62,6 +69,13 @@ const CellAction = ({ data }: props) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem
+            disabled={loading}
+            onClick={() => setPopup(true)}
+            className="cursor-pointer"
+          >
+            <Edit className="w-4 h-4 mr-2" /> View Detail
+          </DropdownMenuItem>
           <DropdownMenuItem
             disabled={loading}
             onClick={() => onUpdate(data.id)}

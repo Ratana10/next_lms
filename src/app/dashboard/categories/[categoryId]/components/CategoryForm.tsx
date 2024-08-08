@@ -30,6 +30,7 @@ import BackButton from "@/components/BackButton";
 import { Modal } from "@/components/Modal";
 import { Separator } from "@/components/ui/separator";
 import { ButtonLoading } from "@/components/ButtonLoading";
+import { Textarea } from "@/components/ui/textarea";
 
 type CategoryProp = {
   initialize: Category | null;
@@ -48,6 +49,7 @@ const CategoryForm = ({ initialize }: CategoryProp) => {
     resolver: zodResolver(categorySchema),
     defaultValues: initialize || {
       name: "",
+      description: "",
     },
   });
 
@@ -136,6 +138,25 @@ const CategoryForm = ({ initialize }: CategoryProp) => {
                   <FormLabel>Name *</FormLabel>
                   <FormControl>
                     <Input autoFocus placeholder="Enter name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="grid grid-cols-3 gap-8">
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Enter description"
+                      className="resize-none"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

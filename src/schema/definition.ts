@@ -1,18 +1,15 @@
 import { z } from "zod";
-import { Option } from '@/components/ui/multiple-selector';
-
+import { Option } from "@/components/ui/multiple-selector";
 
 export const loginSchema = z.object({
-    username: z.string().min(1, {
-      message: "Username is required.",
-    }),
-    password: z.string().min(2, {
-      message: "Password is required.",
-    }),
-  });
+  username: z.string().min(1, {
+    message: "Username is required.",
+  }),
+  password: z.string().min(2, {
+    message: "Password is required.",
+  }),
+});
 
-
-  
 export const registerSchema = z.object({
   firstname: z.string().min(2, {
     message: "Firstname must be at least 2 characters.",
@@ -31,14 +28,19 @@ export const registerSchema = z.object({
   }),
 });
 
-
 export const categorySchema = z.object({
   name: z.string().min(1, {
     message: "Name is required.",
-  })
+  }),
+  description: z.string().min(1, {
+    message: "Description is required.",
+  }),
 });
 
 export const teacherSchema = z.object({
+  code: z.string().min(1, {
+    message: "Code is required.",
+  }),
   firstname: z.string().min(1, {
     message: "Firstname is required.",
   }),
@@ -53,9 +55,8 @@ export const teacherSchema = z.object({
   hireDate: z.date({
     required_error: "HireDate is required.",
   }),
-  address: z.string().optional()
+  address: z.string().optional(),
 });
-
 
 export const studentSchema = z.object({
   firstname: z.string().min(1, {
@@ -70,7 +71,6 @@ export const studentSchema = z.object({
   }),
   email: z.string().optional(),
 });
-
 
 export const courseSchema = z.object({
   name: z.string().min(1, {
@@ -107,17 +107,21 @@ export const enrollSchema = z.object({
   studentId: z.coerce.number().min(1, {
     message: "Student is required.",
   }),
-  courses: z.array(z.object({
-    label: z.string(),
-    value: z.string(),
-    disable: z.boolean().optional(),
-  })).min(1, {
-    message: "Course is required.",
-  }),
+  courses: z
+    .array(
+      z.object({
+        label: z.string(),
+        value: z.string(),
+        disable: z.boolean().optional(),
+      })
+    )
+    .min(1, {
+      message: "Course is required.",
+    }),
   date: z.date({
     required_error: "Date is required.",
   }),
-  amount: z.coerce.number().optional()
+  amount: z.coerce.number().optional(),
 });
 
 export const paymentSchema = z.object({
@@ -131,4 +135,3 @@ export const paymentSchema = z.object({
     required_error: "Date is required.",
   }),
 });
-

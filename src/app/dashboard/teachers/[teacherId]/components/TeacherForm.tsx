@@ -41,7 +41,6 @@ import {
 } from "@/services/teacher.service";
 import { ButtonLoading } from "@/components/ButtonLoading";
 
-
 interface TeacherFormProps {
   initialize: Teacher | null;
 }
@@ -58,6 +57,7 @@ const TeacherForm = ({ initialize }: TeacherFormProps) => {
   const form = useForm<z.infer<typeof teacherSchema>>({
     resolver: zodResolver(teacherSchema),
     defaultValues: initialize || {
+      code: "",
       firstname: "",
       lastname: "",
       email: "",
@@ -109,7 +109,6 @@ const TeacherForm = ({ initialize }: TeacherFormProps) => {
       } finally {
         setLoading(false);
         setOpen(false);
-        
       }
     }
   }
@@ -142,6 +141,21 @@ const TeacherForm = ({ initialize }: TeacherFormProps) => {
       <Separator />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <div className="grid grid-cols-2 gap-8">
+            <FormField
+              control={form.control}
+              name="code"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Code *</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter code" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <div className="grid grid-cols-2 gap-8">
             <FormField
               control={form.control}
@@ -257,7 +271,7 @@ const TeacherForm = ({ initialize }: TeacherFormProps) => {
                         mode="single"
                         selected={field.value}
                         onSelect={field.onChange}
-                        disabled={(date:any) =>
+                        disabled={(date: any) =>
                           date > new Date() || date < new Date("1900-01-01")
                         }
                         initialFocus

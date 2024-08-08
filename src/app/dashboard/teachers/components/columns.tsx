@@ -11,6 +11,10 @@ export const columns: ColumnDef<Teacher>[] = [
     header: "NO",
   },
   {
+    accessorKey: "code",
+    header: "Code",
+  },
+  {
     accessorKey: "firstname",
     header: "First name",
   },
