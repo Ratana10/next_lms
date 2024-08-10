@@ -23,6 +23,8 @@ const EnrollPaymentPage = async ({ params, searchParams }: Props) => {
     no: getNoNumber(index, pagination.pageNumber, pagination.pageSize),
     id: e.id,
     amount: formatToDollar(e.amount),
+    receiver: e.receiver,
+    method: e.method,
     date: formattedDate(e.date),
     createdAt: formattedDate(e.createdAt),
     updatedAt: formattedDate(e.updatedAt),

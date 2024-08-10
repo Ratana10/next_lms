@@ -9,7 +9,7 @@ import { ChevronDown, Plus } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { columns } from "./columns";
-import { Enroll } from "@/types";
+import { Course, Enroll } from "@/types";
 import PaginationSection from "@/components/PaginationSection";
 import { Pagination } from "@/types/Pagination";
 import {
@@ -20,7 +20,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const enrollStatus = [
+export interface FilterOption {
+  label: string;
+  value: string;
+}
+
+const enrollStatus: FilterOption[] = [
   {
     label: "UNPAID",
     value: "UNPAID",
@@ -34,18 +39,40 @@ const enrollStatus = [
     value: "PAID",
   },
 ];
+
+const coursesOption: FilterOption[] = [
+  {
+    label: "Nextjs",
+    value: "1",
+  },
+  {
+    label: "Srpingboot",
+    value: "2",
+  },
+  {
+    label: "Spring",
+    value: "3",
+  },
+];
+
 interface EnrollClientProp {
   enrolls: Enroll[];
   pagination: Pagination;
+  coursesOption: FilterOption[] | null;
 }
 
-const EnrollClient = ({ enrolls, pagination }: EnrollClientProp) => {
+const EnrollClient = ({
+  enrolls,
+  pagination,
+  coursesOption,
+}: EnrollClientProp) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
-  
+
   const [status, setStatus] = useState(searchParams.get("status") || "");
+  const [course, setCourse] = useState(searchParams.get("course") || "");
 
   const onPreviousPage = () => {
     if (pagination.pageNumber > 1) {
@@ -68,6 +95,20 @@ const EnrollClient = ({ enrolls, pagination }: EnrollClientProp) => {
       params.set("status", value);
       setStatus(value);
     }
+    setStatus(value);
+    replace(`${pathname}?${params.toString()}`);
+  };
+
+  const onCourseClick = (value: any) => {
+    const params = new URLSearchParams(searchParams);
+    if (status === value) {
+      setStatus("");
+      params.delete("course");
+    } else {
+      params.set("course", value);
+      setStatus(value);
+    }
+    setCourse(value);
     replace(`${pathname}?${params.toString()}`);
   };
 
@@ -81,7 +122,7 @@ const EnrollClient = ({ enrolls, pagination }: EnrollClientProp) => {
         </Button>
       </div>
       <Separator />
-      <div className="flex">
+      <div className="flex gap-2">
         <Search placeholder="Search student name ..." />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -94,9 +135,28 @@ const EnrollClient = ({ enrolls, pagination }: EnrollClientProp) => {
               value={status}
               onValueChange={(value) => onclick(value)}
             >
-              {enrollStatus.map((status, index: number) => (
+              {enrollStatus.map((status: FilterOption, index: number) => (
                 <DropdownMenuRadioItem key={index} value={status.value}>
                   {status.label}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="ml-auto">
+              Courses <ChevronDown className="ml-2 h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuRadioGroup
+              value={course}
+              onValueChange={(value) => onCourseClick(value)}
+            >
+              {coursesOption?.map((course: FilterOption, index: number) => (
+                <DropdownMenuRadioItem key={index} value={course.value}>
+                  {course.label}
                 </DropdownMenuRadioItem>
               ))}
             </DropdownMenuRadioGroup>

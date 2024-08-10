@@ -8,15 +8,17 @@ export async function getAllEnrolls({
   page,
   search,
   status,
+  course,
 }: {
   page: number;
   search: string;
   status: string;
+  course: string;
 }) {
   let size = 10;
   const token = await getToken();
   const res = await fetch(
-    `${process.env.API_BASE_URL}/api/v1/enrollments?size=${size}&page=${page}&search=${search}&status=${status}`,
+    `${process.env.API_BASE_URL}/api/v1/enrollments?size=${size}&page=${page}&search=${search}&status=${status}&course=${course}`,
     {
       method: "GET",
       headers: {
@@ -44,7 +46,7 @@ export async function createEnroll(enroll: z.infer<typeof enrollSchema>) {
     amount: enroll.amount,
     courseIds,
     method: enroll.method,
-    receiver: enroll.receiver
+    receiver: enroll.receiver,
   };
 
   const res = await fetch(`${process.env.API_BASE_URL}/api/v1/enrollments`, {
@@ -130,21 +132,23 @@ export async function getEnrollById(enrollId: number) {
   };
 }
 
-
 export async function getPaymentsByEnrollId(enrollId: number, page: number) {
   const token = await getToken();
-  const res = await fetch(`${process.env.API_BASE_URL}/api/v1/enrollments/${enrollId}/payments?page=${page}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const res = await fetch(
+    `${process.env.API_BASE_URL}/api/v1/enrollments/${enrollId}/payments?page=${page}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
-  const data  =await res.json();
+  const data = await res.json();
 
   return {
     payments: data.data,
-    pagination: data.pagination
-  }
+    pagination: data.pagination,
+  };
 }
