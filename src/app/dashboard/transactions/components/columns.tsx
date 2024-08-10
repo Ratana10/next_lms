@@ -1,33 +1,38 @@
 "use client";
 
-import { Student } from "@/types";
+import { formatToDollar } from "@/lib/formatted";
+import { Payment } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import CellAction from "./CellAction";
 
-export const columns: ColumnDef<Student>[] = [
+export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "no",
     header: "NO",
-  },
-  {
-    accessorKey: "lastname",
-    header: "Lastname",
   },
   {
     accessorKey: "firstname",
     header: "Firstname",
   },
   {
-    accessorKey: "gender",
-    header: "Gender",
+    accessorKey: "lastname",
+    header: "Lastname",
   },
   {
-    accessorKey: "phone",
-    header: "Phone",
+    accessorKey: "amount",
+    header: "Amount",
   },
   {
-    accessorKey: "email",
-    header: "Email",
+    accessorKey: "receiver",
+    header: "Receiver",
+  },
+  {
+    accessorKey: "method",
+    header: "Method",
+  },
+  {
+    accessorKey: "date",
+    header: "Date",
   },
   {
     accessorKey: "createdAt",

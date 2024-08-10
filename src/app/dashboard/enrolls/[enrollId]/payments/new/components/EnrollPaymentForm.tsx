@@ -33,6 +33,7 @@ import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { createPayment } from "@/services/payment.service";
 import { ButtonLoading } from "@/components/ButtonLoading";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type EnrollPaymentProp = {
   initialize: Enroll;
@@ -46,12 +47,29 @@ const EnrollPaymentForm = ({ initialize }: EnrollPaymentProp) => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
 
+  interface optionType {
+    value: string;
+    label: string;
+  }
+  const methodOption: optionType[] = [
+    {
+      value: "CASH",
+      label: "Cash",
+    },
+    {
+      value: "BANK",
+      label: "Bank",
+    },
+  ];
+
   const form = useForm<z.infer<typeof paymentSchema>>({
     resolver: zodResolver(paymentSchema),
     defaultValues: {
       enrollmentId: initialize.id,
       amount: 0,
       date: new Date(),
+      method: "CASH",
+      receiver: "",
     },
   });
 
@@ -113,6 +131,47 @@ const EnrollPaymentForm = ({ initialize }: EnrollPaymentProp) => {
                       placeholder="Enter amount"
                       {...field}
                     />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-8">
+            <FormField
+              control={form.control}
+              name="method"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Payment Method</FormLabel>
+                  <Select onValueChange={field.onChange}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a method" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {methodOption.map((item: optionType, index: number) => (
+                        <SelectItem key={index} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-8">
+            <FormField
+              control={form.control}
+              name="receiver"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Receiver</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter receiver name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

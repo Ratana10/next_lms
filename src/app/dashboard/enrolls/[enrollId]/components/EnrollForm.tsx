@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { enrollSchema } from "@/schema/definition";
 import Heading from "@/components/Heading";
 import { CalendarIcon, Trash } from "lucide-react";
-import {  Student } from "@/types";
+import { Student } from "@/types";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useState } from "react";
@@ -49,7 +49,11 @@ type EnrollFormProp = {
   coursesOption: Option[];
 };
 
-const EnrollForm = ({ initialize, students, coursesOption }: EnrollFormProp) => {
+const EnrollForm = ({
+  initialize,
+  students,
+  coursesOption,
+}: EnrollFormProp) => {
   const title = initialize ? "Edit enroll" : "Create enroll";
   const description = initialize ? "Edit a enroll" : "Add new enroll";
   const btnText = initialize ? "Save change" : "Create";
@@ -59,7 +63,6 @@ const EnrollForm = ({ initialize, students, coursesOption }: EnrollFormProp) => 
   const [loading, setLoading] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(initialize ? initialize.total : 0);
 
-
   const form = useForm<z.infer<typeof enrollSchema>>({
     resolver: zodResolver(enrollSchema),
     defaultValues: initialize || {
@@ -67,8 +70,25 @@ const EnrollForm = ({ initialize, students, coursesOption }: EnrollFormProp) => 
       courses: [],
       date: new Date(),
       amount: 0,
+      method: "CASH",
+      receiver: "",
     },
   });
+
+  interface optionType {
+    value: string;
+    label: string;
+  }
+  const methodOption: optionType[] = [
+    {
+      value: "CASH",
+      label: "Cash",
+    },
+    {
+      value: "BANK",
+      label: "Bank",
+    },
+  ];
 
   async function onSubmit(values: z.infer<typeof enrollSchema>) {
     try {
@@ -136,7 +156,10 @@ const EnrollForm = ({ initialize, students, coursesOption }: EnrollFormProp) => 
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Student *</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={initialize ? initialize.studentId : ""}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={initialize ? initialize.studentId : ""}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a student" />
@@ -166,7 +189,7 @@ const EnrollForm = ({ initialize, students, coursesOption }: EnrollFormProp) => 
                 <FormItem>
                   <FormLabel>Course *</FormLabel>
                   <FormControl>
-                    <MultipleSelector 
+                    <MultipleSelector
                       {...field}
                       onChange={(value: Option[]) => {
                         field.onChange(value);
@@ -198,7 +221,7 @@ const EnrollForm = ({ initialize, students, coursesOption }: EnrollFormProp) => 
               render={({ field }) => (
                 <FormItem>
                   <div className="flex flex-row justify-between">
-                    <FormLabel>Fee</FormLabel>
+                    <FormLabel>Amount</FormLabel>
                     <FormLabel className="text-md text-green-600">
                       Total : {total} $
                     </FormLabel>
@@ -209,6 +232,47 @@ const EnrollForm = ({ initialize, students, coursesOption }: EnrollFormProp) => 
                       placeholder="Enter your amount"
                       {...field}
                     />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-8">
+            <FormField
+              control={form.control}
+              name="method"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Payment Method *</FormLabel>
+                  <Select onValueChange={field.onChange}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a method" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {methodOption.map((item: optionType, index: number) => (
+                        <SelectItem key={index} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-8">
+            <FormField
+              control={form.control}
+              name="receiver"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Receiver</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter receiver name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

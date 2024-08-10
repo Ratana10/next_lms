@@ -4,11 +4,11 @@ import { getToken } from "@/lib/session";
 import { paymentSchema } from "@/schema/definition";
 import { z } from "zod";
 
-export async function getAllPayments(page: number) {
+export async function getAllPayments(page: number, search: string) {
   let size = 10;
   const token = await getToken();
   const res = await fetch(
-    `${process.env.API_BASE_URL}/api/v1/payments?size=${size}&page=${page}`,
+    `${process.env.API_BASE_URL}/api/v1/payments?size=${size}&page=${page}&search=${search}`,
     {
       method: "GET",
       headers: {
@@ -39,7 +39,7 @@ export async function createPayment(payment: z.infer<typeof paymentSchema>) {
     body: JSON.stringify(payment),
   });
 
-  const data =  await res.json();
+  const data = await res.json();
   if (!res.ok) {
     throw new Error(data.message);
   }
@@ -49,21 +49,23 @@ export async function createPayment(payment: z.infer<typeof paymentSchema>) {
   };
 }
 
-
 export async function deletePayment(paymentId: number) {
   const token = await getToken();
-  const res = await fetch(`${process.env.API_BASE_URL}/api/v1/payments/${paymentId}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const res = await fetch(
+    `${process.env.API_BASE_URL}/api/v1/payments/${paymentId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
-  const data =  await res.json();
+  const data = await res.json();
   if (!res.ok) {
     throw new Error(data.message);
   }
-  
+
   return null;
 }

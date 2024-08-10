@@ -80,6 +80,9 @@ export const courseSchema = z.object({
   price: z.coerce.number().min(1, {
     message: "Price is required.",
   }),
+  discount: z.coerce.number().min(1, {
+    message: "Discount is required.",
+  }),
   teacherId: z.coerce.number().min(1, {
     message: "Teacher is required.",
   }),
@@ -89,7 +92,7 @@ export const courseSchema = z.object({
 });
 
 export const scheduleSchema = z.object({
-  day: z.string().min(1, {
+  description: z.string().min(1, {
     message: "Day is required.",
   }),
   courseId: z.coerce.number().min(1, {
@@ -101,6 +104,13 @@ export const scheduleSchema = z.object({
   endTime: z.string().min(1, {
     message: "EndTime is required.",
   }),
+  startDate: z.date({
+    required_error: "startDate is required.",
+  }),
+  endDate: z.date({
+    required_error: "endDate is required.",
+  }),
+  totalTime: z.coerce.number().optional(),
 });
 
 export const enrollSchema = z.object({
@@ -122,6 +132,8 @@ export const enrollSchema = z.object({
     required_error: "Date is required.",
   }),
   amount: z.coerce.number().optional(),
+  method: z.coerce.string().optional(),
+  receiver: z.coerce.string().optional(),
 });
 
 export const paymentSchema = z.object({
@@ -134,4 +146,6 @@ export const paymentSchema = z.object({
   date: z.date({
     required_error: "Date is required.",
   }),
+  method: z.coerce.string().optional(),
+  receiver: z.coerce.string().optional(),
 });

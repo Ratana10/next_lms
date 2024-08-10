@@ -3,7 +3,7 @@
 import { DataTable } from "../components/DataTable";
 import Heading from "@/components/Heading";
 import { AttendanceDetail, Course, Student } from "@/types";
-import { Plus } from "lucide-react";
+import { Plus, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -111,8 +111,8 @@ const DetailNewClient = ({ course, students, pagination }: Props) => {
           descritpion="Add new attendance"
         />
         <ButtonLoading isLoading={loading} onClick={onCreate}>
-          <Plus className="w-4 h-4 mr-2" />
-          Create
+          <Save className="w-4 h-4 mr-2" />
+          Save
         </ButtonLoading>
       </div>
       <Separator />

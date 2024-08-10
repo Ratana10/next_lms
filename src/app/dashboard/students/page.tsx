@@ -20,9 +20,8 @@ const StudentPage = async ({ searchParams }: PageProps) => {
     (e: Student, index: number) => ({
       id: e.id,
       no: getNoNumber(index, pagination.pageNumber, pagination.pageSize),
-      // firstname: e.firstname,
-      // lastname: e.lastname,
-      name: formattedFullname(e.lastname, e.firstname),
+      firstname: e.firstname,
+      lastname: e.lastname,
       gender: formattedGender(e.gender),
       phone: formattedPhone(e.phone),
       email: formattedEmail(e.email),

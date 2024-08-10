@@ -32,19 +32,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { DayOfWeek, dayOfWeek } from "@/lib/dayOfWeek";
 import { createSchedule, updateSchedule } from "@/services/schedule.service";
 import { ButtonLoading } from "@/components/ButtonLoading";
-import { Textarea } from "@/components/ui/textarea";
 
 type ScheduleProp = {
   initialize: Schedule | null;
@@ -63,13 +53,10 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
   const form = useForm<z.infer<typeof scheduleSchema>>({
     resolver: zodResolver(scheduleSchema),
     defaultValues: initialize || {
-      description: "",
       courseId: 0,
+      day: "",
       startTime: "",
       endTime: "",
-      startDate: new Date(),
-      endDate: new Date(),
-      totalTime: 0,
     },
   });
 
@@ -140,7 +127,7 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
                   <FormLabel>Course *</FormLabel>
                   <Select
                     onValueChange={field.onChange}
-                    defaultValue={initialize?.courseId?.toString()}
+                    defaultValue={initialize?.courseId.toString()}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -164,17 +151,27 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
             />
             <FormField
               control={form.control}
-              name="description"
+              name="day"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description *</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Enter description"
-                      className="resize-none"
-                      {...field}
-                    />
-                  </FormControl>
+                  <FormLabel>Day *</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={initialize?.day}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a day" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {dayOfWeek.map((day: DayOfWeek, index: number) => (
+                        <SelectItem key={index} value={day.value}>
+                          {day.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -202,109 +199,6 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
                   <FormLabel>End Time *</FormLabel>
                   <FormControl onChange={field.onChange}>
                     <Input type="time" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="grid grid-cols-3 gap-8">
-            <FormField
-              control={form.control}
-              name="startDate"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Start Date *</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-[240px] pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        disabled={(date) =>
-                          date > new Date() || date < new Date("1900-01-01")
-                        }
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="endDate"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>End Date *</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-[240px] pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        disabled={(date) =>
-                          date > new Date() || date < new Date("1900-01-01")
-                        }
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="grid grid-cols-3 gap-8">
-            <FormField
-              control={form.control}
-              name="totalTime"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>TotalTime *</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="Enter total time"
-                      {...field}
-                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

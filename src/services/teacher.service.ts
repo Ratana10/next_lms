@@ -32,6 +32,29 @@ export async function getAllTeacher(page: number) {
   };
 }
 
+export async function getTeacherList() {
+  const token = await getToken();
+  const res = await fetch(
+    `${process.env.API_BASE_URL}/api/v1/teachers?all=true`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+  
+  return {
+    teachers: data.data,
+  };
+}
+
 export async function createTeacher(teacher: z.infer<typeof teacherSchema>) {
   const token = await getToken();
   const res = await fetch(`${process.env.API_BASE_URL}/api/v1/teachers`, {

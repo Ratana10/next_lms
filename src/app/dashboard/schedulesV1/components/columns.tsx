@@ -1,33 +1,27 @@
 "use client";
 
-import { Student } from "@/types";
+import { Course } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
+import { Badge } from "@/components/ui/badge";
 import CellAction from "./CellAction";
 
-export const columns: ColumnDef<Student>[] = [
+export const columns: ColumnDef<Course>[] = [
   {
     accessorKey: "no",
     header: "NO",
   },
   {
-    accessorKey: "lastname",
-    header: "Lastname",
+    accessorKey: "name",
+    header: "Name",
   },
   {
-    accessorKey: "firstname",
-    header: "Firstname",
-  },
-  {
-    accessorKey: "gender",
-    header: "Gender",
-  },
-  {
-    accessorKey: "phone",
-    header: "Phone",
-  },
-  {
-    accessorKey: "email",
-    header: "Email",
+    accessorKey: "teacher",
+    header: "Teacher",
+    cell: ({ row }) => (
+      <Badge className="bg-green-600 font-medium">
+        {row.getValue("teacher")}
+      </Badge>
+    ),
   },
   {
     accessorKey: "createdAt",

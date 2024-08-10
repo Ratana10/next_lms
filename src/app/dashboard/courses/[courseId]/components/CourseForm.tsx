@@ -33,7 +33,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { createCourse, deleteCourse, updateCourse } from "@/services/course.service";
+import {
+  createCourse,
+  deleteCourse,
+  updateCourse,
+} from "@/services/course.service";
 import { ButtonLoading } from "@/components/ButtonLoading";
 
 type CourseProp = {
@@ -51,13 +55,13 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-
   const form = useForm<z.infer<typeof courseSchema>>({
     resolver: zodResolver(courseSchema),
     defaultValues: initialize || {
       name: "",
       categoryId: 0,
       price: 0,
+      discount: 0,
       teacherId: undefined,
       description: "",
     },
@@ -156,7 +160,10 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Category *</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={initialize?.categoryId.toString()} >
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={initialize?.categoryId.toString()}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a category" />
@@ -192,11 +199,45 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
             />
             <FormField
               control={form.control}
+              name="discount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Discount *</FormLabel>
+                  <FormControl>
+                    <Input type="number" placeholder="Enter discount" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Enter description"
+                      className="resize-none"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="teacherId"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Teacher *</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={initialize?.teacherId.toString()}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={initialize?.teacherId.toString()}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a teacher " />
@@ -213,23 +254,6 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
                       ))}
                     </SelectContent>
                   </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Enter description"
-                      className="resize-none"
-                      {...field}
-                    />
-                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

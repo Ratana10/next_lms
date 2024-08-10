@@ -1,27 +1,33 @@
-import { formattedDate, formattedFullname, getNoNumber } from "@/lib/formatted";
-import { getAllCourses } from "@/services/course.service";
-import { Course } from "@/types";
-import { PageProps } from "@/types/PageProps";
+import {
+  formattedDate,
+  formatTimeTo12Hour,
+  getNoNumber,
+} from "@/lib/formatted";
+import { getAllSchedule } from "@/services/schedule.service";
+import { Schedule } from "@/types";
 import React from "react";
-import CourseClient from "./components/CourseClient";
+import ScheduleClient from "./components/ScheduleClient";
 
-const SchedulePage = async ({ searchParams }: PageProps) => {
-  const page = Number(searchParams?.page || 1);
-
-  const {courses, pagination}=await getAllCourses(page, "");
-
-  const coursesFormatted = courses.map((e: Course, index: number) => ({
+const SchedulePage = async () => {
+  const { schedules, pagination } = await getAllSchedule(1);
+  console.log(schedules);
+  const formattedSchedules = schedules.map((e: Schedule, index: number) => ({
     no: getNoNumber(index, pagination.pageNumber, pagination.pageSize),
     id: e.id,
-    name: e.name,
-    price: e.price,
-    teacher: formattedFullname(e.teacher?.lastname, e.teacher?.firstname),
+    description: e.description,
+    courseName: e.course?.name,
+    startDate: formattedDate(e.startDate.toString()),
+    endDate: formattedDate(e.endDate.toString()),
+    startTime: formatTimeTo12Hour(e.startTime),
+    endTime: formatTimeTo12Hour(e.endTime),
+    totalTime: e.totalTime,
     createdAt: formattedDate(e.createdAt),
     updatedAt: formattedDate(e.updatedAt),
-
   }));
-  
-  return <CourseClient courses={coursesFormatted} pagination={pagination} />;
+
+  return (
+    <ScheduleClient schedules={formattedSchedules} pagination={pagination} />
+  );
 };
 
 export default SchedulePage;

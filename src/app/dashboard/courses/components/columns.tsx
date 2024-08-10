@@ -1,11 +1,10 @@
 "use client";
 
-import {  Course } from "@/types";
+import { Course } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import CellAction from "./CellAction";
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
 import { formatToDollar } from "@/lib/formatted";
-
 
 export const columns: ColumnDef<Course>[] = [
   {
@@ -17,9 +16,27 @@ export const columns: ColumnDef<Course>[] = [
     header: "Name",
   },
   {
+    accessorKey: "description",
+    header: "Description",
+  },
+  {
     accessorKey: "price",
     header: "Price",
-    cell: ({row}) => <div className="font-medium">{formatToDollar(row.getValue("price"))}</div>
+    cell: ({ row }) => (
+      <div className="font-medium">{formatToDollar(row.getValue("price"))}</div>
+    ),
+  },
+  {
+    accessorKey: "discount",
+    header: "Discount",
+    
+  },
+  {
+    accessorKey: "afterDis",
+    header: "AfterDis",
+    cell: ({ row }) => (
+      <div className="font-medium">{formatToDollar(row.getValue("afterDis"))}</div>
+    ),
   },
   {
     accessorKey: "createdAt",
@@ -32,5 +49,5 @@ export const columns: ColumnDef<Course>[] = [
   {
     id: "actions",
     cell: ({ row }) => <CellAction data={row.original} />,
-  }
+  },
 ];

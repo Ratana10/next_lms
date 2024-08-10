@@ -28,17 +28,27 @@ export async function getAllCategories(page: number) {
   };
 }
 
-export async function getAllCategoriesV2() {
+export async function getCategoryList() {
   const token = await getToken();
-  const res = await fetch(`${process.env.API_BASE_URL}/api/v1/categories/all`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const res = await fetch(
+    `${process.env.API_BASE_URL}/api/v1/categories?all=true`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
-  return await res.json();
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+  
+  return {
+    categories: data.data,
+  };
 }
 
 export async function createCategory(category: z.infer<typeof categorySchema>) {

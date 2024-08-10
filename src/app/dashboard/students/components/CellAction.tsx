@@ -15,6 +15,7 @@ import { deleteStudent } from "@/services/student.service";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Modal } from "@/components/Modal";
+import ModalStudent from "./ModalStudent";
 
 interface props {
   data: Student;
@@ -23,6 +24,7 @@ const CellAction = ({ data }: props) => {
   const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [modalStudent, setModalStudent] = useState<boolean>(false);
 
   const onUpdate = (id: number) => {
     router.push(`/dashboard/students/${id}`);
@@ -52,6 +54,11 @@ const CellAction = ({ data }: props) => {
         onDelete={onDelete}
         loading={loading}
       />
+      <ModalStudent
+        student={data}
+        isOpen={modalStudent}
+        onClose={() => setModalStudent(false)}
+      />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
@@ -61,6 +68,13 @@ const CellAction = ({ data }: props) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem
+            disabled={loading}
+            onClick={() => setModalStudent(true)}
+            className="cursor-pointer"
+          >
+            <Edit className="w-4 h-4 mr-2" /> View Detail
+          </DropdownMenuItem>
           <DropdownMenuItem
             disabled={loading}
             onClick={() => onUpdate(data.id)}
@@ -78,10 +92,12 @@ const CellAction = ({ data }: props) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             disabled={loading}
-            onClick={() => router.push(`/dashboard/students/${data.id}/courses`)}
+            onClick={() =>
+              router.push(`/dashboard/students/${data.id}/courses`)
+            }
             className="cursor-pointer"
           >
-            <Eye className="w-4 h-4 mr-2 "/>
+            <Eye className="w-4 h-4 mr-2 " />
             View courses
           </DropdownMenuItem>
         </DropdownMenuContent>

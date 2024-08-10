@@ -1,25 +1,21 @@
 import { format } from "date-fns";
 
 export const formatTimeTo12Hour = (time: string) => {
-  const [hours, minutes, seconds] = time.split(':').map(Number);
+  const [hours, minutes, seconds] = time.split(":").map(Number);
   const date = new Date();
-  date.setHours(hours)
-  date.setMinutes(minutes)
-  date.setSeconds(seconds)
-  return format(date, 'hh:mm a');
-}
+  date.setHours(hours);
+  date.setMinutes(minutes);
+  date.setSeconds(seconds);
+  return format(date, "hh:mm a");
+};
 
 export const formattedDate = (date: string) => {
-  return date
-      ? format(new Date(date), "dd-MM-yyyy")
-      : "...";
-}
-
+  return date ? format(new Date(date), "dd-MM-yyyy") : "...";
+};
 
 export const formattedGender = (gender: string) => {
-  return gender === "MALE" ? "M" : "F"
-}
-
+  return gender === "MALE" ? "M" : "F";
+};
 
 export const formatToDollar = (value: number) => {
   return new Intl.NumberFormat("en-US", {
@@ -44,11 +40,14 @@ export const formattedFullname = (
   return lastname + " " + firstname;
 };
 
-
 export const formattedEmail = (email: string) => {
-  return email ? email : "N/A"
-}
+  return email ? email : "N/A";
+};
 
 export const formattedPhone = (phone: string) => {
-  return phone ? phone : "N/A"
-}
+  return phone ? phone : "N/A";
+};
+
+export const priceAfterDiscount = (price: number, discount: number) => {
+  return price - (price * discount) / 100;
+};

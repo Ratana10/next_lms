@@ -57,8 +57,8 @@ const Sidebar = () => {
       icon: <Shapes />,
     },
     {
-      href: "/dashboard/payments",
-      label: "Payments",
+      href: "/dashboard/transactions",
+      label: "Transactions",
       icon: <CreditCard />,
     },
     {

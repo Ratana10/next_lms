@@ -43,6 +43,8 @@ export async function createEnroll(enroll: z.infer<typeof enrollSchema>) {
     date: enroll.date,
     amount: enroll.amount,
     courseIds,
+    method: enroll.method,
+    receiver: enroll.receiver
   };
 
   const res = await fetch(`${process.env.API_BASE_URL}/api/v1/enrollments`, {
