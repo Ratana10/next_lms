@@ -76,13 +76,17 @@ const EnrollClient = ({
 
   const onPreviousPage = () => {
     if (pagination.pageNumber > 1) {
-      router.push(`/dashboard/enrolls?page=${pagination.pageNumber - 1}`);
+      const params = new URLSearchParams(searchParams);
+      params.set("page", (pagination.pageNumber - 1).toString());
+      router.push(`${pathname}?${params.toString()}`);
     }
   };
 
   const onNextPage = () => {
     if (pagination.pageNumber < pagination.totalPages) {
-      router.push(`/dashboard/enrolls?page=${pagination.pageNumber + 1}`);
+      const params = new URLSearchParams(searchParams);
+      params.set("page", (pagination.pageNumber + 1).toString());
+      router.push(`${pathname}?${params.toString()}`);
     }
   };
 
@@ -95,20 +99,19 @@ const EnrollClient = ({
       params.set("status", value);
       setStatus(value);
     }
-    setStatus(value);
     replace(`${pathname}?${params.toString()}`);
   };
 
   const onCourseClick = (value: any) => {
     const params = new URLSearchParams(searchParams);
     if (status === value) {
-      setStatus("");
       params.delete("course");
+      setCourse("");
     } else {
       params.set("course", value);
-      setStatus(value);
+      setCourse(value);
     }
-    setCourse(value);
+
     replace(`${pathname}?${params.toString()}`);
   };
 
