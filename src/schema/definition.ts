@@ -70,6 +70,9 @@ export const studentSchema = z.object({
     message: "Gender is required.",
   }),
   email: z.string().optional(),
+  type: z.string().optional(),
+  position: z.string().optional(),
+  from: z.string().optional(),
 });
 
 export const courseSchema = z.object({

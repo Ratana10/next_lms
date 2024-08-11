@@ -7,8 +7,11 @@ import {
   formattedFullname,
   formatToDollar,
   getNoNumber,
+  getTotalPaid,
 } from "@/lib/formatted";
 import { getCoursesList } from "@/services/course.service";
+
+
 
 const EnrollPage = async ({
   searchParams,
@@ -40,7 +43,6 @@ const EnrollPage = async ({
     })
   );
 
-  const getTotalPaid = (total: number, remain: number) => total - remain;
 
   const formattedEnrolls = enrolls.map((e: Enroll, index: number) => ({
     id: e.id,

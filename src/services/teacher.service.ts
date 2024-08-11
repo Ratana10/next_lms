@@ -1,7 +1,8 @@
 "use server";
 
 import { getToken } from "@/lib/session";
-import {  teacherSchema } from "@/schema/definition";
+import { teacherSchema } from "@/schema/definition";
+import { Teacher } from "@/types";
 import { z } from "zod";
 
 export async function getAllTeacher(page: number) {
@@ -28,7 +29,7 @@ export async function getAllTeacher(page: number) {
 
   return {
     teachers: data.data,
-    pagination: data.pagination
+    pagination: data.pagination,
   };
 }
 
@@ -49,7 +50,7 @@ export async function getTeacherList() {
   if (!res.ok) {
     throw new Error(data.message);
   }
-  
+
   return {
     teachers: data.data,
   };
@@ -83,12 +84,21 @@ export async function getTeacherById(teacherId: number) {
   );
   const data = await res.json();
 
-  if (res.ok) {
-    console.log("sucess");
-    return data.data;
-  } else {
-    console.log("fail");
+  if (!data.data) {
+    return { teacher: null };
   }
+
+  // convert hiredate, createdat, updatedat to Date
+  const teacher: Teacher = {
+    ...data.data,
+    hireDate: new Date(data.data.hireDate),
+    createdAt: new Date(data.data.createdAt),
+    updatedAt: new Date(data.data.updatedAt),
+  };
+
+  return {
+    teacher: teacher,
+  };
 }
 
 export async function updateTeacher(
@@ -108,7 +118,6 @@ export async function updateTeacher(
     }
   );
   const data = await res.json();
-  console.log("test res", data);
 
   if (res.ok) {
     console.log("sucess");

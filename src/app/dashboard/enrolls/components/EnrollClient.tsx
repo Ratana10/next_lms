@@ -40,21 +40,6 @@ const enrollStatus: FilterOption[] = [
   },
 ];
 
-const coursesOption: FilterOption[] = [
-  {
-    label: "Nextjs",
-    value: "1",
-  },
-  {
-    label: "Srpingboot",
-    value: "2",
-  },
-  {
-    label: "Spring",
-    value: "3",
-  },
-];
-
 interface EnrollClientProp {
   enrolls: Enroll[];
   pagination: Pagination;
@@ -104,7 +89,7 @@ const EnrollClient = ({
 
   const onCourseClick = (value: any) => {
     const params = new URLSearchParams(searchParams);
-    if (status === value) {
+    if (course === value) {
       params.delete("course");
       setCourse("");
     } else {

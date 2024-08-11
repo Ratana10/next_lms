@@ -43,7 +43,7 @@ const CourseClient = ({ courses, pagination }: CourseClientProp) => {
       </div>
       <Separator />
       <div>
-        <Search placeholder="Search..." />
+        <Search placeholder="Search course name ..." />
       </div>
       <DataTable columns={columns} data={courses} />
 

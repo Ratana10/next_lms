@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, useFormContext } from "react-hook-form";
 import { studentSchema } from "@/schema/definition";
 import {
   createStudent,
@@ -25,12 +25,35 @@ import { Trash } from "lucide-react";
 import { Student } from "@/types";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BackButton from "@/components/BackButton";
 import { Modal } from "@/components/Modal";
 import { Separator } from "@/components/ui/separator";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ButtonLoading } from "@/components/ButtonLoading";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+interface StudentType {
+  label: string;
+  value: string;
+}
+
+const studentType: StudentType[] = [
+  {
+    label: "Study",
+    value: "STUDY",
+  },
+  {
+    label: "Work",
+    value: "WORK",
+  },
+];
 
 type StudentProp = {
   initialize: Student | null;
@@ -53,8 +76,22 @@ const StudentForm = ({ initialize }: StudentProp) => {
       phone: "",
       email: "",
       gender: "MALE",
+      type: "",
+      position: "",
+      from: "",
     },
   });
+
+  const { watch, setValue } = form;
+
+  useEffect(() => {
+    const selectedType = watch("type");
+    if (selectedType === "STUDY") {
+      setValue("position", "Student");
+    } else {
+      setValue("position", "");
+    }
+  }, [watch("type"), setValue]);
 
   async function onSubmit(values: z.infer<typeof studentSchema>) {
     if (initialize) {
@@ -211,6 +248,59 @@ const StudentForm = ({ initialize }: StudentProp) => {
                         </FormItem>
                       </div>
                     </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Type</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={initialize ? initialize.type : ""}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a student" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {studentType.map((e: StudentType) => (
+                        <SelectItem key={e.value} value={e.value}>
+                          {e.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="position"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Position</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter position" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="from"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>From</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter from" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

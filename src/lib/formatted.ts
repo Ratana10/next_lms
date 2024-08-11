@@ -51,3 +51,5 @@ export const formattedPhone = (phone: string) => {
 export const priceAfterDiscount = (price: number, discount: number) => {
   return price - (price * discount) / 100;
 };
+
+export const getTotalPaid = (total: number, remain: number) => total - remain;

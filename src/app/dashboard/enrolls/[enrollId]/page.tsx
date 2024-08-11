@@ -4,17 +4,18 @@ import { getStudentsList } from "@/services/student.service";
 import { Option } from "@/components/ui/multiple-selector";
 import { getEnrollById } from "@/services/enroll.service";
 import { getCoursesList } from "@/services/course.service";
+import { priceAfterDiscount } from "@/lib/formatted";
 
 const EnrollIdPage = async ({ params }: { params: { enrollId: string } }) => {
-  const {courses} = await getCoursesList();
-  const {students} = await getStudentsList();
+  const { courses } = await getCoursesList();
+  const { students } = await getStudentsList();
   const { enroll } = await getEnrollById(parseInt(params.enrollId));
 
   const coursesOption: Option[] = courses.map((e: any, index: number) => ({
     label: e.name,
     value: e.id.toString(),
     diable: false,
-    price: e.price,
+    price: priceAfterDiscount(e.price, e.discount),
   }));
 
   var newFormatted;
@@ -25,7 +26,7 @@ const EnrollIdPage = async ({ params }: { params: { enrollId: string } }) => {
         label: e.name,
         value: e.id.toString(),
         diable: true,
-        price: e.price,
+        price: priceAfterDiscount(e.price, e.discount),
       })),
       date: enroll.date,
       total: enroll.total,

@@ -40,6 +40,9 @@ export type Student = {
   gender: string;
   email: string;
   phone: string;
+  type?: string;
+  position?: string;
+  from?: string;
   createdAt: string;
   updatedAt: string;
 };
