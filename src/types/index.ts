@@ -71,7 +71,7 @@ export type Schedule = {
   createdAt: string;
   updatedAt: string;
   courseId: number | undefined;
-  course: Course | null;
+  course: Course;
 };
 
 export type Enroll = {

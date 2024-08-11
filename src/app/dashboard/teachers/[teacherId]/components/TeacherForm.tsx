@@ -150,7 +150,7 @@ const TeacherForm = ({ initialize }: TeacherFormProps) => {
                 <FormItem>
                   <FormLabel>Code *</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter code" {...field} />
+                    <Input placeholder="Enter code" {...field} autoFocus/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

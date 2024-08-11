@@ -7,15 +7,19 @@ import { getAllSchedule } from "@/services/schedule.service";
 import { Schedule } from "@/types";
 import React from "react";
 import ScheduleClient from "./components/ScheduleClient";
+import { PageProps } from "@/types/PageProps";
 
-const SchedulePage = async () => {
-  const { schedules, pagination } = await getAllSchedule(1);
-  console.log(schedules);
+const SchedulePage = async ({ searchParams }: PageProps) => {
+  const currentPage = Number(searchParams?.page) || 1;
+  const search = searchParams?.search || "";
+
+  const { schedules, pagination } = await getAllSchedule(currentPage, search);
+
   const formattedSchedules = schedules.map((e: Schedule, index: number) => ({
     no: getNoNumber(index, pagination.pageNumber, pagination.pageSize),
     id: e.id,
     description: e.description,
-    courseName: e.course?.name,
+    courseName: e.course.name,
     startDate: formattedDate(e.startDate.toString()),
     endDate: formattedDate(e.endDate.toString()),
     startTime: formatTimeTo12Hour(e.startTime),

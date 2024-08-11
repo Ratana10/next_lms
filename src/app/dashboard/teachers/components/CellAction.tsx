@@ -48,7 +48,7 @@ const CellAction = ({ data }: props) => {
   return (
     <>
       <Modal
-        title={`Are you sure to delete ${data.firstname} ${data.lastname}?`}
+        title={`Are you sure to delete?`}
         description="This action cannot be undone."
         isOpen={open}
         onClose={() => setOpen(false)}

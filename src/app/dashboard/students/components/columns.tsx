@@ -26,10 +26,6 @@ export const columns: ColumnDef<Student>[] = [
     header: "Phone",
   },
   {
-    accessorKey: "email",
-    header: "Email",
-  },
-  {
     accessorKey: "createdAt",
     header: "CreatedAt",
   },

@@ -7,10 +7,11 @@ import { Separator } from "@/components/ui/separator";
 import { Plus } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { columns } from "./columns";
-import { Course, Schedule } from "@/types";
+import { Schedule } from "@/types";
 import PaginationSection from "@/components/PaginationSection";
 import { Pagination } from "@/types/Pagination";
 import BackButton from "@/components/BackButton";
+import Search from "@/components/Search";
 
 interface ScheduleClientProp {
   schedules: Schedule[];
@@ -47,17 +48,19 @@ const ScheduleClient = ({
         </Button>
       </div>
       <Separator />
+      <div>
+        <Search placeholder="Search course name ..." />
+      </div>
       <DataTable columns={columns} data={schedules} />
-      {pagination.totalPages !== 1 && (
-        <PaginationSection
-          isLast={pagination.last}
-          isFirst={pagination.first}
-          currentPage={pagination.numberOfElements}
-          totalPages={pagination.totalPages}
-          onPreviousPage={onPreviousPage}
-          onNextPage={onNextPage}
-        />
-      )}
+      
+      <PaginationSection
+        isLast={pagination.last}
+        isFirst={pagination.first}
+        currentPage={pagination.pageNumber}
+        totalPages={pagination.totalPages}
+        onPreviousPage={onPreviousPage}
+        onNextPage={onNextPage}
+      />
     </>
   );
 };
