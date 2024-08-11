@@ -44,6 +44,10 @@ const CellAction = ({ data }: props) => {
     }
   };
 
+  const onViewDetail = (id: number) => {
+    router.push(`/dashboard/students/${id}/details`);
+  };
+
   return (
     <>
       <Modal
@@ -70,7 +74,7 @@ const CellAction = ({ data }: props) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
             disabled={loading}
-            onClick={() => setModalStudent(true)}
+            onClick={() => onViewDetail(data.id)}
             className="cursor-pointer"
           >
             <Edit className="w-4 h-4 mr-2" /> View Detail
