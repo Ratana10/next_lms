@@ -1,7 +1,15 @@
+"use client";
+
 import { AreaChartComponent } from "@/components/AreaChartComponent";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookUser, DollarSign, Star, Users } from "lucide-react";
-const DashboardClient = () => {
+import { Dashbord } from "@/types";
+import { BookUser, Star, Users } from "lucide-react";
+
+interface DashboardProps {
+  dashboards: Dashbord;
+}
+
+const DashboardClient = ({ dashboards }: DashboardProps) => {
   const chartDataV2 = [
     { month: "January", nextjs: 186, springBoot: 80, sql: 50, react: 100 },
     { month: "February", nextjs: 220, springBoot: 90, sql: 60, react: 110 },
@@ -33,17 +41,17 @@ const DashboardClient = () => {
   const totalData = [
     {
       title: "Total Students",
-      content: "20",
+      content: dashboards.totalStudents,
       icon: <BookUser />,
     },
     {
       title: "Total Teachers",
-      content: "2",
+      content: dashboards.totalTeachers,
       icon: <Users />,
     },
     {
       title: "Total Courses",
-      content: "5",
+      content: dashboards.totalCourses,
       icon: <Star />,
     },
   ];
@@ -51,7 +59,7 @@ const DashboardClient = () => {
   return (
     <>
       <div className="mb-3">
-        <h1 className="text-4xl font-semibold">Overview</h1>
+        <h1 className="text-4xl font-semibold">Overviews</h1>
       </div>
       <div className="grid gap-3 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
         {totalData.map((e, index) => (

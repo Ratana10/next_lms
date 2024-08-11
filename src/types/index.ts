@@ -11,6 +11,12 @@ export type RegisterRequest = {
   role: string;
 };
 
+export type Dashbord = {
+  totalStudents: number;
+  totalTeachers: number;
+  totalCourses: number;
+};
+
 export type Category = {
   id: number;
   name: string;

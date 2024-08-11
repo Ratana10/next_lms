@@ -2,10 +2,10 @@
 
 import { DataTable } from "../components/DataTable";
 import Heading from "@/components/Heading";
-import { AttendanceDetail, Course, Student } from "@/types";
-import { Plus, Save } from "lucide-react";
+import { AttendanceDetail, Course } from "@/types";
+import { Save } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Calendar as CalendarIcon } from "lucide-react";
@@ -34,7 +34,7 @@ interface Props {
 const DetailNewClient = ({ course, students, pagination }: Props) => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
-  
+
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [attendanceData, setAttendanceData] = useState<{
     [key: string]: number[];
@@ -46,7 +46,7 @@ const DetailNewClient = ({ course, students, pagination }: Props) => {
 
   const [formattedStudents, setFormattedStudents] =
     useState<AttendanceDetail[]>(students);
-  
+
   const onSelectChange = (studentId: number, status: string) => {
     setFormattedStudents((prevStudents) =>
       prevStudents.map((student) => {
@@ -82,7 +82,6 @@ const DetailNewClient = ({ course, students, pagination }: Props) => {
     });
   };
 
-
   const onCreate = async () => {
     const data = {
       courseId: course.id,
@@ -91,14 +90,14 @@ const DetailNewClient = ({ course, students, pagination }: Props) => {
     };
 
     try {
-      setLoading(true)
+      setLoading(true);
       await createAttendance(data);
       router.push("/dashboard/attendances");
       router.refresh();
-      toast.success("create attendance success")
+      toast.success("create attendance success");
     } catch (error: any) {
       toast.error(error);
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -116,28 +115,30 @@ const DetailNewClient = ({ course, students, pagination }: Props) => {
         </ButtonLoading>
       </div>
       <Separator />
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            variant={"outline"}
-            className={cn(
-              "w-[280px] justify-start text-left font-normal",
-              !date && "text-muted-foreground"
-            )}
-          >
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            {date ? format(date, "PPP") : <span>Pick a date</span>}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0">
-          <Calendar
-            mode="single"
-            selected={date}
-            onSelect={(value) => setDate(value)}
-            initialFocus
-          />
-        </PopoverContent>
-      </Popover>
+      <div className="flex justify-end">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant={"outline"}
+              className={cn(
+                "w-[280px] justify-start text-left font-normal",
+                !date && "text-muted-foreground"
+              )}
+            >
+              <CalendarIcon className="mr-2 h-4 w-4" />
+              {date ? format(date, "PPP") : <span>Pick a date</span>}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0">
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={(value) => setDate(value)}
+              initialFocus
+            />
+          </PopoverContent>
+        </Popover>
+      </div>
       <DataTable
         columns={columns({ onSelectChange })}
         data={formattedStudents}

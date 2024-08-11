@@ -14,10 +14,6 @@ export const columns: ColumnDef<Schedule>[] = [
     header: "Course",
   },
   {
-    accessorKey: "description",
-    header: "Description",
-  },
-  {
     accessorKey: "startTime",
     header: "StartTime",
   },
