@@ -1,8 +1,7 @@
 import { getAllTeacher } from "@/services/teacher.service";
 import TeacherClient from "./components/TeacherClient";
 import { Teacher } from "@/types";
-import { format } from "date-fns";
-import { formattedDate, formattedGender, getNoNumber } from "@/lib/formatted";
+import { formattedDate, formattedEmail, formattedGender, formattedPhone } from "@/lib/formatted";
 
 const TeacherPage = async ({
   searchParams,
@@ -24,8 +23,8 @@ const TeacherPage = async ({
     lastname: e.lastname,
     gender: formattedGender(e.gender),
     hireDate: e.hireDate,
-    email: e.email,
-    phone: e.phone,
+    email: formattedEmail(e.email),
+    phone: formattedPhone(e.phone),
     address: e.address,
     createdAt: formattedDate(e.createdAt),
     updatedAt: formattedDate(e.updatedAt),
