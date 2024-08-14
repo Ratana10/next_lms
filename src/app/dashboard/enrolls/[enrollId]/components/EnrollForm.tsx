@@ -1,5 +1,4 @@
-"use client";
-
+"use client";;
 import {
   Form,
   FormControl,
@@ -12,15 +11,14 @@ import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { enrollSchema, enrollV2Schema } from "@/schema/definition";
+import { enrollV2Schema } from "@/schema/definition";
 import Heading from "@/components/Heading";
-import { CalendarIcon, Trash } from "lucide-react";
-import { Course, EnrollV2, Student } from "@/types";
+import { CalendarIcon } from "lucide-react";
+import { Course, Student } from "@/types";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import BackButton from "@/components/BackButton";
-import { Modal } from "@/components/Modal";
 import { Separator } from "@/components/ui/separator";
 import {
   Select,
