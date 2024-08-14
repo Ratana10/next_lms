@@ -139,6 +139,21 @@ export const enrollSchema = z.object({
   receiver: z.coerce.string().optional(),
 });
 
+export const enrollV2Schema = z.object({
+  studentId: z.coerce.number().min(1, {
+    message: "Student is required.",
+  }),
+  courseId: z.coerce.number().min(1, {
+    message: "Course is required.",
+  }),
+  date: z.date({
+    required_error: "Date is required.",
+  }),
+  amount: z.coerce.number().optional(),
+  method: z.coerce.string().optional(),
+  receiver: z.coerce.string().optional(),
+});
+
 export const paymentSchema = z.object({
   enrollmentId: z.coerce.number().min(1, {
     message: "Student is required.",

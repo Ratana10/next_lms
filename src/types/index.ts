@@ -94,6 +94,20 @@ export type Enroll = {
   courses?: Course[];
 };
 
+export type EnrollV2 = {
+  id: number;
+  studentId: number;
+  courseId: number;
+  price: number;
+  remain: number;
+  status: string;
+  date: string;
+  createdAt: string;
+  updatedAt: string;
+  student?: Student;
+  course?: Course;
+};
+
 export type Payment = {
   id: number;
   amount: number;

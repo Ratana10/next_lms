@@ -12,10 +12,10 @@ import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { enrollSchema, enrollV2Schema } from "@/schema/definition";
+import { enrollSchema } from "@/schema/definition";
 import Heading from "@/components/Heading";
 import { CalendarIcon, Trash } from "lucide-react";
-import { Course, EnrollV2, Student } from "@/types";
+import { Student } from "@/types";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useState } from "react";
@@ -38,30 +38,36 @@ import {
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
+import MultipleSelector, { Option } from "@/components/ui/multiple-selector";
+import { createEnroll } from "@/services/enroll.service";
 import { Input } from "@/components/ui/input";
 import { ButtonLoading } from "@/components/ButtonLoading";
-import { createEnroll } from "@/services/enrollv2.service";
-import { priceAfterDiscount } from "@/lib/formatted";
 
 type EnrollFormProp = {
+  initialize: any | null;
   students: Student[];
-  courses: Course[];
+  coursesOption: Option[];
 };
 
-const EnrollForm = ({ students, courses }: EnrollFormProp) => {
-  const title = "Create enroll";
-  const description = "Add new enroll";
-  const btnText = "Create";
+const EnrollForm = ({
+  initialize,
+  students,
+  coursesOption,
+}: EnrollFormProp) => {
+  const title = initialize ? "Edit enroll" : "Create enroll";
+  const description = initialize ? "Edit a enroll" : "Add new enroll";
+  const btnText = initialize ? "Save change" : "Create";
 
   const router = useRouter();
+  const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [total, setTotal] = useState<number>(0);
+  const [total, setTotal] = useState<number>(initialize ? initialize.total : 0);
 
-  const form = useForm<z.infer<typeof enrollV2Schema>>({
-    resolver: zodResolver(enrollV2Schema),
-    defaultValues: {
-      studentId: undefined,
-      courseId: undefined,
+  const form = useForm<z.infer<typeof enrollSchema>>({
+    resolver: zodResolver(enrollSchema),
+    defaultValues: initialize || {
+      studentId: "",
+      courses: [],
       date: new Date(),
       amount: 0,
       method: "CASH",
@@ -73,7 +79,6 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
     value: string;
     label: string;
   }
-
   const methodOption: optionType[] = [
     {
       value: "CASH",
@@ -85,7 +90,7 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
     },
   ];
 
-  async function onSubmit(values: z.infer<typeof enrollV2Schema>) {
+  async function onSubmit(values: z.infer<typeof enrollSchema>) {
     try {
       setLoading(true);
       await createEnroll(values);
@@ -99,24 +104,47 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
     }
   }
 
-  const handleCourseChange = (courseId: number) => {
-    const selectedCourse = courses.find((course) => course.id === courseId);
-    const afterDis = priceAfterDiscount(
-      selectedCourse!.price,
-      selectedCourse!.discount
-    );
-    if (selectedCourse) {
-      setTotal(afterDis); // Update total with the selected course's price
-    } else {
-      setTotal(0); // Reset total if no course is selected
-    }
-  };
+  async function onDelete() {
+    // if (initialize && initialize.id) {
+    //   try {
+    //     setLoading(true);
+    //     await deleteEnroll(initialize.id);
+    //     toast.success("Delete enroll successfully");
+    //     router.push("/dashboard/enrolls");
+    //     router.refresh();
+    //     setOpen(false);
+    //   } catch (error) {
+    //     toast.error(`${error}`);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // }
+  }
 
   return (
     <>
       <BackButton text="Back" href="/dashboard/enrolls" />
       <div className="flex justify-between">
         <Heading title={title} descritpion={description} />
+        {initialize && (
+          <>
+            <Modal
+              title={`Are you sure to delete ?`}
+              description="This action cannot be undone."
+              isOpen={open}
+              onClose={() => setOpen(false)}
+              onDelete={onDelete}
+              loading={loading}
+            />
+            <Button
+              disabled={loading}
+              variant="destructive"
+              onClick={() => setOpen(true)}
+            >
+              <Trash className="h-4 w-4" />
+            </Button>
+          </>
+        )}
       </div>
       <Separator />
       <Form {...form}>
@@ -128,7 +156,10 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Student *</FormLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={initialize ? initialize.studentId : ""}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a student" />
@@ -149,40 +180,37 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
-              name="courseId"
+              name="courses"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Course *</FormLabel>
-                  <Select
-                    onValueChange={(value) => {
-                      field.onChange(value);
-                      handleCourseChange(parseInt(value));
-                    }}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a course" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {courses.map((course: Course) => (
-                        <SelectItem
-                          key={course.id}
-                          value={course.id.toString()}
-                        >
-                          {course.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <MultipleSelector
+                      {...field}
+                      onChange={(value: Option[]) => {
+                        field.onChange(value);
+                        var sum = value.reduce(
+                          (sum, option) => sum + (option.price ?? 0),
+                          0
+                        );
+                        setTotal(sum);
+                      }}
+                      defaultOptions={coursesOption}
+                      hidePlaceholderWhenSelected
+                      placeholder="Select course to enroll"
+                      emptyIndicator={
+                        <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                          no results found.
+                        </p>
+                      }
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="amount"

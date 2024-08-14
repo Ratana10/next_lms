@@ -1,28 +1,24 @@
 "use client";
 
 import { DataTable } from "@/components/DataTable";
-import Heading from "@/components/Heading";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Plus } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { Payment } from "@/types";
 import { columns } from "./columns";
-import { Course, Schedule } from "@/types";
-import PaginationSection from "@/components/PaginationSection";
-import { Pagination } from "@/types/Pagination";
+import Heading from "@/components/Heading";
+import { Separator } from "@/components/ui/separator";
 import BackButton from "@/components/BackButton";
+import { Pagination } from "@/types/Pagination";
+import PaginationSection from "@/components/PaginationSection";
+import { usePathname, useRouter } from "next/navigation";
 
-interface ScheduleClientProp {
-  schedules: Schedule[];
+interface EnrollPaymentClientProp {
+  payments: Payment[];
   pagination: Pagination;
-  course: Course;
 }
 
-const ScheduleClient = ({
-  schedules,
+const EnrollPaymentClient = ({
+  payments,
   pagination,
-  course,
-}: ScheduleClientProp) => {
+}: EnrollPaymentClientProp) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -40,21 +36,17 @@ const ScheduleClient = ({
 
   return (
     <>
-      <BackButton text="Back" href="/dashboard/schedules" />
+      <BackButton text="back" href="/dashboard/enrolls" />
       <div className="flex justify-between">
-        <Heading title={`${course.name}`} descritpion="Manage schedules" />
-        <Button onClick={() => router.push("/dashboard/schedules/new")}>
-          <Plus className="w-4 h-4 mr-2" />
-          Add
-        </Button>
+        <Heading title="View Payments" descritpion="List payments" />
       </div>
-      <Separator />
-      <DataTable columns={columns} data={schedules} />
-      {pagination.totalPages !== 1 && (
+      <Separator className="my-4" />
+      <DataTable data={payments} columns={columns} />
+      {pagination.totalElements > 10 && (
         <PaginationSection
           isLast={pagination.last}
           isFirst={pagination.first}
-          currentPage={pagination.numberOfElements}
+          currentPage={pagination.pageNumber}
           totalPages={pagination.totalPages}
           onPreviousPage={onPreviousPage}
           onNextPage={onNextPage}
@@ -64,4 +56,4 @@ const ScheduleClient = ({
   );
 };
 
-export default ScheduleClient;
+export default EnrollPaymentClient;

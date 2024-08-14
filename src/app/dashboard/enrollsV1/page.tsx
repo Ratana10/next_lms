@@ -1,6 +1,7 @@
+import { getAllEnrolls } from "@/services/enroll.service";
 import React from "react";
 import EnrollClient, { FilterOption } from "./components/EnrollClient";
-import { Course, Enroll, EnrollV2 } from "@/types";
+import { Course, Enroll } from "@/types";
 import {
   formattedDate,
   formattedFullname,
@@ -9,7 +10,8 @@ import {
   getTotalPaid,
 } from "@/lib/formatted";
 import { getCoursesList } from "@/services/course.service";
-import { getAllEnrolls } from "@/services/enrollv2.service";
+
+
 
 const EnrollPage = async ({
   searchParams,
@@ -32,7 +34,6 @@ const EnrollPage = async ({
     status,
     course,
   });
-
   const { courses } = await getCoursesList();
 
   const formattedCourses: FilterOption[] = courses.map(
@@ -42,21 +43,19 @@ const EnrollPage = async ({
     })
   );
 
-  const formattedEnrolls = enrolls.map((e: EnrollV2, index: number) => ({
+
+  const formattedEnrolls = enrolls.map((e: Enroll, index: number) => ({
     id: e.id,
     no: getNoNumber(index, pagination.pageNumber, pagination.pageSize),
-    firstname: e.student?.firstname,
-    lastname: e.student?.lastname,
-    paid: formatToDollar(getTotalPaid(e.price, e.remain)),
-    price: formatToDollar(e.price),
+    student: formattedFullname(e.student?.lastname, e.student?.firstname),
+    paid: formatToDollar(getTotalPaid(e.total, e.remain)),
+    coursePrice: formatToDollar(e.total),
     remain: formatToDollar(e.remain),
-    course: e.course?.name,
     status: e.status,
     date: formattedDate(e.date),
     createdAt: formattedDate(e.createdAt),
     updatedAt: formattedDate(e.updatedAt),
   }));
-
   return (
     <EnrollClient
       enrolls={formattedEnrolls}

@@ -19,8 +19,6 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ButtonLoading } from "@/components/ButtonLoading";
-import Link from "next/link";
 
 export interface FilterOption {
   label: string;
@@ -55,6 +53,7 @@ const EnrollClient = ({
 }: EnrollClientProp) => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { replace } = useRouter();
   const pathname = usePathname();
 
   const [status, setStatus] = useState(searchParams.get("status") || "");
@@ -85,7 +84,7 @@ const EnrollClient = ({
       params.set("status", value);
       setStatus(value);
     }
-    router.replace(`${pathname}?${params.toString()}`);
+    replace(`${pathname}?${params.toString()}`);
   };
 
   const onCourseClick = (value: any) => {
@@ -98,19 +97,17 @@ const EnrollClient = ({
       setCourse(value);
     }
 
-    router.replace(`${pathname}?${params.toString()}`);
+    replace(`${pathname}?${params.toString()}`);
   };
 
   return (
     <>
       <div className="flex justify-between">
         <Heading title="Enrolls" descritpion="Manage enrolls" />
-        <Link href={"/dashboard/enrolls/new"}>
-          <Button>
-            <Plus className="w-4 h-4 mr-2" />
-            Add
-          </Button>
-        </Link>
+        <Button onClick={() => router.push("/dashboard/enrolls/new")}>
+          <Plus className="w-4 h-4 mr-2" />
+          Add
+        </Button>
       </div>
       <Separator />
       <div className="flex gap-2">

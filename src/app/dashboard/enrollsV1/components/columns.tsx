@@ -12,12 +12,8 @@ export const columns: ColumnDef<Enroll>[] = [
     header: "NO",
   },
   {
-    accessorKey: "firstname",
-    header: "Firstname",
-  },
-  {
-    accessorKey: "lastname",
-    header: "Lastname",
+    accessorKey: "student",
+    header: "Student",
   },
   {
     accessorKey: "paid",
@@ -45,12 +41,8 @@ export const columns: ColumnDef<Enroll>[] = [
     },
   },
   {
-    accessorKey: "course",
-    header: "Course",
-  },
-  {
-    accessorKey: "price",
-    header: "Price",
+    accessorKey: "coursePrice",
+    header: "CoursePrice",
   },
   {
     accessorKey: "date",
