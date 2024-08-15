@@ -1,4 +1,4 @@
-import { getEnrollById } from "@/services/enroll.service";
+import { getEnrollById } from "@/services/enrollv2.service";
 import EnrollPaymentForm from "./components/EnrollPaymentForm";
 
 const EnrollPaymentpage = async ({
@@ -7,7 +7,7 @@ const EnrollPaymentpage = async ({
   params: { enrollId: string };
 }) => {
   const { enroll } = await getEnrollById(parseInt(params.enrollId));
-
+  console.log(enroll);
   return <EnrollPaymentForm initialize={enroll} />;
 };
 

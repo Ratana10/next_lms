@@ -65,7 +65,7 @@ const EnrollPaymentForm = ({ initialize }: EnrollPaymentProp) => {
   const form = useForm<z.infer<typeof paymentSchema>>({
     resolver: zodResolver(paymentSchema),
     defaultValues: {
-      enrollmentId: initialize.id,
+      enrollId: initialize.id,
       amount: 0,
       date: new Date(),
       method: "CASH",
@@ -100,7 +100,7 @@ const EnrollPaymentForm = ({ initialize }: EnrollPaymentProp) => {
           <div className="grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
-              name="enrollmentId"
+              name="enrollId"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>EnrollmentId *</FormLabel>

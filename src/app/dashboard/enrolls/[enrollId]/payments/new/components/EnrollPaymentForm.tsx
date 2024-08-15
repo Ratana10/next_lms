@@ -33,7 +33,13 @@ import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { createPayment } from "@/services/payment.service";
 import { ButtonLoading } from "@/components/ButtonLoading";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type EnrollPaymentProp = {
   initialize: Enroll;
@@ -65,7 +71,7 @@ const EnrollPaymentForm = ({ initialize }: EnrollPaymentProp) => {
   const form = useForm<z.infer<typeof paymentSchema>>({
     resolver: zodResolver(paymentSchema),
     defaultValues: {
-      enrollmentId: initialize.id,
+      enrollId: initialize.id,
       amount: 0,
       date: new Date(),
       method: "CASH",
@@ -100,10 +106,10 @@ const EnrollPaymentForm = ({ initialize }: EnrollPaymentProp) => {
           <div className="grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
-              name="enrollmentId"
+              name="enrollId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>EnrollmentId *</FormLabel>
+                  <FormLabel>EnrollId *</FormLabel>
                   <FormControl>
                     <Input disabled={true} type="number" {...field} />
                   </FormControl>

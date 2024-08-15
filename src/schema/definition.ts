@@ -155,8 +155,8 @@ export const enrollV2Schema = z.object({
 });
 
 export const paymentSchema = z.object({
-  enrollmentId: z.coerce.number().min(1, {
-    message: "Student is required.",
+  enrollId: z.coerce.number().min(1, {
+    message: "Enroll is required.",
   }),
   amount: z.coerce.number().min(1, {
     message: "Amount is required.",

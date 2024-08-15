@@ -1,18 +1,18 @@
 import StudentDetail from "./components/StudentDetail";
 import {
+  getEnrollsByStudentId,
   getStudentById,
-  getStudentsEnrollInCourse,
 } from "@/services/student.service";
 
 const StudentIdPage = async ({ params }: { params: { studentId: string } }) => {
   const studentId = parseInt(params.studentId);
   const { student } = await getStudentById(studentId);
-  const { courses } = await getStudentsEnrollInCourse(studentId);
+  const { enrolls } = await getEnrollsByStudentId(studentId);
 
-  console.log(student)
-  console.log(courses)
+  console.log(student);
+  console.log(enrolls);
 
-  return <StudentDetail student={student} courses={courses} />;
+  return <StudentDetail student={student} enrolls={enrolls} />;
 };
 
 export default StudentIdPage;

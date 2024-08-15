@@ -114,7 +114,7 @@ export type Payment = {
   date: string;
   createdAt: string;
   updatedAt: string;
-  enrollment?: Enroll;
+  enroll?: EnrollV2;
   method?: string;
   receiver?: string;
 };

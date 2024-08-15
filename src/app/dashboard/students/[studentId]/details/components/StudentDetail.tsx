@@ -1,7 +1,7 @@
 "use client";
 
 import Heading from "@/components/Heading";
-import { Course, Student } from "@/types";
+import { Course, EnrollV2, Student } from "@/types";
 import BackButton from "@/components/BackButton";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -15,10 +15,10 @@ import {
 
 type StudentProp = {
   student: Student;
-  courses: Course[] | null;
+  enrolls: EnrollV2[] | null;
 };
 
-const StudentDetail = ({ student, courses }: StudentProp) => {
+const StudentDetail = ({ student, enrolls }: StudentProp) => {
   const title = "Student Detail";
   const description = "View student details";
 
@@ -93,12 +93,12 @@ const StudentDetail = ({ student, courses }: StudentProp) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {courses && courses.length > 0 ? (
-                courses.map((course, index) => (
-                  <TableRow key={course.id}>
+              {enrolls && enrolls.length > 0 ? (
+                enrolls.map((enroll, index) => (
+                  <TableRow key={enroll.id}>
                     <TableCell className="font-medium">{index + 1}</TableCell>
-                    <TableCell>{course.name}</TableCell>
-                    <TableCell>{course.price}</TableCell>
+                    <TableCell>{enroll.course?.name}</TableCell>
+                    <TableCell>{enroll.price}</TableCell>
                   </TableRow>
                 ))
               ) : (

@@ -20,8 +20,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Modal } from "@/components/Modal";
-import { deleteEnroll } from "@/services/enroll.service";
 import Link from "next/link";
+import { deleteEnroll } from "@/services/enrollv2.service";
 
 interface props {
   data: Enroll;
@@ -30,7 +30,6 @@ const CellAction = ({ data }: props) => {
   const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-
 
   const onDelete = async () => {
     try {

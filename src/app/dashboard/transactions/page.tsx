@@ -13,8 +13,8 @@ const PaymentPage = async ({ searchParams }: PageProps) => {
   const formattedPayments = payments.map((e: Payment, index: number) => ({
     no: getNoNumber(index, pagination.pageNumber, pagination.pageSize),
     id: e.id,
-    firstname: e.enrollment?.student?.firstname,
-    lastname: e.enrollment?.student?.lastname,
+    firstname: e.enroll?.student?.firstname,
+    lastname: e.enroll?.student?.lastname,
     amount: formatToDollar(e.amount),
     date: formattedDate(e.date),
     method: e.method,

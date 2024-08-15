@@ -72,8 +72,27 @@ export async function getEnrollById(enrollId: number) {
     }
   );
   const data = await res.json();
-  
+
   return {
     enroll: data.data,
   };
+}
+
+export async function deleteEnroll(enrollId: number) {
+  const token = await getToken();
+  const res = await fetch(
+    `${process.env.API_BASE_URL}/api/v1/enrolls/${enrollId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
 }
