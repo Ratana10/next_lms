@@ -77,7 +77,7 @@ const CellAction = ({ data }: props) => {
             onClick={() => onViewDetail(data.id)}
             className="cursor-pointer"
           >
-            <Edit className="w-4 h-4 mr-2" /> View Detail
+            <Eye  className="w-4 h-4 mr-2" /> View Detail
           </DropdownMenuItem>
           <DropdownMenuItem
             disabled={loading}
@@ -93,16 +93,6 @@ const CellAction = ({ data }: props) => {
           >
             <Trash className="w-4 h-4 mr-2 " />
             Delete
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            disabled={loading}
-            onClick={() =>
-              router.push(`/dashboard/students/${data.id}/courses`)
-            }
-            className="cursor-pointer"
-          >
-            <Eye className="w-4 h-4 mr-2 " />
-            View courses
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

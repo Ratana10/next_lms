@@ -202,9 +202,13 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
               name="discount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Discount *</FormLabel>
+                  <FormLabel>Discount</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Enter discount" {...field} />
+                    <Input
+                      type="number"
+                      placeholder="Enter discount"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -233,10 +237,10 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
               name="teacherId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Teacher *</FormLabel>
+                  <FormLabel>Teacher</FormLabel>
                   <Select
                     onValueChange={field.onChange}
-                    defaultValue={initialize?.teacherId.toString()}
+                    defaultValue={initialize?.teacherId?.toString()}
                   >
                     <FormControl>
                       <SelectTrigger>

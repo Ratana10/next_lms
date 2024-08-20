@@ -32,9 +32,7 @@ export const categorySchema = z.object({
   name: z.string().min(1, {
     message: "Name is required.",
   }),
-  description: z.string().min(1, {
-    message: "Description is required.",
-  }),
+  description: z.string().optional(),
 });
 
 export const teacherSchema = z.object({
@@ -83,12 +81,8 @@ export const courseSchema = z.object({
   price: z.coerce.number().min(1, {
     message: "Price is required.",
   }),
-  discount: z.coerce.number().min(1, {
-    message: "Discount is required.",
-  }),
-  teacherId: z.coerce.number().min(1, {
-    message: "Teacher is required.",
-  }),
+  discount: z.coerce.number().optional(),
+  teacherId: z.coerce.number().optional(),
   categoryId: z.coerce.number().min(1, {
     message: "Category is required.",
   }),

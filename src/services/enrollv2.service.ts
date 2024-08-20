@@ -96,3 +96,22 @@ export async function deleteEnroll(enrollId: number) {
     throw new Error(data.message);
   }
 }
+
+export async function getEnrollsByStudentId(studentId: number) {
+  const token = await getToken();
+  const res = await fetch(
+    `${process.env.API_BASE_URL}/api/v1/enrolls/students/${studentId}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const data = await res.json();
+
+  return {
+    enrolls: data.data,
+  };
+}

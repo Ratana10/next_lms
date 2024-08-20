@@ -20,7 +20,7 @@ export type Dashbord = {
 export type Category = {
   id: number;
   name: string;
-  description: string;
+  description?: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -60,7 +60,7 @@ export type Course = {
   price: number;
   discount: number;
   categoryId: number;
-  teacherId: number;
+  teacherId: number | undefined;
   createdAt: string;
   updatedAt: string;
   teacher?: Teacher;

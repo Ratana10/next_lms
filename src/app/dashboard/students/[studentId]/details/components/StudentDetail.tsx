@@ -12,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
+import { formattedDate, formatToDollar } from "@/lib/formatted";
 type StudentProp = {
   student: Student;
   enrolls: EnrollV2[] | null;
@@ -90,6 +90,7 @@ const StudentDetail = ({ student, enrolls }: StudentProp) => {
                 <TableHead className="">NO</TableHead>
                 <TableHead>Name</TableHead>
                 <TableHead>Price</TableHead>
+                <TableHead>Date</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -97,8 +98,9 @@ const StudentDetail = ({ student, enrolls }: StudentProp) => {
                 enrolls.map((enroll, index) => (
                   <TableRow key={enroll.id}>
                     <TableCell className="font-medium">{index + 1}</TableCell>
-                    <TableCell>{enroll.course?.name}</TableCell>
-                    <TableCell>{enroll.price}</TableCell>
+                    <TableCell>{enroll?.course?.name}</TableCell>
+                    <TableCell>{formatToDollar(enroll.price)}</TableCell>
+                    <TableCell>{formattedDate(enroll.date)}</TableCell>
                   </TableRow>
                 ))
               ) : (
