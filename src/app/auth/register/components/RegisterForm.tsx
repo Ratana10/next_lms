@@ -36,13 +36,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { registerSchema } from "@/schema/definition";
 import { registerService } from "@/services/auth.service";
 
 export function RegisterForm() {
   const [errorMsg, setErrorMsg] = useState(null);
-  const router = useRouter()
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -55,16 +55,20 @@ export function RegisterForm() {
   });
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
-    const {firstname, lastname, username, password, role} = await registerSchema.parseAsync(values)
+    console.log("submit", values);
+    const { firstname, lastname, username, password, role } =
+      await registerSchema.parseAsync(values);
 
-    const res = await registerService({firstname, lastname, username, password, role});
-    if (res.ok) {
-      //Todo save token into session
-      const data = await res.json();
-      router.push('/dashboard');
-    } else {
-      const data = await res.json();
-      setErrorMsg(data.message);
+    const { token } = await registerService({
+      firstname,
+      lastname,
+      username,
+      password,
+      role,
+    });
+
+    if (token) {
+      router.push("/auth/login");
     }
   }
 
@@ -170,15 +174,6 @@ export function RegisterForm() {
                   )}
                 />
               </div>
-              {errorMsg != null ? (
-                <Alert variant="destructive">
-                  <ExclamationTriangleIcon className="h-4 w-4" />
-                  <AlertTitle>Invalid</AlertTitle>
-                  <AlertDescription>{errorMsg}</AlertDescription>
-                </Alert>
-              ) : (
-                ""
-              )}
               <Button type="submit" className="w-full">
                 Create an account
               </Button>

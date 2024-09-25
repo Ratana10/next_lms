@@ -49,5 +49,12 @@ export async function registerService(registerRequest: RegisterRequest) {
     },
     body: JSON.stringify(registerRequest),
   });
-  return await res.json();
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(`${data.message}`);
+  }
+
+  return {
+    token: data.token,
+  };
 }

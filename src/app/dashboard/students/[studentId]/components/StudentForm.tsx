@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, useFormContext } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { studentSchema } from "@/schema/definition";
 import {
   createStudent,
@@ -76,7 +76,7 @@ const StudentForm = ({ initialize }: StudentProp) => {
       phone: "",
       email: "",
       gender: "MALE",
-      type: "",
+      type: "STUDY",
       position: "",
       from: "",
     },
@@ -260,8 +260,9 @@ const StudentForm = ({ initialize }: StudentProp) => {
                 <FormItem>
                   <FormLabel>Type</FormLabel>
                   <Select
+                    value={field.value}
                     onValueChange={field.onChange}
-                    defaultValue={initialize ? initialize.type : ""}
+                    defaultValue={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -285,7 +286,7 @@ const StudentForm = ({ initialize }: StudentProp) => {
               name="position"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Position</FormLabel>
+                  <FormLabel>Position test</FormLabel>
                   <FormControl>
                     <Input placeholder="Enter position" {...field} />
                   </FormControl>
