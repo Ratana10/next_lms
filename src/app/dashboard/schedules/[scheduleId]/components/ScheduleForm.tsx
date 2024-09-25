@@ -41,7 +41,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { DayOfWeek, dayOfWeek } from "@/lib/dayOfWeek";
 import { createSchedule, updateSchedule } from "@/services/schedule.service";
 import { ButtonLoading } from "@/components/ButtonLoading";
 import { Textarea } from "@/components/ui/textarea";
@@ -137,7 +136,9 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
               name="courseId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Course *</FormLabel>
+                  <FormLabel>
+                    Course <span className="text-red-500">*</span>
+                  </FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={initialize?.courseId?.toString()}
@@ -167,7 +168,9 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description *</FormLabel>
+                  <FormLabel>
+                    Description <span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Enter description"
@@ -186,7 +189,9 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
               name="startTime"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Start Time *</FormLabel>
+                  <FormLabel>
+                    Start Time <span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl onChange={field.onChange}>
                     <Input type="time" {...field} />
                   </FormControl>
@@ -199,7 +204,9 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
               name="endTime"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>End Time *</FormLabel>
+                  <FormLabel>
+                    End Time <span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl onChange={field.onChange}>
                     <Input type="time" {...field} />
                   </FormControl>
@@ -214,7 +221,9 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
               name="startDate"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Start Date *</FormLabel>
+                  <FormLabel>
+                    Start Date <span className="text-red-500">*</span>
+                  </FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -255,7 +264,9 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
               name="endDate"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>End Date *</FormLabel>
+                  <FormLabel>
+                    End Date <span className="text-red-500">*</span>
+                  </FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -298,7 +309,9 @@ const ScheduleForm = ({ initialize, courses }: ScheduleProp) => {
               name="totalTime"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>TotalTime *</FormLabel>
+                  <FormLabel>
+                    TotalTime <span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input
                       type="number"

@@ -174,7 +174,7 @@ const StudentForm = ({ initialize }: StudentProp) => {
               name="firstname"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Firstname *</FormLabel>
+                  <FormLabel>Firstname <span className="text-red-500">*</span></FormLabel>
                   <FormControl>
                     <Input autoFocus placeholder="Enter firstname" {...field} />
                   </FormControl>
@@ -187,7 +187,7 @@ const StudentForm = ({ initialize }: StudentProp) => {
               name="lastname"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Lastname *</FormLabel>
+                  <FormLabel>Lastname <span className="text-red-500">*</span></FormLabel>
                   <FormControl>
                     <Input placeholder="Enter lastname" {...field} />
                   </FormControl>
@@ -226,7 +226,7 @@ const StudentForm = ({ initialize }: StudentProp) => {
               name="gender"
               render={({ field }) => (
                 <FormItem className="space-y-3">
-                  <FormLabel>Gender *</FormLabel>
+                  <FormLabel>Gender <span className="text-red-500">*</span></FormLabel>
                   <FormControl>
                     <RadioGroup
                       onValueChange={field.onChange}
@@ -258,7 +258,7 @@ const StudentForm = ({ initialize }: StudentProp) => {
               name="type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Type</FormLabel>
+                  <FormLabel>Type <span className="text-red-500">*</span></FormLabel>
                   <Select
                     value={field.value}
                     onValueChange={field.onChange}
@@ -286,7 +286,7 @@ const StudentForm = ({ initialize }: StudentProp) => {
               name="position"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Position test</FormLabel>
+                  <FormLabel>Position <span className="text-red-500">*</span></FormLabel>
                   <FormControl>
                     <Input placeholder="Enter position" {...field} />
                   </FormControl>

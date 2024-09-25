@@ -146,7 +146,7 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name *</FormLabel>
+                  <FormLabel>Name <span className="text-red-500">*</span></FormLabel>
                   <FormControl>
                     <Input autoFocus placeholder="Enter name" {...field} />
                   </FormControl>
@@ -159,7 +159,7 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
               name="categoryId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Category *</FormLabel>
+                  <FormLabel>Category <span className="text-red-500">*</span></FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={initialize?.categoryId.toString()}
@@ -189,7 +189,7 @@ const CourseForm = ({ initialize, categories, teachers }: CourseProp) => {
               name="price"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Price *</FormLabel>
+                  <FormLabel>Price <span className="text-red-500">*</span></FormLabel>
                   <FormControl>
                     <Input type="number" placeholder="Enter price" {...field} />
                   </FormControl>

@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import {
   Form,
   FormControl,
@@ -125,7 +125,9 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
               name="studentId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Student *</FormLabel>
+                  <FormLabel>
+                    Student <span className="text-red-500">*</span>
+                  </FormLabel>
                   <Select onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>
@@ -153,7 +155,9 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
               name="courseId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Course *</FormLabel>
+                  <FormLabel>
+                    Course <span className="text-red-500">*</span>
+                  </FormLabel>
                   <Select
                     onValueChange={(value) => {
                       field.onChange(value);
@@ -208,7 +212,9 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
               name="method"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Payment Method *</FormLabel>
+                  <FormLabel>
+                    Payment Method <span className="text-red-500">*</span>
+                  </FormLabel>
                   <Select onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>
@@ -245,7 +251,9 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
               name="date"
               render={({ field }) => (
                 <FormItem className="flex flex-col mt-3">
-                  <FormLabel>Date *</FormLabel>
+                  <FormLabel>
+                    Date <span className="text-red-500">*</span>
+                  </FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>

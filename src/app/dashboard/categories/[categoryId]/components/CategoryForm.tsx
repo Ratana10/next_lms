@@ -55,33 +55,44 @@ const CategoryForm = ({ initialize }: CategoryProp) => {
 
   async function onSubmit(values: z.infer<typeof categorySchema>) {
     if (initialize) {
-      // Update exists category
-      try {
-        setLoading(true);
-        await updateCategory(initialize.id, values);
-        toast.success("Update successfully");
-        router.push("/dashboard/categories");
-        router.refresh();
-      } catch (error) {
-        toast.error(`ERROR: ${error}`);
-      } finally {
-        setLoading(false);
-        setOpen(false);
-      }
+      setLoading(true);
+      toast
+        .promise(updateCategory(initialize.id, values), {
+          loading: "Updating category...",
+          success: "Category updated successfully",
+          error: "Failed to update category",
+        })
+        .then(() => {
+          router.push("/dashboard/categories");
+          router.refresh();
+        })
+        .catch((error) => {
+          console.error("Error updating category: ", error);
+        })
+        .finally(() => {
+          setLoading(false);
+          setOpen(false);
+        });
     } else {
       // Create new category
-      try {
-        setLoading(true);
-        await createCategory(values);
-        toast.success("Create successfully");
-        router.push("/dashboard/categories");
-        router.refresh();
-      } catch (error) {
-        toast.error(`ERROR: ${error}`);
-      } finally {
-        setOpen(false);
-        setLoading(false);
-      }
+      setLoading(true);
+      toast
+        .promise(createCategory(values), {
+          loading: "Creating category...",
+          success: "Category created successfully",
+          error: "Failed to update category",
+        })
+        .then(() => {
+          router.push("/dashboard/categories");
+          router.refresh();
+        })
+        .catch((error) => {
+          console.error("Error creating category: ", error);
+        })
+        .finally(() => {
+          setLoading(false);
+          setOpen(false);
+        });
     }
   }
 
@@ -135,7 +146,9 @@ const CategoryForm = ({ initialize }: CategoryProp) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name *</FormLabel>
+                  <FormLabel>
+                    Name <span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input autoFocus placeholder="Enter name" {...field} />
                   </FormControl>

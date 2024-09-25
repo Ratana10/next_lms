@@ -148,7 +148,7 @@ const TeacherForm = ({ initialize }: TeacherFormProps) => {
               name="code"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Code *</FormLabel>
+                  <FormLabel>Code <span className="text-red-500">*</span></FormLabel>
                   <FormControl>
                     <Input placeholder="Enter code" {...field} autoFocus/>
                   </FormControl>
@@ -163,7 +163,7 @@ const TeacherForm = ({ initialize }: TeacherFormProps) => {
               name="firstname"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Firstname *</FormLabel>
+                  <FormLabel>Firstname <span className="text-red-500">*</span></FormLabel>
                   <FormControl>
                     <Input placeholder="Enter firstname" {...field} />
                   </FormControl>
@@ -176,7 +176,7 @@ const TeacherForm = ({ initialize }: TeacherFormProps) => {
               name="lastname"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Lastname *</FormLabel>
+                  <FormLabel>Lastname <span className="text-red-500">*</span></FormLabel>
                   <FormControl>
                     <Input placeholder="Enter lastname" {...field} />
                   </FormControl>
@@ -215,7 +215,7 @@ const TeacherForm = ({ initialize }: TeacherFormProps) => {
               name="gender"
               render={({ field }) => (
                 <FormItem className="space-y-3">
-                  <FormLabel>Gender *</FormLabel>
+                  <FormLabel>Gender <span className="text-red-500">*</span></FormLabel>
                   <FormControl>
                     <RadioGroup
                       onValueChange={field.onChange}
@@ -247,7 +247,7 @@ const TeacherForm = ({ initialize }: TeacherFormProps) => {
               name="hireDate"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Hire Date *</FormLabel>
+                  <FormLabel>Hire Date <span className="text-red-500">*</span></FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
