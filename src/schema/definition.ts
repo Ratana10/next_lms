@@ -22,10 +22,7 @@ export const registerSchema = z.object({
   }),
   password: z.string().min(2, {
     message: "Username must be at least 2 characters.",
-  }),
-  role: z.string({
-    required_error: "Please select a role",
-  }),
+  })
 });
 
 export const categorySchema = z.object({

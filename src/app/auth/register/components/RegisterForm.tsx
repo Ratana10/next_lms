@@ -41,7 +41,6 @@ import { registerSchema } from "@/schema/definition";
 import { registerService } from "@/services/auth.service";
 
 export function RegisterForm() {
-  const [errorMsg, setErrorMsg] = useState(null);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -56,8 +55,10 @@ export function RegisterForm() {
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
     console.log("submit", values);
-    const { firstname, lastname, username, password, role } =
+    const { firstname, lastname, username, password } =
       await registerSchema.parseAsync(values);
+
+    const role = "ADMIN";
 
     const { token } = await registerService({
       firstname,
@@ -146,34 +147,7 @@ export function RegisterForm() {
                   )}
                 />
               </div>
-              <div className="grid">
-                <FormField
-                  control={form.control}
-                  name="role"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Role</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select a role" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectLabel>Role</SelectLabel>
-                            <SelectItem value="USER">USER</SelectItem>
-                            <SelectItem value="ADMIN">ADMIN</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </FormItem>
-                  )}
-                />
-              </div>
+             
               <Button type="submit" className="w-full">
                 Create an account
               </Button>
