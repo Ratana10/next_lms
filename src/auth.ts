@@ -86,7 +86,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       // If the user is already logged in, redirect them to the dashboard
       if (isLoggedIn && pathname.startsWith("/auth")) {
-        return Response.redirect(new URL("/dashboard", nextUrl));
+        return Response.redirect(new URL("/", nextUrl));
       }
 
       if (!isLoggedIn) {

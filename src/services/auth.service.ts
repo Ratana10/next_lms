@@ -4,13 +4,12 @@ import { z } from "zod";
 import { signIn } from "@/auth";
 import { loginSchema } from "@/schema/definition";
 import { LoginRequest, RegisterRequest } from "@/types";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 export async function login(values: z.infer<typeof loginSchema>) {
   try {
     await signIn("credentials", {
       redirect: true,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
+      redirectTo: "/",
       username: values.username,
       password: values.password,
     });
