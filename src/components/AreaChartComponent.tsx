@@ -69,6 +69,7 @@ export function AreaChartComponent({
             />
             {Object.keys(config).map((key) => (
               <Area
+                key={key}
                 dataKey={`${key}`}
                 type="natural"
                 fill={`var(--color-${key})`}
