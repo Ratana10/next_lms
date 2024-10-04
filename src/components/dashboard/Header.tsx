@@ -8,16 +8,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { CircleUser, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
-const Header = () => {
-  const { data: session } = useSession();
+interface Props {
+  name: string;
+}
+const Header = ({ name }: Props) => {
   return (
     <header className="flex h-14 items-center justify-end gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
       <div className="flex items-center gap-2">
-        {session?.user?.name && (
-          <span className="text-sm font-medium">{session.user.name}</span>
-        )}
+        <span className="text-sm font-medium">{name}</span>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="secondary" size="icon" className="rounded-full">
