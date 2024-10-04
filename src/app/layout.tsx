@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { SessionProvider } from "next-auth/react";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -29,7 +30,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        {children}
+        <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
   );

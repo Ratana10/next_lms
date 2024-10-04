@@ -66,7 +66,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       if (token) {
         session.user.id = token.id as string;
-        session.user.name = token.username as string;
+        session.user.name = token.name as string;
         session.user.token = token.token as string;
         session.user.expireTime = token.expireTime as number;
       }
@@ -76,15 +76,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const isLoggedIn = !!auth?.user;
       const { pathname } = nextUrl;
 
-      if (!isLoggedIn && pathname !== "/auth/login") {
-        return Response.redirect(new URL("/auth/login", nextUrl));
+      // Allow access to /auth/login and /auth/register without being logged in
+      if (
+        !isLoggedIn &&
+        (pathname === "/auth/login" || pathname === "/auth/register")
+      ) {
+        return true;
       }
 
-      if (pathname.startsWith("/auth/login") && isLoggedIn) {
+      // If the user is already logged in, redirect them to the dashboard
+      if (isLoggedIn && pathname.startsWith("/auth")) {
         return Response.redirect(new URL("/dashboard", nextUrl));
       }
 
-      return !!auth;
+      if (!isLoggedIn) {
+        return Response.redirect(new URL("/auth/login", nextUrl));
+      }
+
+      return true;
     },
   },
   pages: {
