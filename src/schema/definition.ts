@@ -22,7 +22,7 @@ export const registerSchema = z.object({
   }),
   password: z.string().min(2, {
     message: "Username must be at least 2 characters.",
-  })
+  }),
 });
 
 export const categorySchema = z.object({
@@ -85,27 +85,32 @@ export const courseSchema = z.object({
   }),
 });
 
-export const scheduleSchema = z.object({
-  description: z.string().min(1, {
-    message: "Day is required.",
-  }),
-  courseId: z.coerce.number().min(1, {
-    message: "Course is required.",
-  }),
-  startTime: z.string().min(1, {
-    message: "StartTime is required.",
-  }),
-  endTime: z.string().min(1, {
-    message: "EndTime is required.",
-  }),
-  startDate: z.date({
-    required_error: "startDate is required.",
-  }),
-  endDate: z.date({
-    required_error: "endDate is required.",
-  }),
-  totalTime: z.coerce.number().optional(),
-});
+export const scheduleSchema = z
+  .object({
+    description: z.string().min(1, {
+      message: "Day is required.",
+    }),
+    courseId: z.coerce.number().min(1, {
+      message: "Course is required.",
+    }),
+    startTime: z.string().min(1, {
+      message: "StartTime is required.",
+    }),
+    endTime: z.string().min(1, {
+      message: "EndTime is required.",
+    }),
+    startDate: z.date({
+      required_error: "startDate is required.",
+    }),
+    endDate: z.date({
+      required_error: "endDate is required.",
+    }),
+    totalTime: z.coerce.number().optional(),
+  })
+  .refine((data) => data.endDate >= data.startDate, {
+    message: "End date cannot be before start date.",
+    path: ["endDate"],
+  });
 
 export const enrollSchema = z.object({
   studentId: z.coerce.number().min(1, {
