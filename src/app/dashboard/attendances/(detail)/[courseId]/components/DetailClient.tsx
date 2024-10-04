@@ -47,7 +47,7 @@ const DetailClient = ({
     }
 
     router.push(`${pathname}?${searchParams.toString()}`);
-  }, [date, router]);
+  }, [date, router, pathname]);
 
   const onPreviousPage = () => {
     if (pagination.pageNumber > 1) {

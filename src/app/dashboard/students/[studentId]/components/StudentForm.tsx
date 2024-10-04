@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { studentSchema } from "@/schema/definition";
 import {
   createStudent,
@@ -82,16 +82,20 @@ const StudentForm = ({ initialize }: StudentProp) => {
     },
   });
 
-  const { watch, setValue } = form;
+  const { setValue } = form;
+
+  const selectedType = useWatch({
+    control: form.control,
+    name: "type",
+  });
 
   useEffect(() => {
-    const selectedType = watch("type");
     if (selectedType === "STUDY") {
       setValue("position", "Student");
     } else {
       setValue("position", "");
     }
-  }, [watch("type"), setValue]);
+  }, [selectedType, setValue]);
 
   async function onSubmit(values: z.infer<typeof studentSchema>) {
     if (initialize) {
