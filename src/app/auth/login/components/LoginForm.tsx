@@ -85,7 +85,12 @@ export function LoginForm() {
                     <FormItem onClick={handleClearErrors}>
                       <FormLabel>Username</FormLabel>
                       <FormControl>
-                        <Input autoFocus placeholder="username" {...field} />
+                        <Input
+                          autoFocus
+                          autoComplete="username"
+                          placeholder="username"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -102,6 +107,7 @@ export function LoginForm() {
                       <FormControl>
                         <Input
                           type="password"
+                          autoComplete="current-password"
                           placeholder="*********"
                           {...field}
                         />

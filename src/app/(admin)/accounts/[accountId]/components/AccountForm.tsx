@@ -64,7 +64,6 @@ const AccountForm = ({ initialize }: Prop) => {
   });
 
   async function onSubmit(values: z.infer<typeof accountSchema>) {
-    console.log("values", values);
     setLoading(true);
     toast
       .promise(createAccount(values), {
@@ -77,7 +76,6 @@ const AccountForm = ({ initialize }: Prop) => {
         router.push("/accounts");
       })
       .catch((error) => {
-        console.error("Error creating account: ", error);
         setLoading(false);
       });
   }
