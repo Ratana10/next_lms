@@ -8,7 +8,7 @@ import { LoginRequest, RegisterRequest } from "@/types";
 export async function login(values: z.infer<typeof loginSchema>) {
   try {
     const result = await signIn("credentials", {
-      redirect: false, // Set to false to handle redirects manually
+      redirect: false,
       username: values.username,
       password: values.password,
     });

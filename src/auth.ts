@@ -79,7 +79,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // Allow access to /auth/login and /auth/register without being logged in
       if (
         !isLoggedIn &&
-        (pathname === "/auth/login" || pathname === "/auth/register")
+        (pathname === "/auth/login")
       ) {
         return true;
       }
