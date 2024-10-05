@@ -19,7 +19,6 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -57,7 +56,6 @@ export function LoginForm() {
         router.refresh();
       })
       .catch((error) => {
-        console.error("Error login: ", error);
         setLoading(false);
       });
   }
@@ -75,7 +73,7 @@ export function LoginForm() {
             <CardHeader>
               <CardTitle className="text-2xl">Login</CardTitle>
               <CardDescription>
-                Enter your username below to login to your account.
+                Enter your username and password below to login to your account.
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4">

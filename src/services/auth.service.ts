@@ -20,7 +20,6 @@ export async function login(values: z.infer<typeof loginSchema>) {
 
     return result;
   } catch (error) {
-    console.error("Unexpected login error:", error);
     throw new Error("An unexpected error occurred during login.");
   }
 }
