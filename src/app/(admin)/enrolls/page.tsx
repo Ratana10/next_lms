@@ -42,6 +42,7 @@ const EnrollPage = async ({
     })
   );
 
+
   const formattedEnrolls = enrolls.map((e: EnrollV2, index: number) => ({
     id: e.id,
     no: getNoNumber(index, pagination.pageNumber, pagination.pageSize),

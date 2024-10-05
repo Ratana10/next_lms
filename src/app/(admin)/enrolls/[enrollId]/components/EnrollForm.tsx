@@ -257,6 +257,7 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
                                 value={course.name}
                                 onSelect={() => {
                                   form.setValue("courseId", course.id);
+                                  handleCourseChange(parseInt(course.id.toString()));
                                   setOpenCourse(false);
                                 }}
                               >
