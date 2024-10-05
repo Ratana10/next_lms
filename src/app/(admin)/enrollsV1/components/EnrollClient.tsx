@@ -104,7 +104,7 @@ const EnrollClient = ({
     <>
       <div className="flex justify-between">
         <Heading title="Enrolls" descritpion="Manage enrolls" />
-        <Button onClick={() => router.push("/dashboard/enrolls/new")}>
+        <Button onClick={() => router.push("/enrolls/new")}>
           <Plus className="w-4 h-4 mr-2" />
           Add
         </Button>

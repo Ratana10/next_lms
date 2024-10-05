@@ -95,7 +95,7 @@ const EnrollForm = ({
       setLoading(true);
       await createEnroll(values);
       toast.success("Create successfully");
-      router.push("/dashboard/enrolls");
+      router.push("/enrolls");
       router.refresh();
     } catch (error) {
       toast.error(`${error}`);
@@ -110,7 +110,7 @@ const EnrollForm = ({
     //     setLoading(true);
     //     await deleteEnroll(initialize.id);
     //     toast.success("Delete enroll successfully");
-    //     router.push("/dashboard/enrolls");
+    //     router.push("/enrolls");
     //     router.refresh();
     //     setOpen(false);
     //   } catch (error) {
@@ -123,7 +123,7 @@ const EnrollForm = ({
 
   return (
     <>
-      <BackButton text="Back" href="/dashboard/enrolls" />
+      <BackButton text="Back" href="/enrolls" />
       <div className="flex justify-between">
         <Heading title={title} descritpion={description} />
         {initialize && (

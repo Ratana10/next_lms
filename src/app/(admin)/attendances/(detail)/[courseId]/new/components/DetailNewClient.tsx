@@ -92,7 +92,7 @@ const DetailNewClient = ({ course, students, pagination }: Props) => {
     try {
       setLoading(true);
       await createAttendance(data);
-      router.push("/dashboard/attendances");
+      router.push("/attendances");
       router.refresh();
       toast.success("create attendance success");
     } catch (error: any) {
@@ -103,7 +103,7 @@ const DetailNewClient = ({ course, students, pagination }: Props) => {
 
   return (
     <>
-      <BackButton text="Back" href="/dashboard/attendances" />
+      <BackButton text="Back" href="/attendances" />
       <div className="flex justify-between">
         <Heading
           title={`${course.name} Attendance`}

@@ -70,7 +70,7 @@ const CellAction = ({ data }: props) => {
               className="cursor-pointer"
               asChild
             >
-              <Link href={`/dashboard/enrolls/${data.id}/payments/new`}>
+              <Link href={`/enrolls/${data.id}/payments/new`}>
                 <CircleDollarSign className="w-4 h-4 mr-2" /> Make Payment
               </Link>
             </DropdownMenuItem>
@@ -81,7 +81,7 @@ const CellAction = ({ data }: props) => {
               className="cursor-pointer"
               asChild
             >
-              <Link href={`/dashboard/enrolls/${data.id}/payments`}>
+              <Link href={`/enrolls/${data.id}/payments`}>
                 <Wallet className="w-4 h-4 mr-2" /> View Payments
               </Link>
             </DropdownMenuItem>
@@ -92,7 +92,7 @@ const CellAction = ({ data }: props) => {
             className="cursor-pointer"
             asChild
           >
-            <Link href={`/dashboard/enrolls/${data.id}`}>
+            <Link href={`/enrolls/${data.id}`}>
               <Edit className="w-4 h-4 mr-2" /> Update
             </Link>
           </DropdownMenuItem>

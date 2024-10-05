@@ -36,7 +36,7 @@ const EnrollPaymentClient = ({
 
   return (
     <>
-      <BackButton text="back" href="/dashboard/enrolls" />
+      <BackButton text="back" href="/enrolls" />
       <div className="flex justify-between">
         <Heading title="View Payments" descritpion="List payments" />
       </div>

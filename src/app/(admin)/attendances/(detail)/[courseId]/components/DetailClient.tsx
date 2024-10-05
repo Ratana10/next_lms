@@ -63,7 +63,7 @@ const DetailClient = ({
 
   return (
     <>
-      <BackButton href="/dashboard/attendances" text="Back" />
+      <BackButton href="/attendances" text="Back" />
       <div className="flex justify-between">
         <Heading
           title={`${course.name}`}
@@ -78,7 +78,7 @@ const DetailClient = ({
             setDate={setDate}
           />
           <Button asChild>
-            <Link href={`/dashboard/attendances/${course.id}/new`}>
+            <Link href={`/attendances/${course.id}/new`}>
               <Plus className="w-4 h-4 mr-2" />
               Create
             </Link>

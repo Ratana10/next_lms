@@ -79,7 +79,7 @@ const EnrollPaymentForm = ({ initialize }: EnrollPaymentProp) => {
       setLoading(true);
       await createPayment(values);
       toast.success("Create successfully");
-      router.push("/dashboard/enrolls");
+      router.push("/enrolls");
       router.refresh();
     } catch (error) {
       toast.error(`${error}`);
@@ -90,7 +90,7 @@ const EnrollPaymentForm = ({ initialize }: EnrollPaymentProp) => {
 
   return (
     <>
-      <BackButton text="Back" href="/dashboard/enrolls" />
+      <BackButton text="Back" href="/enrolls" />
       <div className="flex justify-between">
         <Heading title={title} descritpion={description} />
       </div>

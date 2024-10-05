@@ -99,10 +99,10 @@ export const scheduleSchema = z
     endTime: z.string().min(1, {
       message: "EndTime is required.",
     }),
-    startDate: z.date({
+    startDate: z.coerce.date({
       required_error: "startDate is required.",
     }),
-    endDate: z.date({
+    endDate: z.coerce.date({
       required_error: "endDate is required.",
     }),
     totalTime: z.coerce.number().optional(),
