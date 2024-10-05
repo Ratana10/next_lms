@@ -29,14 +29,19 @@ export const columns: ColumnDef<Course>[] = [
   {
     accessorKey: "discount",
     header: "Discount",
-    
   },
   {
     accessorKey: "afterDis",
     header: "AfterDis",
     cell: ({ row }) => (
-      <div className="font-medium">{formatToDollar(row.getValue("afterDis"))}</div>
+      <div className="font-medium">
+        {formatToDollar(row.getValue("afterDis"))}
+      </div>
     ),
+  },
+  {
+    accessorKey: "teacher",
+    header: "Teacher",
   },
   {
     accessorKey: "createdAt",
