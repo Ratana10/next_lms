@@ -7,17 +7,21 @@ import { LoginRequest, RegisterRequest } from "@/types";
 
 export async function login(values: z.infer<typeof loginSchema>) {
   try {
-    await signIn("credentials", {
-      redirect: true,
-      redirectTo: "/",
+    const result = await signIn("credentials", {
+      redirect: false, // Set to false to handle redirects manually
       username: values.username,
       password: values.password,
     });
-  } catch (error: any) {
-    if (error.cause && error.cause.err && error.cause.err.message) {
-      console.error("Login error:", error.cause.err.message);
-      throw new Error(`${error.cause.err.message}`);
+
+    if (result?.error) {
+      console.error("Login error:", result.error);
+      throw new Error(result.error);
     }
+
+    return result;
+  } catch (error) {
+    console.error("Unexpected login error:", error);
+    throw new Error("An unexpected error occurred during login.");
   }
 }
 

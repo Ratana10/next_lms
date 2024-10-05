@@ -34,7 +34,7 @@ export function LoginForm() {
   const [errors, setErrors] = useState(null);
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
-  
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -44,16 +44,22 @@ export function LoginForm() {
   });
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    try {
-      setLoading(true)
-      await login(values);
-      toast.success("Login success");
-      router.refresh(); 
-    } catch (error: any) {
-      toast.error(`${error}`);
-    }finally{
-      setLoading(false)
-    }
+    setLoading(true);
+    toast
+      .promise(login(values), {
+        loading: "loading",
+        success: "login successfully",
+        error: "Invalid username or password",
+      })
+      .then((message) => {
+        setLoading(false);
+        router.push("/");
+        router.refresh();
+      })
+      .catch((error) => {
+        console.error("Error login: ", error);
+        setLoading(false);
+      });
   }
 
   function handleClearErrors() {
@@ -96,7 +102,11 @@ export function LoginForm() {
                     <FormItem onClick={handleClearErrors}>
                       <FormLabel>Password</FormLabel>
                       <FormControl>
-                        <Input type="password" placeholder="*****" {...field} />
+                        <Input
+                          type="password"
+                          placeholder="*********"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -114,7 +124,11 @@ export function LoginForm() {
               )}
             </CardContent>
             <CardFooter>
-              <ButtonLoading isLoading={loading} className="w-full" type="submit">
+              <ButtonLoading
+                isLoading={loading}
+                className="w-full"
+                type="submit"
+              >
                 Sign in
               </ButtonLoading>
             </CardFooter>
