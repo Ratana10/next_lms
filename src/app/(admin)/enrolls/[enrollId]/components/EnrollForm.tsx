@@ -64,6 +64,7 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
   const [total, setTotal] = useState<number>(0);
 
   const [openStudent, setOpenStudent] = useState(false);
+  const [openCourse, setOpenCourse] = useState(false);
 
   const form = useForm<z.infer<typeof enrollV2Schema>>({
     resolver: zodResolver(enrollV2Schema),
@@ -211,36 +212,70 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
               )}
             />
 
+            {/* Course */}
             <FormField
               control={form.control}
               name="courseId"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="">
                   <FormLabel>
                     Course <span className="text-red-500">*</span>
                   </FormLabel>
-                  <Select
-                    onValueChange={(value) => {
-                      field.onChange(value);
-                      handleCourseChange(parseInt(value));
-                    }}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a course" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {courses.map((course: Course) => (
-                        <SelectItem
-                          key={course.id}
-                          value={course.id.toString()}
+                  <Popover open={openCourse} onOpenChange={setOpenCourse}>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={openCourse}
+                          className={cn(
+                            "w-full justify-between",
+                            !field.value && "text-muted-foreground"
+                          )}
                         >
-                          {course.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                          {field.value
+                            ? courses.find(
+                                (course: Course) => course.id === field.value
+                              )?.name
+                            : "Select a course"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[200px] p-0">
+                      <Command>
+                        <CommandInput
+                          placeholder="Search course..."
+                          className="h-9"
+                        />
+                        <CommandList>
+                          <CommandEmpty>No course found.</CommandEmpty>
+                          <CommandGroup>
+                            {courses.map((course: Course) => (
+                              <CommandItem
+                                key={course.id}
+                                value={course.name}
+                                onSelect={() => {
+                                  form.setValue("courseId", course.id);
+                                  setOpenCourse(false);
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    course.id === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {course.name}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                   <FormMessage />
                 </FormItem>
               )}
