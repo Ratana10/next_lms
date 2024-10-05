@@ -169,3 +169,22 @@ export const paymentSchema = z.object({
   method: z.coerce.string().optional(),
   receiver: z.coerce.string().optional(),
 });
+
+export const accountSchema = z.object({
+  firstname: z.string().min(1, {
+    message: "firstname is required.",
+  }),
+  lastname: z.string().min(1, {
+    message: "lastname is required.",
+  }),
+  username: z.string().min(1, {
+    message: "username is required.",
+  }),
+  role: z.string().min(1, {
+    message: "role is required.",
+  }),
+  password: z.string().min(1, {
+    message: "password is required.",
+  }),
+});
+
