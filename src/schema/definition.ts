@@ -136,12 +136,18 @@ export const enrollSchema = z.object({
 });
 
 export const enrollV2Schema = z.object({
-  studentId: z.coerce.number().min(1, {
-    message: "Student is required.",
-  }),
-  courseId: z.coerce.number().min(1, {
-    message: "Course is required.",
-  }),
+  studentId: z
+    .union([z.string(), z.number()])
+    .refine((value) => !isNaN(Number(value)), {
+      message: "Student is required.",
+    })
+    .transform((value) => Number(value)), // Coerce to number
+  courseId: z
+    .union([z.string(), z.number()])
+    .refine((value) => !isNaN(Number(value)), {
+      message: "Course is required.",
+    })
+    .transform((value) => Number(value)), // Coerce to number
   date: z.date({
     required_error: "Date is required.",
   }),

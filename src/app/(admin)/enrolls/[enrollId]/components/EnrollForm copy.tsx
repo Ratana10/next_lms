@@ -13,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { enrollV2Schema } from "@/schema/definition";
 import Heading from "@/components/Heading";
-import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 import { Course, Student } from "@/types";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -39,15 +39,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { ButtonLoading } from "@/components/ButtonLoading";
 import { createEnroll } from "@/services/enrollv2.service";
-import { formattedFullname, priceAfterDiscount } from "@/lib/formatted";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
+import { priceAfterDiscount } from "@/lib/formatted";
 
 type EnrollFormProp = {
   students: Student[];
@@ -62,8 +54,6 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
-
-  const [openStudent, setOpenStudent] = useState(false);
 
   const form = useForm<z.infer<typeof enrollV2Schema>>({
     resolver: zodResolver(enrollV2Schema),
@@ -134,78 +124,27 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
               control={form.control}
               name="studentId"
               render={({ field }) => (
-                <FormItem className="">
+                <FormItem>
                   <FormLabel>
                     Student <span className="text-red-500">*</span>
                   </FormLabel>
-                  <Popover open={openStudent} onOpenChange={setOpenStudent}>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          aria-expanded={openStudent}
-                          className={cn(
-                            "w-full justify-between",
-                            !field.value && "text-muted-foreground"
-                          )}
+                  <Select onValueChange={field.onChange}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a student" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {students.map((student: Student) => (
+                        <SelectItem
+                          key={student.id}
+                          value={student.id.toString()}
                         >
-                          {field.value
-                            ? students.find(
-                                (student: Student) => student.id === field.value
-                              )
-                              ? `${
-                                  students.find(
-                                    (student) => student.id === field.value
-                                  )!.firstname
-                                } ${
-                                  students.find(
-                                    (student) => student.id === field.value
-                                  )!.lastname
-                                }`
-                              : "Select student"
-                            : "Select student"}
-                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-[200px] p-0">
-                      <Command>
-                        <CommandInput
-                          placeholder="Search student..."
-                          className="h-9"
-                        />
-                        <CommandList>
-                          <CommandEmpty>No student found.</CommandEmpty>
-                          <CommandGroup>
-                            {students.map((student: Student) => (
-                              <CommandItem
-                                key={student.id}
-                                value={`${student.firstname} ${student.lastname}`}
-                                onSelect={() => {
-                                  form.setValue("studentId", student.id);
-                                  setOpenStudent(false);
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    student.id === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {formattedFullname(
-                                  student.firstname,
-                                  student.lastname
-                                )}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </CommandList>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
+                          {student.lastname + " " + student.firstname}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -268,13 +207,14 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="method"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Payment Method</FormLabel>
+                  <FormLabel>
+                    Payment Method <span className="text-red-500">*</span>
+                  </FormLabel>
                   <Select onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>
@@ -293,7 +233,6 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="receiver"
@@ -307,7 +246,6 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="date"
