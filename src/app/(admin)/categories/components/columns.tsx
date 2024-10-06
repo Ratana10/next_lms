@@ -10,7 +10,17 @@ import { ArrowUpDown } from "lucide-react";
 export const columns: ColumnDef<Category>[] = [
   {
     accessorKey: "no",
-    header: "NO",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          NO
+          <ArrowUpDown className="ml-2 h-3 w-3" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "name",
@@ -21,7 +31,7 @@ export const columns: ColumnDef<Category>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 h-3 w-3" />
         </Button>
       );
     },

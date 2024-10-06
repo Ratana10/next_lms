@@ -5,19 +5,51 @@ import { ColumnDef } from "@tanstack/react-table";
 import CellAction from "./CellAction";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ArrowUpDown } from "lucide-react";
 
 export const columns: ColumnDef<Enroll>[] = [
   {
     accessorKey: "no",
-    header: "NO",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          NO
+          <ArrowUpDown className="ml-2 h-3 w-3" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "firstname",
-    header: "Firstname",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          First Name
+          <ArrowUpDown className="ml-2 h-3 w-3" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "lastname",
-    header: "Lastname",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Last Name
+          <ArrowUpDown className="ml-2 h-3 w-3" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "paid",
