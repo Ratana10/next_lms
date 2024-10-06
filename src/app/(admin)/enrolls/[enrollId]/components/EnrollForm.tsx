@@ -95,17 +95,27 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
   ];
 
   async function onSubmit(values: z.infer<typeof enrollV2Schema>) {
-    try {
-      setLoading(true);
-      await createEnroll(values);
-      toast.success("Create successfully");
-      router.push("/enrolls");
-      router.refresh();
-    } catch (error) {
-      toast.error(`${error}`);
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true);
+    toast
+      .promise(createEnroll(values), {
+        loading: "creating enroll",
+        success: "created enroll successfully",
+        error: (error) => {
+          // Customize the error message based on the specific error
+          const errorMessage =
+            error?.response?.data?.message ||
+            error.message ||
+            "An unexpected error occurred";
+          return `Failed to create enroll: ${errorMessage}`;
+        },
+      })
+      .then((message) => {
+        setLoading(false);
+        router.push("/enrolls");
+      })
+      .catch((error) => {
+        setLoading(false);
+      });
   }
 
   const handleCourseChange = (courseId: number) => {
@@ -115,9 +125,9 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
       selectedCourse!.discount
     );
     if (selectedCourse) {
-      setTotal(afterDis); // Update total with the selected course's price
+      setTotal(afterDis);
     } else {
-      setTotal(0); // Reset total if no course is selected
+      setTotal(0);
     }
   };
 
@@ -257,7 +267,9 @@ const EnrollForm = ({ students, courses }: EnrollFormProp) => {
                                 value={course.name}
                                 onSelect={() => {
                                   form.setValue("courseId", course.id);
-                                  handleCourseChange(parseInt(course.id.toString()));
+                                  handleCourseChange(
+                                    parseInt(course.id.toString())
+                                  );
                                   setOpenCourse(false);
                                 }}
                               >
