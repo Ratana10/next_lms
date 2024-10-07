@@ -1,13 +1,5 @@
-"use client";
-
-import { Edit, MoreHorizontal, Trash } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+"use client";;
+import { Edit, Eye, Trash } from "lucide-react";
 import { Modal } from "@/components/Modal";
 import { Button } from "@/components/ui/button";
 
@@ -60,39 +52,17 @@ const CellAction = ({ data }: props) => {
         onClose={() => setPopup(false)}
         teacher={data}
       />
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem
-            disabled={loading}
-            onClick={() => setPopup(true)}
-            className="cursor-pointer"
-          >
-            <Edit className="w-4 h-4 mr-2" /> View Detail
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            disabled={loading}
-            onClick={() => onUpdate(data.id)}
-            className="cursor-pointer"
-          >
-            <Edit className="w-4 h-4 mr-2" /> Update
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            disabled={loading}
-            onClick={() => setOpen(true)}
-            className="text-red-500 cursor-pointer"
-          >
-            <Trash className="w-4 h-4 mr-2 " />
-            Delete
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <div className="flex gap-1 items-center justify-center">
+        <Button className="bg-blue-500" onClick={() => setPopup(true)}>
+          <Eye className="w-4 h-4" />
+        </Button>
+        <Button className="bg-yellow-500" onClick={() => onUpdate(data.id)}>
+          <Edit className="w-4 h-4" />
+        </Button>
+        <Button className="bg-red-500" onClick={() => setOpen(true)}>
+          <Trash className="w-4 h-4" />
+        </Button>
+      </div>
     </>
   );
 };

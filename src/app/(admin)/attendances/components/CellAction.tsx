@@ -1,52 +1,48 @@
 "use client";
-
-import { Eye, MoreHorizontal, SquarePlus } from "lucide-react";
+import { Eye, SquarePlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Course } from "@/types";
 import Link from "next/link";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface Props {
   data: Course;
 }
 const CellAction = ({ data }: Props) => {
   return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem asChild>
-            <Link
-              href={`/attendances/${data.id}/new`}
-              className="cursor-pointer"
-            >
-              <SquarePlus className="w-4 h-4 mr-2" />
-              Create Attendance
+    <div className="flex gap-1 items-center justify-center">
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Link href={`/attendances/${data.id}/new`}>
+              <Button className="bg-yellow-500">
+                <SquarePlus className="w-4 h-4" />
+              </Button>
             </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link
-              href={`/attendances/${data.id}`}
-              className="cursor-pointer"
-            >
-              <Eye className="w-4 h-4 mr-2" />
-              View Attendances
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Create students attendance</p>
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Link href={`/attendances/${data.id}`} className="cursor-pointer">
+              <Button className="bg-blue-500">
+                <Eye className="w-4 h-4" />
+              </Button>
             </Link>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>View students attendance</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </div>
   );
 };
 

@@ -1,15 +1,7 @@
-"use client";
-
-import {  MoreHorizontal, Trash } from "lucide-react";
+"use client";;
+import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {  Payment } from "@/types";
+import { Payment } from "@/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -49,24 +41,11 @@ const CellAction = ({ data }: props) => {
         onDelete={onDelete}
         loading={loading}
       />
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem
-            disabled={loading}
-            onClick={() => setOpen(true)}
-            className="text-red-500 cursor-pointer"
-          >
-            <Trash className="w-4 h-4 mr-2 " />
-            Delete
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <div className="flex gap-2 items-center justify-center">
+        <Button className="bg-red-500" onClick={() => setOpen(true)}>
+          <Trash className="w-4 h-4" />
+        </Button>
+      </div>
     </>
   );
 };

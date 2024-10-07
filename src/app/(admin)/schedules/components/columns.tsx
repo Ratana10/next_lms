@@ -70,6 +70,7 @@ export const columns: ColumnDef<Schedule>[] = [
   },
   {
     id: "actions",
+    header: "Actions",
     cell: ({ row }) => <CellAction data={row.original} />,
   },
 ];

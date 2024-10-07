@@ -1,5 +1,4 @@
 "use client";
-
 import {
   CircleDollarSign,
   Edit,
@@ -8,6 +7,13 @@ import {
   Wallet,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Enroll } from "@/types";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { Modal } from "@/components/Modal";
+import { deleteEnroll } from "@/services/enrollv2.service";
+import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,13 +21,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Enroll } from "@/types";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import toast from "react-hot-toast";
-import { Modal } from "@/components/Modal";
-import Link from "next/link";
-import { deleteEnroll } from "@/services/enrollv2.service";
 
 interface props {
   data: Enroll;
@@ -55,6 +54,7 @@ const CellAction = ({ data }: props) => {
         onDelete={onDelete}
         loading={loading}
       />
+
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">

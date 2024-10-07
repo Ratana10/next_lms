@@ -75,6 +75,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     id: "actions",
+    header: "Actions",
     cell: ({ row }) => <CellAction data={row.original} />,
   },
 ];
