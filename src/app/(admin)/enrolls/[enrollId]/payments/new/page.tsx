@@ -7,7 +7,6 @@ const EnrollPaymentpage = async ({
   params: { enrollId: string };
 }) => {
   const { enroll } = await getEnrollById(parseInt(params.enrollId));
-  console.log(enroll);
   return <EnrollPaymentForm initialize={enroll} />;
 };
 

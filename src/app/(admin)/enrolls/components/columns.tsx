@@ -90,6 +90,7 @@ export const columns: ColumnDef<Enroll>[] = [
   },
   {
     id: "actions",
+    header: "Actions",
     cell: ({ row }) => <CellAction data={row.original} />,
   },
 ];

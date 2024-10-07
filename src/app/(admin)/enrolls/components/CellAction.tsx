@@ -1,11 +1,5 @@
 "use client";
-import {
-  CircleDollarSign,
-  Edit,
-  MoreHorizontal,
-  Trash,
-  Wallet,
-} from "lucide-react";
+import { CircleDollarSign, Edit, Trash, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Enroll } from "@/types";
 import { useRouter } from "next/navigation";
@@ -13,14 +7,6 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { Modal } from "@/components/Modal";
 import { deleteEnroll } from "@/services/enrollv2.service";
-import Link from "next/link";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 interface props {
   data: Enroll;
@@ -55,7 +41,45 @@ const CellAction = ({ data }: props) => {
         loading={loading}
       />
 
-      <DropdownMenu>
+      <div className="flex gap-1 items-center justify-center">
+        {/* Payment Button */}
+        <Button
+          className="bg-green-500"
+          disabled={loading || data.status === "PAID"} // Disable if status is PAID
+          onClick={() => router.push(`/enrolls/${data.id}/payments/new`)}
+        >
+          <CircleDollarSign className="w-4 h-4" />
+        </Button>
+
+        {/* View Payments Button */}
+        <Button
+          className="bg-blue-500"
+          disabled={loading || data.status === "UNPAID"} // Disable if status is UNPAID
+          onClick={() => router.push(`/enrolls/${data.id}/payments`)}
+        >
+          <Wallet className="w-4 h-4" />
+        </Button>
+
+        {/* Update Button */}
+        <Button
+          className="bg-yellow-500"
+          disabled={loading}
+          onClick={() => router.push(`/enrolls/${data.id}`)}
+        >
+          <Edit className="w-4 h-4" />
+        </Button>
+
+        {/* Delete Button */}
+        <Button
+          className="bg-red-500"
+          disabled={loading}
+          onClick={() => setOpen(true)}
+        >
+          <Trash className="w-4 h-4" />
+        </Button>
+      </div>
+
+      {/* <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
             <span className="sr-only">Open menu</span>
@@ -105,7 +129,7 @@ const CellAction = ({ data }: props) => {
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
-      </DropdownMenu>
+      </DropdownMenu> */}
     </>
   );
 };

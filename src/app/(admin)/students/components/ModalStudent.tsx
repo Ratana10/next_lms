@@ -37,7 +37,6 @@ interface StudentProps {
 }
 
 const ModalStudent = ({ student, isOpen, onClose }: StudentProps) => {
-  console.log(student);
   const form = useForm({
     defaultValues: {
       firstname: student.firstname,

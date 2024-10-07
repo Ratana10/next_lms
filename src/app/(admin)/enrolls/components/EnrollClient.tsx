@@ -116,7 +116,6 @@ const EnrollClient = ({
     router.replace(`${pathname}?${params.toString()}`);
   };
 
-  console.log("Course", coursesOption);
   return (
     <>
       <div className="flex justify-between">

@@ -56,7 +56,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         typeof token.expireTime === "number" &&
         token.expireTime < currentTime
       ) {
-        console.log("token expired");
         return null;
       }
 

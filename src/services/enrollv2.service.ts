@@ -38,7 +38,6 @@ export async function getAllEnrolls({
 export async function createEnroll(enroll: z.infer<typeof enrollV2Schema>) {
   const token = await getToken();
 
-  console.log("server testing", enroll);
   const res = await fetch(`${process.env.API_BASE_URL}/api/v1/enrolls`, {
     method: "POST",
     headers: {

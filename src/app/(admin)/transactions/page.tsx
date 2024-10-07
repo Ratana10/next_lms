@@ -7,7 +7,6 @@ import { PageProps } from "@/types/PageProps";
 const PaymentPage = async ({ searchParams }: PageProps) => {
   const page = Number(searchParams?.page || 1);
   const search = searchParams?.search || "";
-  console.log("search", search);
   const { payments, pagination } = await getAllPayments(page, search);
 
   const formattedPayments = payments.map((e: Payment, index: number) => ({
