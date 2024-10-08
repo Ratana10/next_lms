@@ -13,13 +13,13 @@ export const columns: ColumnDef<Enroll>[] = [
     accessorKey: "no",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
+        <button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex items-center"
         >
           NO
           <ArrowUpDown className="ml-2 h-3 w-3" />
-        </Button>
+        </button>
       );
     },
   },
