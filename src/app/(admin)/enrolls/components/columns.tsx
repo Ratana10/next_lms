@@ -5,55 +5,64 @@ import { ColumnDef } from "@tanstack/react-table";
 import CellAction from "./CellAction";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 
 export const columns: ColumnDef<Enroll>[] = [
   {
     accessorKey: "no",
-    header: ({ column }) => {
-      return (
+    header: ({ column }) => (
+      <div className="flex justify-center items-center">
         <button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="flex items-center"
+          className="flex items-center "
         >
           NO
           <ArrowUpDown className="ml-2 h-3 w-3" />
         </button>
-      );
-    },
+      </div>
+    ),
   },
   {
     accessorKey: "firstname",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
+    header: ({ column }) => (
+      <div className="flex justify-center items-center">
+        <button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex items-center "
         >
           First Name
           <ArrowUpDown className="ml-2 h-3 w-3" />
-        </Button>
-      );
-    },
+        </button>
+      </div>
+    ),
   },
   {
     accessorKey: "lastname",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
+    header: ({ column }) => (
+      <div className="flex justify-center items-center">
+        <button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex items-center "
         >
           Last Name
           <ArrowUpDown className="ml-2 h-3 w-3" />
-        </Button>
-      );
-    },
+        </button>
+      </div>
+    ),
   },
   {
     accessorKey: "paid",
-    header: "Paid",
+    header: ({ column }) => (
+      <div className="flex justify-center items-center">
+        <button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex items-center "
+        >
+          Paid
+          <ArrowUpDown className="ml-2 h-3 w-3" />
+        </button>
+      </div>
+    ),
   },
   {
     accessorKey: "remain",
