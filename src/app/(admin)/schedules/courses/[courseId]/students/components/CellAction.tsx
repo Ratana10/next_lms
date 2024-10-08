@@ -1,56 +1,64 @@
-"use client";
+"use client";;
 import { Edit, Eye, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Schedule } from "@/types";
+import { Student } from "@/types";
 import { useRouter } from "next/navigation";
+import { deleteStudent } from "@/services/student.service";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Modal } from "@/components/Modal";
-import { deleteSchedule } from "@/services/schedule.service";
-import Link from "next/link";
+import ModalStudent from "./ModalStudent";
 
 interface props {
-  data: Schedule;
+  data: Student;
 }
 const CellAction = ({ data }: props) => {
   const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [modalStudent, setModalStudent] = useState<boolean>(false);
 
   const onUpdate = (id: number) => {
-    router.push(`/schedules/${id}`);
+    router.push(`/students/${id}`);
   };
 
   const onDelete = async () => {
     try {
       setLoading(true);
-      await deleteSchedule(data.id);
-      toast.success("Delete schedule successfully");
+      await deleteStudent(data.id);
       router.refresh();
-      setLoading(false);
       setOpen(false);
+      setLoading(false);
     } catch (error) {
       toast.error(`${error}`);
+    } finally {
+      toast.success("Delete student successfully");
     }
+  };
+
+  const onViewDetail = (id: number) => {
+    router.push(`/students/${id}/details`);
   };
 
   return (
     <>
       <Modal
-        title={`Are you sure to delete?`}
+        title={`Are you sure to delete ${data.firstname} ${data.lastname}?`}
         description="This action cannot be undone."
         isOpen={open}
         onClose={() => setOpen(false)}
         onDelete={onDelete}
         loading={loading}
       />
+      <ModalStudent
+        student={data}
+        isOpen={modalStudent}
+        onClose={() => setModalStudent(false)}
+      />
       <div className="flex gap-1 items-center justify-center">
-        {/* View students of this schedule course */}
-        <Link href={`schedules/courses/${data.course.id}/students`}>
-          <Button className="bg-blue-500">
-            <Eye className="w-4 h-4" />
-          </Button>
-        </Link>
+        <Button className="bg-blue-500" onClick={() => setModalStudent(true)}>
+          <Eye className="w-4 h-4" />
+        </Button>
         <Button className="bg-yellow-500" onClick={() => onUpdate(data.id)}>
           <Edit className="w-4 h-4" />
         </Button>

@@ -19,7 +19,10 @@ const SchedulePage = async ({ searchParams }: PageProps) => {
     no: getNoNumber(index, pagination.pageNumber, pagination.pageSize),
     id: e.id,
     description: e.description,
-    courseName: e.course.name,
+    course: {
+      id: e.course.id,
+      name: e.course.name,
+    },
     startDate: formattedDate(e.startDate.toString()),
     endDate: formattedDate(e.endDate.toString()),
     startTime: formatTimeTo12Hour(e.startTime),

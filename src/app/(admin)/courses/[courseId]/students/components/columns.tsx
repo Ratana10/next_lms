@@ -1,12 +1,12 @@
 "use client";
 
-import { Schedule } from "@/types";
+import { Student } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
-import CellAction from "./CellAction";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
+import CellAction from "./CellAction";
 
-export const columns: ColumnDef<Schedule>[] = [
+export const columns: ColumnDef<Student>[] = [
   {
     accessorKey: "no",
     header: ({ column }) => {
@@ -15,50 +15,47 @@ export const columns: ColumnDef<Schedule>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          NO
+          No
           <ArrowUpDown className="ml-2 h-3 w-3" />
         </Button>
       );
     },
   },
   {
-    accessorKey: "course.name",
+    accessorKey: "lastname",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Course
+          Last Name
           <ArrowUpDown className="ml-2 h-3 w-3" />
         </Button>
       );
     },
   },
   {
-    accessorKey: "description",
-    header: "Description",
+    accessorKey: "firstname",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          First Name
+          <ArrowUpDown className="ml-2 h-3 w-3" />
+        </Button>
+      );
+    },
   },
   {
-    accessorKey: "startTime",
-    header: "StartTime",
+    accessorKey: "gender",
+    header: "Gender",
   },
   {
-    accessorKey: "endTime",
-    header: "EndTime",
-  },
-
-  {
-    accessorKey: "startDate",
-    header: "StartDate",
-  },
-  {
-    accessorKey: "endDate",
-    header: "EndDate",
-  },
-  {
-    accessorKey: "totalTime",
-    header: "TotalTime",
+    accessorKey: "phone",
+    header: "Phone",
   },
   {
     accessorKey: "createdAt",
