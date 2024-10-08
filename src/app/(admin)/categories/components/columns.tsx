@@ -41,14 +41,6 @@ export const columns: ColumnDef<Category>[] = [
     header: "Description",
   },
   {
-    accessorKey: "createdAt",
-    header: "CreatedAt",
-  },
-  {
-    accessorKey: "updatedAt",
-    header: "UpdatedAt",
-  },
-  {
     id: "actions",
     header: "Actions",
     cell: ({ row }) => <CellAction data={row.original} />,

@@ -1,11 +1,10 @@
 "use client";
 
-import {  Teacher } from "@/types";
+import { Teacher } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import CellAction from "./CellAction";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
-
 
 export const columns: ColumnDef<Teacher>[] = [
   {
@@ -71,14 +70,6 @@ export const columns: ColumnDef<Teacher>[] = [
   {
     accessorKey: "hireDate",
     header: "Hire Date",
-  },
-  {
-    accessorKey: "createdAt",
-    header: "CreatedAt",
-  },
-  {
-    accessorKey: "updatedAt",
-    header: "UpdatedAt",
   },
   {
     id: "actions",
