@@ -141,10 +141,7 @@ export async function deleteTeacher(teacherId: number) {
   );
   const data = await res.json();
 
-  if (res.ok) {
-    console.log("sucess");
-    return data.data;
-  } else {
-    console.log("fail");
+  if (!res.ok) {
+    throw new Error("Fail to delete teacher.")
   }
 }
