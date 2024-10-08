@@ -44,6 +44,7 @@ const CellAction = ({ data }: props) => {
       <div className="flex gap-1 items-center justify-center">
         {/* Payment Button */}
         <Button
+          size={"sm"}
           className="bg-green-500"
           disabled={loading || data.status === "PAID"} // Disable if status is PAID
           onClick={() => router.push(`/enrolls/${data.id}/payments/new`)}
@@ -53,6 +54,7 @@ const CellAction = ({ data }: props) => {
 
         {/* View Payments Button */}
         <Button
+          size={"sm"}
           className="bg-blue-500"
           disabled={loading || data.status === "UNPAID"} // Disable if status is UNPAID
           onClick={() => router.push(`/enrolls/${data.id}/payments`)}
@@ -62,6 +64,7 @@ const CellAction = ({ data }: props) => {
 
         {/* Update Button */}
         <Button
+          size={"sm"}
           className="bg-yellow-500"
           disabled={loading}
           onClick={() => router.push(`/enrolls/${data.id}`)}
@@ -71,6 +74,7 @@ const CellAction = ({ data }: props) => {
 
         {/* Delete Button */}
         <Button
+          size={"sm"}
           className="bg-red-500"
           disabled={loading}
           onClick={() => setOpen(true)}
