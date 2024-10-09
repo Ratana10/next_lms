@@ -8,7 +8,6 @@ import {
   ClipboardCheck,
   CreditCard,
   Gauge,
-  Package2,
   Shapes,
   Star,
   User,
