@@ -99,10 +99,10 @@ export const scheduleSchema = z
     endTime: z.string().min(1, {
       message: "EndTime is required.",
     }),
-    startDate: z.date({
+    startDate: z.coerce.date({
       required_error: "startDate is required.",
     }),
-    endDate: z.date({
+    endDate: z.coerce.date({
       required_error: "endDate is required.",
     }),
     totalTime: z.coerce.number().optional(),
@@ -136,12 +136,18 @@ export const enrollSchema = z.object({
 });
 
 export const enrollV2Schema = z.object({
-  studentId: z.coerce.number().min(1, {
-    message: "Student is required.",
-  }),
-  courseId: z.coerce.number().min(1, {
-    message: "Course is required.",
-  }),
+  studentId: z
+    .union([z.string(), z.number()])
+    .refine((value) => !isNaN(Number(value)), {
+      message: "Student is required.",
+    })
+    .transform((value) => Number(value)), // Coerce to number
+  courseId: z
+    .union([z.string(), z.number()])
+    .refine((value) => !isNaN(Number(value)), {
+      message: "Course is required.",
+    })
+    .transform((value) => Number(value)), // Coerce to number
   date: z.date({
     required_error: "Date is required.",
   }),
@@ -163,3 +169,22 @@ export const paymentSchema = z.object({
   method: z.coerce.string().optional(),
   receiver: z.coerce.string().optional(),
 });
+
+export const accountSchema = z.object({
+  firstname: z.string().min(1, {
+    message: "firstname is required.",
+  }),
+  lastname: z.string().min(1, {
+    message: "lastname is required.",
+  }),
+  username: z.string().min(1, {
+    message: "username is required.",
+  }),
+  role: z.string().min(1, {
+    message: "role is required.",
+  }),
+  password: z.string().min(1, {
+    message: "password is required.",
+  }),
+});
+

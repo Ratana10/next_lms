@@ -56,7 +56,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         typeof token.expireTime === "number" &&
         token.expireTime < currentTime
       ) {
-        console.log("token expired");
         return null;
       }
 
@@ -79,14 +78,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // Allow access to /auth/login and /auth/register without being logged in
       if (
         !isLoggedIn &&
-        (pathname === "/auth/login" || pathname === "/auth/register")
+        (pathname === "/auth/login")
       ) {
         return true;
       }
 
       // If the user is already logged in, redirect them to the dashboard
       if (isLoggedIn && pathname.startsWith("/auth")) {
-        return Response.redirect(new URL("/dashboard", nextUrl));
+        return Response.redirect(new URL("/", nextUrl));
       }
 
       if (!isLoggedIn) {

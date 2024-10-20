@@ -4,21 +4,23 @@ import { z } from "zod";
 import { signIn } from "@/auth";
 import { loginSchema } from "@/schema/definition";
 import { LoginRequest, RegisterRequest } from "@/types";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 export async function login(values: z.infer<typeof loginSchema>) {
   try {
-    await signIn("credentials", {
-      redirect: true,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
+    const result = await signIn("credentials", {
+      redirect: false,
       username: values.username,
       password: values.password,
     });
-  } catch (error: any) {
-    if (error.cause && error.cause.err && error.cause.err.message) {
-      console.error("Login error:", error.cause.err.message);
-      throw new Error(`${error.cause.err.message}`);
+
+    if (result?.error) {
+      console.error("Login error:", result.error);
+      throw new Error(result.error);
     }
+
+    return result;
+  } catch (error) {
+    throw new Error("An unexpected error occurred during login.");
   }
 }
 

@@ -8,7 +8,6 @@ import {
   ClipboardCheck,
   CreditCard,
   Gauge,
-  Package2,
   Shapes,
   Star,
   User,
@@ -22,52 +21,52 @@ const Sidebar = () => {
 
   const navs = [
     {
-      href: "/dashboard",
+      href: "/",
       label: "Dashboards",
       icon: <Gauge />,
     },
     {
-      href: "/dashboard/categories",
+      href: "/categories",
       label: "Categories",
       icon: <Star />,
     },
     {
-      href: "/dashboard/teachers",
+      href: "/teachers",
       label: "Teachers",
       icon: <Users />,
     },
     {
-      href: "/dashboard/students",
+      href: "/students",
       label: "Students",
       icon: <BookUser />,
     },
     {
-      href: "/dashboard/courses",
+      href: "/courses",
       label: "Courses",
       icon: <Book />,
     },
     {
-      href: "/dashboard/schedules",
+      href: "/schedules",
       label: "Schedules",
       icon: <CalendarCheck />,
     },
     {
-      href: "/dashboard/enrolls",
+      href: "/enrolls",
       label: "Enrolls",
       icon: <Shapes />,
     },
     {
-      href: "/dashboard/transactions",
+      href: "/transactions",
       label: "Transactions",
       icon: <CreditCard />,
     },
     {
-      href: "/dashboard/attendances",
+      href: "/attendances",
       label: "Attendances",
       icon: <ClipboardCheck />,
     },
     {
-      href: "/dashboard/accounts",
+      href: "/accounts",
       label: "Accounts",
       icon: <User />,
     },
@@ -75,20 +74,18 @@ const Sidebar = () => {
   return (
     <div className="hidden border-r bg-muted/40 md:block">
       <div className="flex h-full max-h-screen flex-col gap-2">
-        <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+        <div className="flex h-14 items-center justify-center border-b px-4 lg:h-[60px] lg:px-6">
           <Link href="/" className="flex items-center gap-2 font-semibold">
-            <Package2 className="h-6 w-6" />
-            <span className="">Khmer GRS Academy</span>
+            <span className="text-sm">Khmer GRS Academy</span>
           </Link>
         </div>
         <div className="flex-1">
           <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
             {navs.map((nav) => {
-              const activeRoute = pathname.startsWith("/dashboard/")
-                ? pathname.replace("/dashboard/", "").split("/")[0]
-                : pathname;
-
-              const isActive = nav.href.endsWith(activeRoute);
+              const isActive =
+                nav.href === "/"
+                  ? pathname === "/" // Highlight only if the current path is exactly `/`
+                  : pathname.startsWith(nav.href); // For other routes, check if it starts with the nav href
 
               return (
                 <Link
