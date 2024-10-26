@@ -43,8 +43,10 @@ const DetailPage = async ({ params, searchParams }: Props) => {
       student: e.student,
       status: e.status,
       date: formattedDate(e.date),
+      reason: e.reason
     })
   );
+
   return (
     <DetailClient
       course={course}

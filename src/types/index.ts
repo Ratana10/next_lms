@@ -146,6 +146,7 @@ export type AttendanceDetail = {
   student: Student;
   status: string;
   date: string;
+  reason?: string;
 };
 
 export type Attendance = {

@@ -82,12 +82,34 @@ const DetailNewClient = ({ course, students, pagination }: Props) => {
     });
   };
 
+  const onReasonChange = (studentId: number, reason: string) => {
+    setFormattedStudents((prevStudents) =>
+      prevStudents.map((student) =>
+        student.student.id === studentId ? { ...student, reason } : student
+      )
+    );
+  };
+
   const onCreate = async () => {
+
+    const attendanceData = {
+      PRESENT: formattedStudents.filter((student) => student.status === "PRESENT").map((student) => student.student.id),
+      ABSENT: formattedStudents.filter((student) => student.status === "ABSENT").map((student) => student.student.id),
+      PERMISSION: formattedStudents.filter((student) => student.status === "PERMISSION").map((student) => student.student.id),
+    };
+
+    const reasons = formattedStudents
+    .filter((student) => (student.status === "ABSENT" || student.status === "PERMISSION") && student.reason)
+    .reduce((acc, student) => ({ ...acc, [student.student.id]: student.reason }), {});
+
+
     const data = {
       courseId: course.id,
       date: format(date!, "yyyy-MM-dd"),
       attendance: attendanceData,
+      reasons
     };
+    console.log("🚀 ~ onCreate ~ data:", data)
 
     try {
       setLoading(true);
@@ -140,7 +162,7 @@ const DetailNewClient = ({ course, students, pagination }: Props) => {
         </Popover>
       </div>
       <DataTable
-        columns={columns({ onSelectChange })}
+        columns={columns({ onSelectChange, onReasonChange })}
         data={formattedStudents}
         pagesize={pagination.totalElements}
       />
