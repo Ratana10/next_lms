@@ -8,7 +8,12 @@ interface ReasonCellProps {
   onReasonChange: (studentId: number, reason: string) => void;
 }
 
-export const ReasonCell = ({ studentId, initialReason, status, onReasonChange }: ReasonCellProps) => {
+export const ReasonCell = ({
+  studentId,
+  initialReason,
+  status,
+  onReasonChange,
+}: ReasonCellProps) => {
   const [localReason, setLocalReason] = useState(initialReason);
 
   const handleReasonChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,20 +21,24 @@ export const ReasonCell = ({ studentId, initialReason, status, onReasonChange }:
   };
 
   const handleReasonBlur = () => {
-    onReasonChange(studentId, localReason); 
+    onReasonChange(studentId, localReason);
   };
 
-  if (status === "ABSENT" || status === "PERMISSION") {
-    return (
-      <Input
-        type="text"
-        placeholder="Enter reason"
-        value={localReason} 
-        onChange={handleReasonChange}
-        onBlur={handleReasonBlur}
-      />
-    );
-  }
+  const placeholderText =
+    status === "ABSENT"
+      ? "Reason for absent"
+      : status === "PERMISSION"
+      ? "Reason for permission"
+      : "N/A";
 
-  return <span>N/A</span>;
+  return (
+    <Input
+      type="text"
+      placeholder={placeholderText}
+      value={localReason}
+      disabled={status !== "ABSENT" && status !== "PERMISSION"}
+      onChange={handleReasonChange}
+      onBlur={handleReasonBlur}
+    />
+  );
 };

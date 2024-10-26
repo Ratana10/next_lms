@@ -1,4 +1,5 @@
 "use client";
+
 import { Eye, SquarePlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Course } from "@/types";
@@ -20,7 +21,7 @@ const CellAction = ({ data }: Props) => {
         <Tooltip>
           <TooltipTrigger asChild>
             <Link href={`/attendances/${data.id}/new`}>
-              <Button className="bg-yellow-500">
+              <Button size="sm" className="bg-yellow-500">
                 <SquarePlus className="w-4 h-4" />
               </Button>
             </Link>
@@ -32,7 +33,7 @@ const CellAction = ({ data }: Props) => {
         <Tooltip>
           <TooltipTrigger asChild>
             <Link href={`/attendances/${data.id}`} className="cursor-pointer">
-              <Button className="bg-blue-500">
+              <Button size="sm" className="bg-blue-500">
                 <Eye className="w-4 h-4" />
               </Button>
             </Link>

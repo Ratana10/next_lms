@@ -1,79 +1,73 @@
 "use client";
-
 import { Enroll } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import CellAction from "./CellAction";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { ArrowUpDown } from "lucide-react";
-
+import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 export const columns: ColumnDef<Enroll>[] = [
   {
     accessorKey: "no",
     header: ({ column }) => (
-      <div className="flex justify-center items-center">
-        <button
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="flex items-center "
-        >
-          NO
-          <ArrowUpDown className="ml-2 h-3 w-3" />
-        </button>
-      </div>
+      <DataTableColumnHeader
+        className="text-center flex justify-center items-center uppercase"
+        column={column}
+        title="NO"
+      />
     ),
-  },
-  {
-    accessorKey: "firstname",
-    header: ({ column }) => (
-      <div className="flex justify-center items-center">
-        <button
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="flex items-center "
-        >
-          First Name
-          <ArrowUpDown className="ml-2 h-3 w-3" />
-        </button>
-      </div>
+    cell: ({ row }) => (
+      <div className="w-[50px] text-center">{row.getValue("no")}</div>
     ),
   },
   {
     accessorKey: "lastname",
     header: ({ column }) => (
-      <div className="flex justify-center items-center">
-        <button
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="flex items-center "
-        >
-          Last Name
-          <ArrowUpDown className="ml-2 h-3 w-3" />
-        </button>
-      </div>
+      <DataTableColumnHeader
+        className="text-center flex justify-center items-center"
+        column={column}
+        title="Last Name"
+      />
+    ),
+  },
+  {
+    accessorKey: "firstname",
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="text-center flex justify-center items-center"
+        column={column}
+        title="First Name"
+      />
     ),
   },
   {
     accessorKey: "paid",
     header: ({ column }) => (
-      <div className="flex justify-center items-center">
-        <button
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="flex items-center "
-        >
-          Paid
-          <ArrowUpDown className="ml-2 h-3 w-3" />
-        </button>
-      </div>
+      <DataTableColumnHeader
+        className="text-center flex justify-center items-center"
+        column={column}
+        title="Paid"
+      />
     ),
   },
   {
     accessorKey: "remain",
-    header: "Remain",
-    cell: ({ row }) => (
-      <div className="font-bold text-md">{row.getValue("remain")}</div>
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="text-center flex justify-center items-center"
+        column={column}
+        title="Remain"
+      />
     ),
   },
   {
     accessorKey: "status",
-    header: "Status",
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="text-center flex justify-center items-center"
+        column={column}
+        title="Status"
+      />
+    ),
     cell: ({ row }) => {
       var status: string = row.getValue("status");
       const badgeClass = cn("font-medium", {
@@ -87,15 +81,33 @@ export const columns: ColumnDef<Enroll>[] = [
   },
   {
     accessorKey: "course",
-    header: "Course",
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="text-center flex justify-center items-center"
+        column={column}
+        title="Course"
+      />
+    ),
   },
   {
     accessorKey: "price",
-    header: "Price",
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="text-center flex justify-center items-center"
+        column={column}
+        title="Price"
+      />
+    ),
   },
   {
     accessorKey: "date",
-    header: "Date",
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="text-center flex justify-center items-center"
+        column={column}
+        title="Date"
+      />
+    ),
   },
   {
     id: "actions",

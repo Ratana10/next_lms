@@ -1,4 +1,5 @@
-"use client";;
+"use client";
+
 import { Edit, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Course } from "@/types";
@@ -45,10 +46,14 @@ const CellAction = ({ data }: props) => {
         loading={loading}
       />
       <div className="flex gap-1 items-center justify-center">
-        <Button className="bg-yellow-500" onClick={() => onUpdate(data.id)}>
+        <Button
+          size="sm"
+          className="bg-yellow-500"
+          onClick={() => onUpdate(data.id)}
+        >
           <Edit className="w-4 h-4" />
         </Button>
-        <Button className="bg-red-500" onClick={() => setOpen(true)}>
+        <Button size="sm" className="bg-red-500" onClick={() => setOpen(true)}>
           <Trash className="w-4 h-4" />
         </Button>
       </div>

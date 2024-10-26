@@ -1,4 +1,5 @@
-"use client";;
+"use client";
+
 import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Payment } from "@/types";
@@ -42,7 +43,7 @@ const CellAction = ({ data }: props) => {
         loading={loading}
       />
       <div className="flex gap-2 items-center justify-center">
-        <Button className="bg-red-500" onClick={() => setOpen(true)}>
+        <Button size="sm" className="bg-red-500" onClick={() => setOpen(true)}>
           <Trash className="w-4 h-4" />
         </Button>
       </div>

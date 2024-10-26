@@ -47,14 +47,18 @@ const CellAction = ({ data }: props) => {
       <div className="flex gap-1 items-center justify-center">
         {/* View students of this schedule course */}
         <Link href={`schedules/courses/${data.course.id}/students`}>
-          <Button className="bg-blue-500">
+          <Button size="sm" className="bg-blue-500">
             <Eye className="w-4 h-4" />
           </Button>
         </Link>
-        <Button className="bg-yellow-500" onClick={() => onUpdate(data.id)}>
+        <Button
+          size="sm"
+          className="bg-yellow-500"
+          onClick={() => onUpdate(data.id)}
+        >
           <Edit className="w-4 h-4" />
         </Button>
-        <Button className="bg-red-500" onClick={() => setOpen(true)}>
+        <Button size="sm" className="bg-red-500" onClick={() => setOpen(true)}>
           <Trash className="w-4 h-4" />
         </Button>
       </div>

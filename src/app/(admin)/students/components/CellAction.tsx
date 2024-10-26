@@ -1,4 +1,5 @@
-"use client";;
+"use client";
+
 import { Edit, Eye, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Student } from "@/types";
@@ -56,13 +57,21 @@ const CellAction = ({ data }: props) => {
         onClose={() => setModalStudent(false)}
       />
       <div className="flex gap-1 items-center justify-center">
-        <Button className="bg-blue-500" onClick={() => setModalStudent(true)}>
+        <Button
+          size="sm"
+          className="bg-blue-500"
+          onClick={() => setModalStudent(true)}
+        >
           <Eye className="w-4 h-4" />
         </Button>
-        <Button className="bg-yellow-500" onClick={() => onUpdate(data.id)}>
+        <Button
+          size="sm"
+          className="bg-yellow-500"
+          onClick={() => onUpdate(data.id)}
+        >
           <Edit className="w-4 h-4" />
         </Button>
-        <Button className="bg-red-500" onClick={() => setOpen(true)}>
+        <Button size="sm" className="bg-red-500" onClick={() => setOpen(true)}>
           <Trash className="w-4 h-4" />
         </Button>
       </div>

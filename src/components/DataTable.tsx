@@ -23,14 +23,15 @@ import { useState } from "react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  pagesize?: number;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  pagesize,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([])
-
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
     data,
@@ -41,6 +42,12 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
+    },
+    initialState: {
+      //This line
+      pagination: {
+        pageSize: pagesize || 10,
+      },
     },
   });
 

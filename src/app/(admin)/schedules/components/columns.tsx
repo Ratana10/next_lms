@@ -3,62 +3,91 @@
 import { Schedule } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import CellAction from "./CellAction";
-import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
+import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 
 export const columns: ColumnDef<Schedule>[] = [
   {
     accessorKey: "no",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          NO
-          <ArrowUpDown className="ml-2 h-3 w-3" />
-        </Button>
-      );
-    },
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="text-center flex justify-center items-center uppercase"
+        column={column}
+        title="NO"
+      />
+    ),
+    cell: ({ row }) => (
+      <div className="w-[50px] text-center">{row.getValue("no")}</div>
+    ),
   },
   {
     accessorKey: "course.name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Course
-          <ArrowUpDown className="ml-2 h-3 w-3" />
-        </Button>
-      );
-    },
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="text-center flex justify-center items-center"
+        column={column}
+        title="Course"
+      />
+    ),
   },
   {
     accessorKey: "description",
-    header: "Description",
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="text-center flex justify-center items-center"
+        column={column}
+        title="Description"
+      />
+    ),
   },
   {
     accessorKey: "startTime",
-    header: "StartTime",
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="text-center flex justify-center items-center"
+        column={column}
+        title="Start Time"
+      />
+    ),
   },
   {
     accessorKey: "endTime",
-    header: "EndTime",
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="text-center flex justify-center items-center"
+        column={column}
+        title="End Time"
+      />
+    ),
   },
-
   {
     accessorKey: "startDate",
-    header: "StartDate",
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="text-center flex justify-center items-center"
+        column={column}
+        title="Start Date"
+      />
+    ),
   },
   {
     accessorKey: "endDate",
-    header: "EndDate",
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="text-center flex justify-center items-center"
+        column={column}
+        title="End Date"
+      />
+    ),
   },
   {
     accessorKey: "totalTime",
-    header: "TotalTime",
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="text-center flex justify-center items-center"
+        column={column}
+        title="Time"
+      />
+    ),
   },
   {
     id: "actions",

@@ -74,7 +74,7 @@ export function DataTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead className="bg-red-700 text-black " key={header.id} colSpan={header.colSpan}>
+                    <TableHead className="bg-sky-200 text-black " key={header.id} colSpan={header.colSpan}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(

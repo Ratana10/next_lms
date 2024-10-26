@@ -1,6 +1,5 @@
 "use client";
 
-import { DataTable } from "@/components/DataTable";
 import Heading from "@/components/Heading";
 import { Separator } from "@/components/ui/separator";
 import { Account } from "@/types";
@@ -8,6 +7,7 @@ import { columns } from "./columns";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
+import { DataTable } from "@/components/DataTable";
 
 interface AccountClientProps {
   accounts: Account[];

@@ -26,7 +26,6 @@ export const columns: ColumnDef<AttendanceDetail>[] = [
     accessorKey: "name",
     header: ({ column }) => (
       <DataTableColumnHeader
-
         className="text-center flex justify-center items-center uppercase"
         column={column}
         title="Name"
@@ -45,8 +44,7 @@ export const columns: ColumnDef<AttendanceDetail>[] = [
     accessorKey: "gender",
     header: ({ column }) => (
       <DataTableColumnHeader
-      className="text-center flex justify-center items-center uppercase"
-
+        className="text-center flex justify-center items-center uppercase"
         column={column}
         title="Gender"
       />
@@ -61,23 +59,18 @@ export const columns: ColumnDef<AttendanceDetail>[] = [
     accessorKey: "reason",
     header: ({ column }) => (
       <DataTableColumnHeader
-      className="text-center flex justify-center items-center uppercase"
-
+        className="text-center flex justify-center items-center uppercase"
         column={column}
         title="Reason"
       />
     ),
-    cell: ({ row }) => (
-      <div className="">
-        {row.original.reason}
-      </div>
-    ),
+    cell: ({ row }) => <div className="">{row.original.reason}</div>,
   },
   {
     accessorKey: "status",
     header: ({ column }) => (
       <DataTableColumnHeader
-      className="text-center flex justify-center items-center uppercase"
+        className="text-center flex justify-center items-center uppercase"
         column={column}
         title="Status"
       />

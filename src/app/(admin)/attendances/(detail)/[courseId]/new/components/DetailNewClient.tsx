@@ -1,6 +1,5 @@
 "use client";
 
-import { DataTable } from "../components/DataTable";
 import Heading from "@/components/Heading";
 import { AttendanceDetail, Course } from "@/types";
 import { Save } from "lucide-react";
@@ -23,6 +22,7 @@ import toast from "react-hot-toast";
 import BackButton from "@/components/BackButton";
 import { Pagination } from "@/types/Pagination";
 import { ButtonLoading } from "@/components/ButtonLoading";
+import { DataTable } from "@/components/DataTable";
 
 export const attendanceStatus = ["PRESENT", "PERMISSION", "ABSENT"];
 
@@ -91,26 +91,35 @@ const DetailNewClient = ({ course, students, pagination }: Props) => {
   };
 
   const onCreate = async () => {
-
     const attendanceData = {
-      PRESENT: formattedStudents.filter((student) => student.status === "PRESENT").map((student) => student.student.id),
-      ABSENT: formattedStudents.filter((student) => student.status === "ABSENT").map((student) => student.student.id),
-      PERMISSION: formattedStudents.filter((student) => student.status === "PERMISSION").map((student) => student.student.id),
+      PRESENT: formattedStudents
+        .filter((student) => student.status === "PRESENT")
+        .map((student) => student.student.id),
+      ABSENT: formattedStudents
+        .filter((student) => student.status === "ABSENT")
+        .map((student) => student.student.id),
+      PERMISSION: formattedStudents
+        .filter((student) => student.status === "PERMISSION")
+        .map((student) => student.student.id),
     };
 
     const reasons = formattedStudents
-    .filter((student) => (student.status === "ABSENT" || student.status === "PERMISSION") && student.reason)
-    .reduce((acc, student) => ({ ...acc, [student.student.id]: student.reason }), {});
-
+      .filter(
+        (student) =>
+          (student.status === "ABSENT" || student.status === "PERMISSION") &&
+          student.reason
+      )
+      .reduce(
+        (acc, student) => ({ ...acc, [student.student.id]: student.reason }),
+        {}
+      );
 
     const data = {
       courseId: course.id,
       date: format(date!, "yyyy-MM-dd"),
       attendance: attendanceData,
-      reasons
+      reasons,
     };
-    console.log("🚀 ~ onCreate ~ data:", data)
-
     try {
       setLoading(true);
       await createAttendance(data);

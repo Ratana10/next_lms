@@ -2,7 +2,6 @@
 
 import { AttendanceDetail } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
-
 import {
   Select,
   SelectContent,
@@ -13,10 +12,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { attendanceStatus } from "./DetailNewClient";
-import { formattedGender } from "@/lib/formatted";
+import { formattedFullname, formattedGender } from "@/lib/formatted";
 import { cn } from "@/lib/utils";
 import { ReasonCell } from "./ReasonCell";
-import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 
 interface ColumnsProps {
   onSelectChange: (studentId: number, status: string) => void;
@@ -28,48 +26,20 @@ export const columns = ({
 }: ColumnsProps): ColumnDef<AttendanceDetail>[] => [
   {
     accessorKey: "no",
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className="text-center flex justify-center items-center uppercase"
-        column={column}
-        title="NO"
-      />
-    ),
-    cell: ({ row }) => (
-      <div className="w-[50px] text-center">{row.getValue("no")}</div>
-    ),
+    header: "NO",
   },
   {
-    accessorKey: "student.lastname",
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className="text-center flex justify-center items-center uppercase"
-        column={column}
-        title="Lastname"
-      />
-    ),
-    cell: ({ row }) => <div>{row.original.student.lastname}</div>,
-  },
-  {
-    accessorKey: "student.firstname",
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className="text-center flex justify-center items-center uppercase"
-        column={column}
-        title="First Name"
-      />
-    ),
-    cell: ({ row }) => <div>{row.original.student.firstname}</div>,
+    accessorKey: "student",
+    header: "Name",
+    cell: ({ row }) =>
+      formattedFullname(
+        row.original.student.lastname,
+        row.original.student.firstname
+      ),
   },
   {
     accessorKey: "student.gender",
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className="text-center flex justify-center items-center uppercase"
-        column={column}
-        title="Gender"
-      />
-    ),
+    header: "Gender",
     cell: ({ row }) => formattedGender(row.original.student.gender),
   },
   {
