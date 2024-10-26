@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 
 interface ReasonCellProps {
@@ -15,6 +15,12 @@ export const ReasonCell = ({
   onReasonChange,
 }: ReasonCellProps) => {
   const [localReason, setLocalReason] = useState(initialReason);
+
+  useEffect(() => {
+    if (status === "PRESENT") {
+      setLocalReason("");
+    }
+  }, [status]);
 
   const handleReasonChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocalReason(e.target.value);
